@@ -27,7 +27,6 @@ makeId         int primary key auto_increment,
 makeName       varchar(20) not null,
 modelId        int not null,
 constraint fk_make_model foreign key (modelId) references models(modelId)
-
 );
 
 
