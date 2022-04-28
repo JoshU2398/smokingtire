@@ -90,13 +90,22 @@ values
   
 insert into roles (roleName) 
 VALUES 
-('AUTHOR'), ('ADMIN');
+('USER'), ('ADMIN');
 
 insert into userroles (userId, roleId) 
 VALUES 
 (1,1), (2,2); 
   
-insert into listings (listingText, authorId, isPublic, createDate) 
+insert into listings (
+listingText,
+userId,
+carId,
+createDate,
+views,
+mileage,
+price
+) 
 values 
-('this is a private listing', 1, 0, '2020-04-06'), ('this is a public listing', 2, 1, '2020-04-05');
+('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000), 
+('this is a public listing', 2, 1, '2020-04-05', 8792, 2000, 120000);
     
