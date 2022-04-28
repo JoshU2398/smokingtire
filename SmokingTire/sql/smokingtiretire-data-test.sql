@@ -123,7 +123,41 @@ price
 values 
 ('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000), 
 ('this is a public listing', 2, 1, '2020-04-05', 8792, 2000, 120000);
-    
+
+
+insert into models(
+modelName,
+modelYear
+)
+values
+('Supra', '1998'),
+('Viper', '2004');
+
+
+insert into makes(
+makeName,
+modelId
+)
+values
+('Toyota', 1),
+('Dodge', 2);
+
+
+insert into cars(
+horsepower,
+drivetrain,
+chassis,
+transmission,
+makeId
+)
+values
+(500, 'rear-wheel drive', 'roadster', 'manual', 2),
+(276, 'rear-wheel drive', 'coupe', 'manual', 1);
+
+
+
+
+
     
     end //
     
