@@ -47,50 +47,46 @@
 ## Tasks
 * [ ] Create Java API
   * [x] Create Java Project (SmokingTire)
-  * [ ] Modify pom.xml to include the parent tag (spring-boot-starter-parent)
-  * [ ] Modify pom.xml to include the following dependencies
-    * [ ] spring-boot-starter-security
-    * [ ] jjwt-api
-    * [ ] jjwt-impl
-    * [ ] jjwt-jackson
-    * [ ] mysql-connector-java
-    * [ ] spring-boot-starter-jdbc
-    * [ ] spring-boot-starter-web
-  * [ ] Create base package (capstone)
-    * [ ] Create App class
-      * [ ] @SpringBootApplication
-      * [ ] main
-        * [ ] SpringApplication.run( App.class, args );
+  * [x] Modify pom.xml to include the parent tag (spring-boot-starter-parent)
+  * [x] Modify pom.xml to include the following dependencies
+    * [x] spring-boot-starter-security
+    * [x] jjwt-api
+    * [x] jjwt-impl
+    * [x] jjwt-jackson
+    * [x] mysql-connector-java
+    * [x] spring-boot-starter-jdbc
+    * [x] spring-boot-starter-web
+  * [x] Create base package (capstone)
+    * [x] Create App class
+      * [x] @SpringBootApplication
+      * [x] main
+        * [x] SpringApplication.run( App.class, args );
   * [ ] Create application.properties file
     * [ ] spring.datasource.url=jdbc:mysql://localhost:3306/`<name of database>`
     * [ ] spring.datasource.username=root
     * [ ] spring.datasource.password=top-secret-password
-  * [ ] Create models package
-    * [ ] Create AppUser class
-      * [ ] Extend from the User (org.springframework.security.core.userdetails)
-      * [ ] Add Set&lt;String&gt; roles field variable
-      * [ ] Add Integer userId field variable
-      * [ ] Generate getters/setters
-      * [ ] Generate hashCode/equals
-      * [ ] Add constructor which takes Integer userId, String username, String password, and Set&lt;String&gt; roles
-        * [ ] call super(username, password, roles.stream().map( r -> new SimpleGrantedAuthority( "ROLE_" + r )).collect( Collectors.toList() ) )
-        * [ ] assign to this.userId
-        * [ ] assign to this.roles
-    * [ ] Create Listing Class
-        * [ ] Fill out Listing Class
-            * [ ] create a `int viewCount` attribute.
-    * [ ] Create Car Class
-        * [ ] Fill out CarClass        
-    * [ ] Create Make Class
-        * [ ] Fill out Make Class    
-    * [ ] Create Model Class
-        * [ ] Fill out Model Class
+  * [x] Create models package
+    * [x] Create AppUser class
+      * [x] Extend from the User (org.springframework.security.core.userdetails)
+      * [x] Add Set&lt;String&gt; roles field variable
+      * [x] Add Integer userId field variable
+      * [x] Generate getters/setters
+      * [x] Generate hashCode/equals
+      * [x] Add constructor which takes Integer userId, String username, String password, and Set&lt;String&gt; roles
+        * [x] call super(username, password, roles.stream().map( r -> new SimpleGrantedAuthority( "ROLE_" + r )).collect( Collectors.toList() ) )
+        * [x] assign to this.userId
+        * [x] assign to this.roles
+    * [x] Create Listing Class
+        * [x] Fill out Listing Class
+            * [x] create a `int viewCount` attribute.
+    * [x] Create Car Class
+        * [x] Fill out CarClass        
   * [ ] Create data package
     * [ ] Create ListingRepo Interface
         * [ ] Create `findAll()` method
-        * [ ] Create `findByMakeId(int makeId)` method
-        * [ ] Create `findByModelId(int modelId)` method
-        * [ ] Create `findByPriceRange(BigDecimal min, BigDecimal max)` method
+        * [ ] Create `findByMakeId(Integer makeId)` method
+        * [ ] Create `findByModelId(Integer modelId)` method
+        * [ ] Create `findByPriceRange(Integer min, Integer max)` method
         * [ ] Create `add()` method
         * [ ] Create `edit()` method
         * [ ] Create `delete()` method
@@ -106,6 +102,11 @@
       * [ ] implements RowMapper&lt;AppUser&gt;
       * [ ] auto-generate methods
         * [ ] AppUser toBuild = new AppUser(userId, username, password, roles);
+    * [ ] Create CarRepo interface
+      * [ ] implement findAll() method
+    * [ ] Create CarDbRepo
+      * [ ] auto-generate method and fill it out.
+      * [ ] test to make sure it works :).
     * [ ] Create UserDbRepo class
       * [ ] Add @Repository
       * [ ] implements UserRepo
@@ -267,19 +268,16 @@
     * [ ] listingId        int primary key auto_increment,
     * [ ] listingText      text not null,
     * [ ] userId           int not null,
-    * [ ] carId            int primary key auto_increment,
+    * [ ] carId            int not null,
     * [ ] createDate       date not null,
     * [ ] views            int not null,
     * [ ] constraint fk_listings_users foreign key (userId) references users(userId)
     * [ ] constraint fk_listings_cars foreign key (carId) references cars(carId)
   * [ ] create table cars
     * [ ] carId         int primary key auto_increment
-    * [ ] price         int not null,
     * [ ] horsepower    int not null,
     * [ ] drivetrain    varchar(20) not null,
     * [ ] chassis       varchar(50) not null,
-    * [ ] drivetrain    varchar(20) not null,
-    * [ ] mileage       int not null,
     * [ ] transmission  varchar(30) not null,
     * [ ] makeId        int not null,
     * [ ] constraint fk_cars_make foreign key (makeId) references make(makeId)   
