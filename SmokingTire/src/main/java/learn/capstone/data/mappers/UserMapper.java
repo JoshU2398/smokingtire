@@ -25,5 +25,5 @@ public class UserMapper implements RowMapper<AppUser> {
 
         return toReturn;
     }
-    
+
 }
