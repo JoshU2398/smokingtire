@@ -3,11 +3,14 @@ package learn.capstone.data;
 import learn.capstone.data.mappers.UserMapper;
 import learn.capstone.models.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -20,10 +23,13 @@ public class UserDbRepo implements UserRepo {
     @Autowired
     JdbcTemplate template;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
+    @Transactional
     public AppUser findByUsername(String username) {
 
         String sql = "select userId, username, password from users where username = ?";
@@ -79,7 +85,7 @@ public class UserDbRepo implements UserRepo {
         String username = toAdd.getUsername();
         String password = toAdd.getPassword();
 
-        String encodedPassword = passwordEncoder.encode(password);
+        String encodedPassword = passwordEncoder().encode(password);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = template.update(connection -> {
@@ -108,7 +114,7 @@ public class UserDbRepo implements UserRepo {
     @Override
     public void edit(AppUser updated) {
         String sql = "update users set username = ?, password = ? where userId = ?;";
-        String encodedPassword = passwordEncoder.encode(updated.getPassword());
+        String encodedPassword = passwordEncoder().encode(updated.getPassword());
 
         template.update(sql, updated.getUsername(), encodedPassword, updated.getUserId());
     }
