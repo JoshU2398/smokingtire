@@ -102,11 +102,14 @@
       * [ ] implements RowMapper&lt;AppUser&gt;
       * [ ] auto-generate methods
         * [ ] AppUser toBuild = new AppUser(userId, username, password, roles);
-    * [ ] Create CarRepo interface
-      * [ ] implement findAll() method
+    * [x] Create CarRepo interface
+      * [x] implement findAll() method
     * [ ] Create CarDbRepo
       * [ ] auto-generate method and fill it out.
       * [ ] test to make sure it works :).
+    * [ ] Create CarMapper class
+      * [ ] implements `RowMapper<Car>`
+      * [ ] auto-generate methods
     * [ ] Create UserDbRepo class
       * [ ] Add @Repository
       * [ ] implements UserRepo
