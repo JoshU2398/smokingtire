@@ -47,50 +47,46 @@
 ## Tasks
 * [ ] Create Java API
   * [x] Create Java Project (SmokingTire)
-  * [ ] Modify pom.xml to include the parent tag (spring-boot-starter-parent)
-  * [ ] Modify pom.xml to include the following dependencies
-    * [ ] spring-boot-starter-security
-    * [ ] jjwt-api
-    * [ ] jjwt-impl
-    * [ ] jjwt-jackson
-    * [ ] mysql-connector-java
-    * [ ] spring-boot-starter-jdbc
-    * [ ] spring-boot-starter-web
-  * [ ] Create base package (capstone)
-    * [ ] Create App class
-      * [ ] @SpringBootApplication
-      * [ ] main
-        * [ ] SpringApplication.run( App.class, args );
+  * [x] Modify pom.xml to include the parent tag (spring-boot-starter-parent)
+  * [x] Modify pom.xml to include the following dependencies
+    * [x] spring-boot-starter-security
+    * [x] jjwt-api
+    * [x] jjwt-impl
+    * [x] jjwt-jackson
+    * [x] mysql-connector-java
+    * [x] spring-boot-starter-jdbc
+    * [x] spring-boot-starter-web
+  * [x] Create base package (capstone)
+    * [x] Create App class
+      * [x] @SpringBootApplication
+      * [x] main
+        * [x] SpringApplication.run( App.class, args );
   * [ ] Create application.properties file
     * [ ] spring.datasource.url=jdbc:mysql://localhost:3306/`<name of database>`
     * [ ] spring.datasource.username=root
     * [ ] spring.datasource.password=top-secret-password
-  * [ ] Create models package
-    * [ ] Create AppUser class
-      * [ ] Extend from the User (org.springframework.security.core.userdetails)
-      * [ ] Add Set&lt;String&gt; roles field variable
-      * [ ] Add Integer userId field variable
-      * [ ] Generate getters/setters
-      * [ ] Generate hashCode/equals
-      * [ ] Add constructor which takes Integer userId, String username, String password, and Set&lt;String&gt; roles
-        * [ ] call super(username, password, roles.stream().map( r -> new SimpleGrantedAuthority( "ROLE_" + r )).collect( Collectors.toList() ) )
-        * [ ] assign to this.userId
-        * [ ] assign to this.roles
-    * [ ] Create Listing Class
-        * [ ] Fill out Listing Class
-            * [ ] create a `int viewCount` attribute.
-    * [ ] Create Car Class
-        * [ ] Fill out CarClass        
-    * [ ] Create Make Class
-        * [ ] Fill out Make Class    
-    * [ ] Create Model Class
-        * [ ] Fill out Model Class
+  * [x] Create models package
+    * [x] Create AppUser class
+      * [x] Extend from the User (org.springframework.security.core.userdetails)
+      * [x] Add Set&lt;String&gt; roles field variable
+      * [x] Add Integer userId field variable
+      * [x] Generate getters/setters
+      * [x] Generate hashCode/equals
+      * [x] Add constructor which takes Integer userId, String username, String password, and Set&lt;String&gt; roles
+        * [x] call super(username, password, roles.stream().map( r -> new SimpleGrantedAuthority( "ROLE_" + r )).collect( Collectors.toList() ) )
+        * [x] assign to this.userId
+        * [x] assign to this.roles
+    * [x] Create Listing Class
+        * [x] Fill out Listing Class
+            * [x] create a `int viewCount` attribute.
+    * [x] Create Car Class
+        * [x] Fill out CarClass        
   * [ ] Create data package
     * [ ] Create ListingRepo Interface
         * [ ] Create `findAll()` method
-        * [ ] Create `findByMakeId(int makeId)` method
-        * [ ] Create `findByModelId(int modelId)` method
-        * [ ] Create `findByPriceRange(BigDecimal min, BigDecimal max)` method
+        * [ ] Create `findByMakeId(Integer makeId)` method
+        * [ ] Create `findByModelId(Integer modelId)` method
+        * [ ] Create `findByPriceRange(Integer min, Integer max)` method
         * [ ] Create `add()` method
         * [ ] Create `edit()` method
         * [ ] Create `delete()` method
@@ -106,6 +102,14 @@
       * [ ] implements RowMapper&lt;AppUser&gt;
       * [ ] auto-generate methods
         * [ ] AppUser toBuild = new AppUser(userId, username, password, roles);
+    * [x] Create CarRepo interface
+      * [x] implement findAll() method
+    * [ ] Create CarDbRepo
+      * [ ] auto-generate method and fill it out.
+      * [ ] test to make sure it works :).
+    * [ ] Create CarMapper class
+      * [ ] implements `RowMapper<Car>`
+      * [ ] auto-generate methods
     * [ ] Create UserDbRepo class
       * [ ] Add @Repository
       * [ ] implements UserRepo
@@ -252,71 +256,68 @@
           * [ ] service.deleteById( listingId, user );
           * [ ] generate listingService.deleteById()
           * [ ] return ResponseEntity.ok().build();
-* [x] Create mysql schemas (test/prod)
-  * [x] create sql folder in project folder
-  * [x] create smokingtires-test.sql
-  * [x] create smokingtires-prod.sql
-  * [x] drop database if exists smokingtires_X
-  * [x] create database smokingtires_X
-  * [x] use smokingtires_X
-  * [x] create table users
-    * [x] userId        int primary key auto_increment
-    * [x] username      varchar(300) not null unique
-    * [x] password      varchar(2048) not null,
-  * [x] create table listings
-    * [x] listingId        int primary key auto_increment,
-    * [x] listingText      text not null,
-    * [x] userId           int not null,
-    * [x] carId            int primary key auto_increment,
-    * [x] createDate       date not null,
-    * [x] views            int not null,
-    * [x] constraint fk_listings_users foreign key (userId) references users(userId)
-    * [x] constraint fk_listings_cars foreign key (carId) references cars(carId)
-  * [x] create table cars
-    * [x] carId         int primary key auto_increment
-    * [x] price         int not null,
-    * [x] horsepower    int not null,
-    * [x] drivetrain    varchar(20) not null,
-    * [x] chassis       varchar(50) not null,
-    * [x] drivetrain    varchar(20) not null,
-    * [x] mileage       int not null,
-    * [x] transmission  varchar(30) not null,
-    * [x] makeId        int not null,
-    * [x] constraint fk_cars_make foreign key (makeId) references make(makeId)   
-  * [x] create table makes
-    * [x] makeId         int primary key auto_increment,
-    * [x] makeName       varchar(20) not null,
-    * [x] modelId        int not null,
-    * [x] constraint fk_make_model foreign key (modelId) references model(modelId)   
-  * [x] create table models
-    * [x] modelId        int primary key auto_increment,
-    * [x] modelName      varchar(20) not null,
-    * [x] modelYear      year(date) not null,
-  * [x] create table roles
-    * [x] roleId        int primay key auto_increment
-    * [x] roleName      varchar(20) not null unique
-  * [x] create table userroles
-    * [x] userId        int not null,
-    * [x] roleId        int not null,
-    * [x] constraint pk_userroles (userId, roleId),
-    * [x] constraint fk_users_userroles foreign key (userId) references users(userId)
-    * [x] constraint fk_roles_userroles foreign key (roleId) references roles(roleId)
-  * [x] insert into users (username, password) values ('bob', '$2a$12$HqaU3VlN09ufZ60R8VrLHuIX8H6b1iFDA9AG./vzThpIzhxEIF8nC');   -- pw is password
-  * [x] insert into users (username, password) values ('june', '$2a$12$k2TB.cQ1TLHLOYn.pbbiTuQ5HoUxozWkl.ZgFZ.9eioAeMxndT5AS');  -- pw is admin-password
-  * [x] insert into roles (roleName) VALUES ('AUTHOR'), ('ADMIN');
-  * [x] insert into userroles (userId, roleId) VALUES (1,1), (2,2);
+* [ ] Create mysql schemas (test/prod)
+  * [ ] create sql folder in project folder
+  * [ ] create smokingtires-test.sql
+  * [ ] create smokingtires-prod.sql
+  * [ ] drop database if exists smokingtires_X
+  * [ ] create database smokingtires_X
+  * [ ] use smokingtires_X
+  * [ ] create table users
+    * [ ] userId        int primary key auto_increment
+    * [ ] username      varchar(300) not null unique
+    * [ ] password      varchar(2048) not null,
+  * [ ] create table listings
+    * [ ] listingId        int primary key auto_increment,
+    * [ ] listingText      text not null,
+    * [ ] userId           int not null,
+    * [ ] carId            int not null,
+    * [ ] createDate       date not null,
+    * [ ] views            int not null,
+    * [ ] constraint fk_listings_users foreign key (userId) references users(userId)
+    * [ ] constraint fk_listings_cars foreign key (carId) references cars(carId)
+  * [ ] create table cars
+    * [ ] carId         int primary key auto_increment
+    * [ ] horsepower    int not null,
+    * [ ] drivetrain    varchar(20) not null,
+    * [ ] chassis       varchar(50) not null,
+    * [ ] transmission  varchar(30) not null,
+    * [ ] makeId        int not null,
+    * [ ] constraint fk_cars_make foreign key (makeId) references make(makeId)   
+  * [ ] create table makes
+    * [ ] makeId         int primary key auto_increment,
+    * [ ] makeName       varchar(20) not null,
+    * [ ] modelId        int not null,
+    * [ ] constraint fk_make_model foreign key (modelId) references model(modelId)   
+  * [ ] create table models
+    * [ ] modelId        int primary key auto_increment,
+    * [ ] modelName      varchar(20) not null,
+    * [ ] modelYear      year(date) not null,
+  * [ ] create table roles
+    * [ ] roleId        int primay key auto_increment
+    * [ ] roleName      varchar(20) not null unique
+  * [ ] create table userroles
+    * [ ] userId        int not null,
+    * [ ] roleId        int not null,
+    * [ ] constraint pk_userroles (userId, roleId),
+    * [ ] constraint fk_users_userroles foreign key (userId) references users(userId)
+    * [ ] constraint fk_roles_userroles foreign key (roleId) references roles(roleId)
+  * [ ] insert into users (username, password) values ('bob', '$2a$12$HqaU3VlN09ufZ60R8VrLHuIX8H6b1iFDA9AG./vzThpIzhxEIF8nC');   -- pw is password
+  * [ ] insert into users (username, password) values ('june', '$2a$12$k2TB.cQ1TLHLOYn.pbbiTuQ5HoUxozWkl.ZgFZ.9eioAeMxndT5AS');  -- pw is admin-password
+  * [ ] insert into roles (roleName) VALUES ('AUTHOR'), ('ADMIN');
+  * [ ] insert into userroles (userId, roleId) VALUES (1,1), (2,2);
   * [ ] <b>CHANGE SAMPLE DATA TO MATCH LISTINGS INSTEAD OF listingS</b>
-  * [x] insert into listings (listingText, authorId, isPublic, createDate) values ('this is a private listing', 1, 0, '2020-04-06'), ('this is a public listing', 2, 1, '2020-04-05');
+  * [ ] insert into listings (listingText, authorId, isPublic, createDate) values ('this is a private listing', 1, 0, '2020-04-06'), ('this is a public listing', 2, 1, '2020-04-05');
   * [ ] generate reset stored procedure in db (set_known_good_state)
-    * [x] delete from userroles;
-    * [x] delete from users;
-    * [x] alter table users auto_increment = 1;
-    * [x] delete from roles;
-    * [x] alter table roles auto_increment = 1;
-    * [x] delete from listings;
-    * [x] alter table listings auto_increment = 1;
-    * [x] (copy all inserts from prod)
-  * [x] at end of test schema call set_known_good_state();
+    * [ ] delete from userroles;
+    * [ ] delete from users;
+    * [ ] alter table users auto_increment = 1;
+    * [ ] delete from roles;
+    * [ ] alter table roles auto_increment = 1;
+    * [ ] delete from listings;
+    * [ ] alter table listings auto_increment = 1;
+    * [ ] (copy all inserts from prod)
+  * [ ] at end of test schema call set_known_good_state();
 
 * [ ] Create React Front-End
   * [ ] From the terminal, inside of your Java application
