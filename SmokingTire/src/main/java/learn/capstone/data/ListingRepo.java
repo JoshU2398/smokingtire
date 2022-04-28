@@ -19,4 +19,5 @@ public interface ListingRepo {
     boolean edit(Listing toEdit);
 
     boolean deleteById(int listingId);
+
 }
