@@ -11,20 +11,32 @@ public class Listing {
     LocalDate postDate;
     String description;
     Integer viewCount;
-    AppUser owner;
+    Integer userId;
+    Integer carId;
 
 
     public Listing() {
     }
 
-    public Listing(Integer listingId, BigDecimal price, Integer mileage, LocalDate postDate, String description, Integer viewCount, AppUser owner) {
+
+    public Listing(Integer listingId, BigDecimal price, Integer mileage, LocalDate postDate, String description, Integer viewCount, Integer userId, Integer carId) {
         this.listingId = listingId;
         this.price = price;
         this.mileage = mileage;
         this.postDate = postDate;
         this.description = description;
         this.viewCount = viewCount;
-        this.owner = owner;
+        this.userId = userId;
+        this.carId = carId;
+    }
+
+
+    public Integer getCarId() {
+        return carId;
+    }
+
+    public void setCarId(Integer carId) {
+        this.carId = carId;
     }
 
     public Integer getListingId() {
@@ -75,12 +87,12 @@ public class Listing {
         this.viewCount = viewCount;
     }
 
-    public AppUser getOwner() {
-        return owner;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setOwner(AppUser owner) {
-        this.owner = owner;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -88,11 +100,11 @@ public class Listing {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Listing listing = (Listing) o;
-        return Objects.equals(listingId, listing.listingId) && Objects.equals(price, listing.price) && Objects.equals(mileage, listing.mileage) && Objects.equals(postDate, listing.postDate) && Objects.equals(description, listing.description) && Objects.equals(viewCount, listing.viewCount) && Objects.equals(owner, listing.owner);
+        return Objects.equals(listingId, listing.listingId) && Objects.equals(price, listing.price) && Objects.equals(mileage, listing.mileage) && Objects.equals(postDate, listing.postDate) && Objects.equals(description, listing.description) && Objects.equals(viewCount, listing.viewCount) && Objects.equals(userId, listing.userId) && Objects.equals(carId, listing.carId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(listingId, price, mileage, postDate, description, viewCount, owner);
+        return Objects.hash(listingId, price, mileage, postDate, description, viewCount, userId, carId);
     }
 }
