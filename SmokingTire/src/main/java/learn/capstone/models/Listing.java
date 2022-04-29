@@ -1,42 +1,43 @@
 package learn.capstone.models;
 
-import java.math.BigDecimal;
+import learn.capstone.App;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Listing {
     Integer listingId;
-    BigDecimal price;
+    Integer price;
     Integer mileage;
     LocalDate postDate;
     String description;
     Integer viewCount;
-    Integer userId;
-    Integer carId;
+    AppUser user;
+    Car car;
 
 
     public Listing() {
     }
 
 
-    public Listing(Integer listingId, BigDecimal price, Integer mileage, LocalDate postDate, String description, Integer viewCount, Integer userId, Integer carId) {
+    public Listing(Integer listingId, Integer price, Integer mileage, LocalDate postDate, String description, Integer viewCount, AppUser user, Car car) {
         this.listingId = listingId;
         this.price = price;
         this.mileage = mileage;
         this.postDate = postDate;
         this.description = description;
         this.viewCount = viewCount;
-        this.userId = userId;
-        this.carId = carId;
+        this.user = this.user;
+        this.car = this.car;
     }
 
 
-    public Integer getCarId() {
-        return carId;
+    public Car getCar() {
+        return car;
     }
 
-    public void setCarId(Integer carId) {
-        this.carId = carId;
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     public Integer getListingId() {
@@ -47,11 +48,11 @@ public class Listing {
         this.listingId = listingId;
     }
 
-    public BigDecimal getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -87,12 +88,12 @@ public class Listing {
         this.viewCount = viewCount;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public AppUser getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(AppUser user) {
+        this.user = user;
     }
 
     @Override
@@ -100,11 +101,11 @@ public class Listing {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Listing listing = (Listing) o;
-        return Objects.equals(listingId, listing.listingId) && Objects.equals(price, listing.price) && Objects.equals(mileage, listing.mileage) && Objects.equals(postDate, listing.postDate) && Objects.equals(description, listing.description) && Objects.equals(viewCount, listing.viewCount) && Objects.equals(userId, listing.userId) && Objects.equals(carId, listing.carId);
+        return Objects.equals(listingId, listing.listingId) && Objects.equals(price, listing.price) && Objects.equals(mileage, listing.mileage) && Objects.equals(postDate, listing.postDate) && Objects.equals(description, listing.description) && Objects.equals(viewCount, listing.viewCount) && Objects.equals(user, listing.user) && Objects.equals(car, listing.car);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(listingId, price, mileage, postDate, description, viewCount, userId, carId);
+        return Objects.hash(listingId, price, mileage, postDate, description, viewCount, user, car);
     }
 }
