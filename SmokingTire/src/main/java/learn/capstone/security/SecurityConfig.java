@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 //TODO: add antMatchers
-                .antMatchers("/**").denyAll()
+                .antMatchers("/**").permitAll()
                 .and()
                 .addFilter( new JwtRequestFilter(converter, authenticationManager() ))
                 .sessionManagement()
