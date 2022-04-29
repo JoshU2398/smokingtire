@@ -115,12 +115,12 @@ public class ListingDbRepo implements ListingRepo {
         ) > 0;
     }
 
-    private void addMake(Listing listing){
-        final String sql = "";
-
-        var makes = template.query(sql, new ListingMapper(), listing.getListingId());
-        listing.setMakes(listing);
-    }
+//    private void addMake(Listing listing){
+//        final String sql = "";
+//
+//        var makes = template.query(sql, new ListingMapper(), listing.getListingId());
+//        listing.setMakes(listing);
+//    }
 
     private void addModel(Listing listing){
 
