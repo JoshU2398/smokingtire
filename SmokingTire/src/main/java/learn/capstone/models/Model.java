@@ -7,6 +7,9 @@ public class Model {
     String modelName;
     Integer modelYear;
 
+    public Model() {
+    }
+
     public Model(Integer modelId, String modelName, Integer modelYear) {
         this.modelId = modelId;
         this.modelName = modelName;

@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface ListingRepo {
 
-    List<Listing> findAllListings();
+    List<Listing> findAllAvailableListings();
+
+    List<Listing> findPurchasedListingsByUser(String username);
 
     List<Listing> findByMakeId(int makeId);
 

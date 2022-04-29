@@ -7,6 +7,9 @@ public class Make {
     String makeName;
     Model model;
 
+    public Make() {
+    }
+
     public Make(Integer makeId, String makeName, Model model) {
         this.makeId = makeId;
         this.makeName = makeName;
