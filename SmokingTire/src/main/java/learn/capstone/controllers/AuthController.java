@@ -1,5 +1,6 @@
 package learn.capstone.controllers;
 
+import learn.capstone.domain.UserService;
 import learn.capstone.security.JwtConverter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
