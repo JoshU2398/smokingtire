@@ -1,6 +1,5 @@
 package learn.capstone.data.mappers;
 
-import learn.capstone.models.AppUser;
 import learn.capstone.models.Listing;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -12,12 +11,11 @@ public class ListingMapper implements RowMapper<Listing> {
     public Listing mapRow(ResultSet rs, int rowNum) throws SQLException {
         Listing listing = new Listing();
         listing.setListingId(rs.getInt("listingId"));
-        listing.setPrice(rs.getBigDecimal("price"));
-        listing.setMileage(rs.getInt("mileage"));
         listing.setDescription(rs.getString("listingText"));
+        listing.setPrice(rs.getInt("price"));
+        listing.setMileage(rs.getInt("mileage"));
+
         listing.setViewCount(rs.getInt("views"));
-        listing.setUserId(rs.getInt("userId"));
-        listing.setCarId(rs.getInt("carId"));
         if(rs.getDate("createDate") != null){
             listing.setPostDate(rs.getDate("createDate").toLocalDate());
         }

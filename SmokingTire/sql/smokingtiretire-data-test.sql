@@ -17,7 +17,7 @@ username      varchar(300) not null unique,
 create table models(
 modelId        int primary key auto_increment,
 modelName      varchar(20) not null,
-modelYear      date not null
+modelYear      year not null
     );
 
 
@@ -110,18 +110,7 @@ insert into userroles (userId, roleId)
 VALUES 
 (1,1), (2,2); 
   
-insert into listings (
-listingText,
-userId,
-carId,
-createDate,
-views,
-mileage,
-price
-) 
-values 
-('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000), 
-('this is a public listing', 2, 1, '2020-04-05', 8792, 2000, 120000);
+
 
 
 insert into models(
@@ -152,6 +141,20 @@ makeId
 values
 (500, 'rear-wheel drive', 'roadster', 'manual', 2),
 (276, 'rear-wheel drive', 'coupe', 'manual', 1);
+
+
+insert into listings (
+listingText,
+userId,
+carId,
+createDate,
+views,
+mileage,
+price
+) 
+values 
+('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000), 
+('this is a public listing', 2, 1, '2020-04-05', 8792, 2000, 120000);
 
 
 
