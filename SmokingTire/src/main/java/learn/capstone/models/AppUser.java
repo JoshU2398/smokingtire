@@ -54,7 +54,7 @@ public class AppUser extends User {
 
         result = 31 * result + (roles != null ? roles.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        
+
         return result;
     }
 
