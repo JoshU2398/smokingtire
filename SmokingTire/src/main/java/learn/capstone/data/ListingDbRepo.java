@@ -1,12 +1,7 @@
 package learn.capstone.data;
 
-import learn.capstone.data.mappers.ListingMapper;
-import learn.capstone.data.mappers.MakeMapper;
-import learn.capstone.data.mappers.ModelMapper;
-import learn.capstone.models.Car;
-import learn.capstone.models.Listing;
-import learn.capstone.models.Make;
-import learn.capstone.models.Model;
+import learn.capstone.data.mappers.*;
+import learn.capstone.models.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -16,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -135,17 +131,33 @@ public class ListingDbRepo implements ListingRepo {
         ) > 0;
     }
 
-    private void addUser(List<Listing> listings {
-        String 
-        for (Listing l : listings) {
+    private void addUser(List<Listing> listings) {
+        String sql = "select u.userId, u.username, u.password "
+                + "from listings l "
+                + "inner join users u on l.userId = u.userId "
+                + "where l.listingId = ?;";
 
+        for (Listing l : listings) {
+            AppUser user = template.query(sql, new UserMapper(Collections.singleton("USER")), l.getListingId()).stream()
+                    .findFirst().orElse(null);
+
+            l.setUser(user);
         }
 
     }
 
     private void addCar(List<Listing> listings) {
-        for (Listing l : listings) {
+        String sql = "select c.carId, c.horsepower, c.drivetrain, c.chassis, c.transmission "
+                + "from listings l "
+                + "inner join cars c on l.carId = c.carId "
+                + "where l.listingId = ?;";
 
+        for (Listing l : listings) {
+            Car car = template.query(sql, new CarMapper(), l.getListingId()).stream()
+                    .findFirst().orElse(null);
+
+            addMake(car);
+            l.setCar(car);
         }
 
     }
