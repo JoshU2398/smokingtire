@@ -13,7 +13,6 @@ public class MakeMapper implements RowMapper<Make> {
         toReturn.setMakeId(rs.getInt("makeId"));
         toReturn.setMakeName(rs.getString("makeName"));
 
-
         return toReturn;
     }
 }

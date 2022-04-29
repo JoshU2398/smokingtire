@@ -86,6 +86,7 @@ constraint fk_roles_userroles foreign key (roleId) references roles(roleId)
     
     create procedure set_known_good_state()
     begin
+
     delete from listings;
     alter table listings auto_increment = 1;
     delete from userroles;

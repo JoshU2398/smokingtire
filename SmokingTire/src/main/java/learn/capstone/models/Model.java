@@ -7,6 +7,7 @@ public class Model {
     String modelName;
     Integer modelYear;
 
+
     public Model() {
     }
 
