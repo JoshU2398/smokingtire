@@ -5,12 +5,12 @@ import java.util.Objects;
 public class Make {
     Integer makeId;
     String makeName;
-    Integer modelId;
+    Model model;
 
-    public Make(Integer makeId, String makeName, Integer modelId) {
+    public Make(Integer makeId, String makeName, Model model) {
         this.makeId = makeId;
         this.makeName = makeName;
-        this.modelId = modelId;
+        this.model = model;
     }
 
     public Integer getMakeId() {
@@ -29,12 +29,12 @@ public class Make {
         this.makeName = makeName;
     }
 
-    public Integer getModelId() {
-        return modelId;
+    public Model getModel() {
+        return model;
     }
 
-    public void setModelId(Integer modelId) {
-        this.modelId = modelId;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
     @Override
@@ -42,11 +42,11 @@ public class Make {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Make make = (Make) o;
-        return Objects.equals(makeId, make.makeId) && Objects.equals(makeName, make.makeName) && Objects.equals(modelId, make.modelId);
+        return Objects.equals(makeId, make.makeId) && Objects.equals(makeName, make.makeName) && Objects.equals(model, make.model);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(makeId, makeName, modelId);
+        return Objects.hash(makeId, makeName, model);
     }
 }

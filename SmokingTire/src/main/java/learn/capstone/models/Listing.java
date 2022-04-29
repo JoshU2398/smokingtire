@@ -14,23 +14,23 @@ public class Listing {
     Integer viewCount;
     AppUser user;
     Car car;
+    boolean isAvailable;
 
 
     public Listing() {
     }
 
-
-    public Listing(Integer listingId, Integer price, Integer mileage, LocalDate postDate, String description, Integer viewCount, AppUser user, Car car) {
+    public Listing(Integer listingId, Integer price, Integer mileage, LocalDate postDate, String description, Integer viewCount, AppUser user, Car car, boolean isAvailable) {
         this.listingId = listingId;
         this.price = price;
         this.mileage = mileage;
         this.postDate = postDate;
         this.description = description;
         this.viewCount = viewCount;
-        this.user = this.user;
-        this.car = this.car;
+        this.user = user;
+        this.car = car;
+        this.isAvailable = isAvailable;
     }
-
 
     public Car getCar() {
         return car;
@@ -96,16 +96,24 @@ public class Listing {
         this.user = user;
     }
 
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Listing listing = (Listing) o;
-        return Objects.equals(listingId, listing.listingId) && Objects.equals(price, listing.price) && Objects.equals(mileage, listing.mileage) && Objects.equals(postDate, listing.postDate) && Objects.equals(description, listing.description) && Objects.equals(viewCount, listing.viewCount) && Objects.equals(user, listing.user) && Objects.equals(car, listing.car);
+        return isAvailable == listing.isAvailable && Objects.equals(listingId, listing.listingId) && Objects.equals(price, listing.price) && Objects.equals(mileage, listing.mileage) && Objects.equals(postDate, listing.postDate) && Objects.equals(description, listing.description) && Objects.equals(viewCount, listing.viewCount) && Objects.equals(user, listing.user) && Objects.equals(car, listing.car);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(listingId, price, mileage, postDate, description, viewCount, user, car);
+        return Objects.hash(listingId, price, mileage, postDate, description, viewCount, user, car, isAvailable);
     }
 }

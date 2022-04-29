@@ -8,20 +8,18 @@ public class Car {
     String drivetrain;
     String chassis;
     String transmission;
-    Integer makeId;
-    Integer modelId;
+    Make make;
 
     public Car() {
     }
 
-    public Car(Integer carId, Integer horsepower, String drivetrain, String chassis, String transmission, Integer makeId, Integer modelId) {
+    public Car(Integer carId, Integer horsepower, String drivetrain, String chassis, String transmission, Make make) {
         this.carId = carId;
         this.horsepower = horsepower;
         this.drivetrain = drivetrain;
         this.chassis = chassis;
         this.transmission = transmission;
-        this.makeId = makeId;
-        this.modelId = modelId;
+        this.make = make;
     }
 
     public Integer getCarId() {
@@ -64,20 +62,12 @@ public class Car {
         this.transmission = transmission;
     }
 
-    public Integer getMakeId() {
-        return makeId;
+    public Make getMake() {
+        return make;
     }
 
-    public void setMakeId(Integer makeId) {
-        this.makeId = makeId;
-    }
-
-    public Integer getModelId() {
-        return modelId;
-    }
-
-    public void setModelId(Integer modelId) {
-        this.modelId = modelId;
+    public void setMake(Make make) {
+        this.make = make;
     }
 
     @Override
@@ -85,11 +75,11 @@ public class Car {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return Objects.equals(carId, car.carId) && Objects.equals(horsepower, car.horsepower) && Objects.equals(drivetrain, car.drivetrain) && Objects.equals(chassis, car.chassis) && Objects.equals(transmission, car.transmission) && Objects.equals(makeId, car.makeId) && Objects.equals(modelId, car.modelId);
+        return Objects.equals(carId, car.carId) && Objects.equals(horsepower, car.horsepower) && Objects.equals(drivetrain, car.drivetrain) && Objects.equals(chassis, car.chassis) && Objects.equals(transmission, car.transmission) && Objects.equals(make, car.make);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(carId, horsepower, drivetrain, chassis, transmission, makeId, modelId);
+        return Objects.hash(carId, horsepower, drivetrain, chassis, transmission, make);
     }
 }
