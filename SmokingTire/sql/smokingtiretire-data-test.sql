@@ -27,6 +27,7 @@ makeId         int primary key auto_increment,
 makeName       varchar(20) not null,
 modelId        int not null,
 constraint fk_make_model foreign key (modelId) references models(modelId)
+
 );
 
 
@@ -52,6 +53,7 @@ createDate       date not null,
 views            int not null,
 mileage       int not null,
 price         int not null,
+isAvailable	  boolean not null,
 constraint fk_listings_users foreign key (userId) references users(userId),
 constraint fk_listings_cars foreign key (carId) references cars(carId)
 
@@ -84,14 +86,14 @@ constraint fk_roles_userroles foreign key (roleId) references roles(roleId)
     
     create procedure set_known_good_state()
     begin
-	delete from listings;
+
+    delete from listings;
     alter table listings auto_increment = 1;
     delete from userroles;
     delete from users;
     alter table users auto_increment = 1;
     delete from roles;
     alter table roles auto_increment = 1;
-
     
     
     insert into users (username, password) 
@@ -151,11 +153,12 @@ carId,
 createDate,
 views,
 mileage,
-price
+price,
+isAvailable
 ) 
 values 
-('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000), 
-('this is a public listing', 2, 1, '2020-04-05', 8792, 2000, 120000);
+('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000, 1), 
+('this is a public listing', 2, 1, '2020-04-05', 8792, 2000, 120000, 1);
 
 
 

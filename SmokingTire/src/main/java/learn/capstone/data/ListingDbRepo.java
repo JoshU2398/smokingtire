@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Repository
 public class ListingDbRepo implements ListingRepo {
     private JdbcTemplate template;
@@ -30,16 +31,17 @@ public class ListingDbRepo implements ListingRepo {
     @Override
     @Transactional
     public List<Listing> findByMakeId(int makeId) {
-        final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price "
-                + "inner join "
-                + "inner join "
-                + "from listings "
+        final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price, "
+                + "from listings l"
+                + "inner join cars c on c.carId = l.carId"
+                + "inner join makes m on m.makeId = c.makeId"
+                + "inner join users u on u.userId = l.userId"
                 + "where makeId = ?;";
 
         List<Listing> result = template.query(sql, new ListingMapper(), makeId).stream().collect(Collectors.toList());
 
         if(result != null){
-
+            addMake(result);
         }
 
         return result;
@@ -116,12 +118,20 @@ public class ListingDbRepo implements ListingRepo {
         ) > 0;
     }
 
-//    private void addMake(Listing listing){
-//        final String sql = "";
+    private void addCar(){
+
+    }
+
+    private void addMake(List<Listing> listings){
+        final String sql = "";
+
+//        for(){
 //
-//        var makes = template.query(sql, new ListingMapper(), listing.getListingId());
-//        listing.setMakes(listing);
-//    }
+//        }
+
+     //   var makes = template.query(sql, new ListingMapper(), listing.getListingId());
+      //  listings.setMakes(listing);
+    }
 
     private void addModel(Listing listing){
 

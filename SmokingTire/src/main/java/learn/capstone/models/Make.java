@@ -7,6 +7,10 @@ public class Make {
     String makeName;
     Integer modelId;
 
+    public Make(){
+
+    }
+
     public Make(Integer makeId, String makeName, Integer modelId) {
         this.makeId = makeId;
         this.makeName = makeName;
