@@ -11,8 +11,6 @@ class CarDbRepoTest {
     @Autowired
     CarDbRepo repo;
 
-
-
     @Test
     void shouldFindAll() {
 

@@ -5,6 +5,7 @@ import learn.capstone.models.Listing;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
@@ -12,7 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Repository
 public class ListingDbRepo implements ListingRepo {
     private JdbcTemplate template;
 
@@ -126,6 +127,6 @@ public class ListingDbRepo implements ListingRepo {
 
         final String sql = "";
         var models = template.query(sql, new ListingMapper(), listing.getListingId());
-        listing.setModels(listing);
+        //listing.setModels(listing);
     }
 }
