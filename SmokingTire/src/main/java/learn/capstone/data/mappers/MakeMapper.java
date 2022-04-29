@@ -12,7 +12,6 @@ public class MakeMapper implements RowMapper<Make> {
         Make toReturn = new Make();
         toReturn.setMakeId(rs.getInt("makeId"));
         toReturn.setMakeName(rs.getString("makeName"));
-        
 
         return toReturn;
     }

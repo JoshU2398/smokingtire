@@ -1,7 +1,12 @@
 package learn.capstone.data;
 
 import learn.capstone.data.mappers.ListingMapper;
+import learn.capstone.data.mappers.MakeMapper;
+import learn.capstone.data.mappers.ModelMapper;
+import learn.capstone.models.Car;
 import learn.capstone.models.Listing;
+import learn.capstone.models.Make;
+import learn.capstone.models.Model;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -22,20 +27,32 @@ public class ListingDbRepo implements ListingRepo {
         this.template = template;
     }
 
+
     @Override
-    public List<Listing> findAllListings() {
-        final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price from listings;";
-        return template.query(sql, new ListingMapper());
+    public List<Listing> findAllAvailableListings() {
+        final String sql = "select listingId, listingText, createDate, views, mileage, price, isAvailable "
+                + "from listings where isAvailable = true;";
+
+        List<Listing> result = template.query(sql, new ListingMapper()).stream().collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Listing> findPurchasedListingsByUser(String username) {
+        final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price, l.isAvailable "
+                + "from listings l "
+                + "inner join users u on l.userId = u.userId "
+                + "where l.isAvailable = true and where u.username = ?;";
+
+        List<Listing> result = template.query(sql, new ListingMapper()).stream().collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public List<Listing> findByMakeId(int makeId) {
-        final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price, "
-                + "from listings l"
-                + "inner join cars c on c.carId = l.carId"
-                + "inner join makes m on m.makeId = c.makeId"
-                + "inner join users u on u.userId = l.userId"
+        final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price "
+                + "from listings l "
+                + "inner join cars c on c.carId = l.carId "
+                + "inner join makes m on m.makeId = c.makeId "
                 + "where makeId = ?;";
 
         List<Listing> result = template.query(sql, new ListingMapper(), makeId).stream().collect(Collectors.toList());
@@ -118,25 +135,46 @@ public class ListingDbRepo implements ListingRepo {
         ) > 0;
     }
 
-    private void addCar(){
+    private void addUser(List<Listing> listings {
+        String 
+        for (Listing l : listings) {
+
+        }
 
     }
 
-    private void addMake(List<Listing> listings){
-        final String sql = "";
+    private void addCar(List<Listing> listings) {
+        for (Listing l : listings) {
 
-//        for(){
-//
-//        }
+        }
 
-     //   var makes = template.query(sql, new ListingMapper(), listing.getListingId());
-      //  listings.setMakes(listing);
     }
 
-    private void addModel(Listing listing){
+    private void addMake(Car car){
+        final String sql = "select m.makeId, m.makeName, m.modelId "
+                + "from listings l "
+                + "inner join cars c on c.carId = l.carId "
+                + "inner join makes m on m.makeId = c.makeId "
+                + "where c.carId = ?;";
 
-        final String sql = "";
-        var models = template.query(sql, new ListingMapper(), listing.getListingId());
-        //listing.setModels(listing);
+        Make make = template.query(sql, new MakeMapper(), car.getCarId()).stream()
+                .findFirst().orElse(null);
+
+        addModel(make);
+        car.setMake(make);
     }
+
+    private void addModel(Make make){
+        final String sql = "select m.makeId, m.makeName, m.modelId "
+                + "from listings l "
+                + "inner join cars c on c.carId = l.carId "
+                + "inner join makes m on m.makeId = c.makeId "
+                + "inner join models mo on mo.modelId = m.modelId "
+                + "where m.makeId = ?;";
+
+        Model model = template.query(sql, new ModelMapper(), make.getMakeId()).stream()
+                .findFirst().orElse(null);
+        make.setModel(model);
+    }
+
 }

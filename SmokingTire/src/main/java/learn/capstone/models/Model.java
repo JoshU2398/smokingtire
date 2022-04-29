@@ -8,8 +8,7 @@ public class Model {
     Integer modelYear;
 
 
-    public Model(){
-
+    public Model() {
     }
 
     public Model(Integer modelId, String modelName, Integer modelYear) {
