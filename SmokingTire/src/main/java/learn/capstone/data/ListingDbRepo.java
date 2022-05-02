@@ -11,18 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
 public class ListingDbRepo implements ListingRepo {
+
     private JdbcTemplate template;
 
     public ListingDbRepo(JdbcTemplate template) {
         this.template = template;
     }
-
 
     @Override
     public List<Listing> findAllAvailableListings() {
@@ -31,11 +32,10 @@ public class ListingDbRepo implements ListingRepo {
 
         List<Listing> result = template.query(sql, new ListingMapper()).stream().collect(Collectors.toList());
 
-        if(result != null){
+        if(result.size() != 0){
             addCar(result);
             addUser(result);
         }
-
         return result;
     }
 
@@ -44,15 +44,14 @@ public class ListingDbRepo implements ListingRepo {
         final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price, l.isAvailable "
                 + "from listings l "
                 + "inner join users u on l.userId = u.userId "
-                + "where l.isAvailable = true and where u.username = ?;";
+                + "where l.isAvailable = false and where u.username = ?;";
 
-        List<Listing> result = template.query(sql, new ListingMapper()).stream().collect(Collectors.toList());
+        List<Listing> result = template.query(sql, new ListingMapper(), username).stream().collect(Collectors.toList());
 
-        if(result != null){
+        if(result.size() != 0){
             addCar(result);
             addUser(result);
         }
-
         return result;
     }
 
@@ -63,54 +62,85 @@ public class ListingDbRepo implements ListingRepo {
                 + "from listings l "
                 + "inner join cars c on c.carId = l.carId "
                 + "inner join makes m on m.makeId = c.makeId "
-                + "where makeId = ?;";
+                + "where m.makeId = ?;";
 
         List<Listing> result = template.query(sql, new ListingMapper(), makeId).stream().collect(Collectors.toList());
 
-        if(result != null){
+        if(result.size() != 0){
             addCar(result);
             addUser(result);
         }
-
         return result;
     }
 
     @Override
     @Transactional
     public List<Listing> findByModelId(int modelId) {
-        final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price "
-                + "from listings "
-                + "where modelId = ?;";
+        final String sql = "select l.listingId, l.listingText, l.userId, l.carId, l.createDate, l.views, l.mileage, l.price "
+                + "from listings l "
+                + "inner join cars c on c.carId = l.carId "
+                + "inner join makes m on m.makeId = c.makeId "
+                + "inner join models mo on mo.modelId = m.modelId "
+                + "where mo.modelId = ?;";
 
         List<Listing> result = template.query(sql, new ListingMapper(), modelId).stream()
                 .collect(Collectors.toList());
 
-        if(result != null){
+        if(result.size() != 0){
             addCar(result);
             addUser(result);
         }
-
         return result;
     }
 
     @Override
     public List<Listing> findByPriceRange(Integer min, Integer max) {
-        return null;
+        final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price "
+                + "from listings "
+                + "where price is between ? and ?;";
+
+        List<Listing> result = template.query(sql, new ListingMapper(), min, max).stream()
+                .collect(Collectors.toList());
+
+        if(result.size() != 0){
+            addCar(result);
+            addUser(result);
+        }
+        return result;
+    }
+
+    @Override
+    public Listing findById(int listingId) {
+        final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price "
+                + "from listings "
+                + "where listingId = ?;";
+
+        Listing result = template.query(sql, new ListingMapper(), listingId).stream()
+                .findFirst().orElse(null);
+
+        if(result != null){
+            addCar(result);
+            addUser(result);
+        }
+        return result;
     }
 
     @Override
     public Listing add(Listing toAdd) {
-        final String sql = "insert into listings (listingText, userId, carId, createDate, views, mileage, price)"
+        final String sql = "insert into listings (listingText, userId, carId, createDate, views, mileage, price, isAvailable)"
                 + "values (?,?,?,?,?,?,?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = template.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, toAdd.getDescription());
-            ps.setDate(2, Date.valueOf(toAdd.getPostDate()));
-            ps.setInt(3, toAdd.getViewCount());
-            ps.setInt(4, toAdd.getMileage());
-            ps.setInt(5, toAdd.getPrice());
+            ps.setInt(2, toAdd.getUser().getUserId());
+            ps.setInt(3, toAdd.getCar().getCarId());
+            ps.setDate(4, Date.valueOf(LocalDate.now()));
+            ps.setInt(5, toAdd.getViewCount());
+            ps.setInt(6, toAdd.getMileage());
+            ps.setInt(7, toAdd.getPrice());
+            ps.setBoolean(8, true);
             return ps;
         }, keyHolder);
 
@@ -130,6 +160,7 @@ public class ListingDbRepo implements ListingRepo {
                 + "mileage = ?, "
                 + "price = ?, "
                 + "where listingId = ?;";
+
         return template.update(sql,
                 toEdit.getDescription(),
                 toEdit.getPostDate(),
