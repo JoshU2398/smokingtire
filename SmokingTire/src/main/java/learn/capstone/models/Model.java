@@ -1,12 +1,16 @@
 package learn.capstone.models;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class Model {
     Integer modelId;
+    @NotNull(message = "Model name cannot be empty.")
     String modelName;
+    @NotNull(message = "Model year cannot be empty.")
+    @Min(value = 1950, message = "We are not accepting cars from prior to 1950.")
     Integer modelYear;
-
 
     public Model() {
     }

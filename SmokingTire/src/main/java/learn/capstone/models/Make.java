@@ -1,10 +1,13 @@
 package learn.capstone.models;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class Make {
     Integer makeId;
+    @NotNull(message = "Name cannot be empty.")
     String makeName;
+    @NotNull(message = "Model cannot be empty.")
     Model model;
 
 
