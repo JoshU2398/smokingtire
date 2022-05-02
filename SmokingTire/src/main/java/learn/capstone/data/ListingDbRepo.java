@@ -30,6 +30,13 @@ public class ListingDbRepo implements ListingRepo {
                 + "from listings where isAvailable = true;";
 
         List<Listing> result = template.query(sql, new ListingMapper()).stream().collect(Collectors.toList());
+
+        if(result != null){
+            addCar(result);
+            addUser(result);
+        }
+
+        return result;
     }
 
     @Override
@@ -40,6 +47,13 @@ public class ListingDbRepo implements ListingRepo {
                 + "where l.isAvailable = true and where u.username = ?;";
 
         List<Listing> result = template.query(sql, new ListingMapper()).stream().collect(Collectors.toList());
+
+        if(result != null){
+            addCar(result);
+            addUser(result);
+        }
+
+        return result;
     }
 
     @Override
@@ -54,7 +68,8 @@ public class ListingDbRepo implements ListingRepo {
         List<Listing> result = template.query(sql, new ListingMapper(), makeId).stream().collect(Collectors.toList());
 
         if(result != null){
-            addMake(result);
+            addCar(result);
+            addUser(result);
         }
 
         return result;
@@ -71,7 +86,8 @@ public class ListingDbRepo implements ListingRepo {
                 .collect(Collectors.toList());
 
         if(result != null){
-
+            addCar(result);
+            addUser(result);
         }
 
         return result;
@@ -146,6 +162,18 @@ public class ListingDbRepo implements ListingRepo {
 
     }
 
+    private void addUser(Listing listing) {
+        String sql = "select u.userId, u.username, u.password "
+                + "from listings l "
+                + "inner join users u on l.userId = u.userId "
+                + "where l.listingId = ?;";
+
+        AppUser user = template.query(sql, new UserMapper(Collections.singleton("USER")), listing.getListingId()).stream()
+                .findFirst().orElse(null);
+
+        listing.setUser(user);
+    }
+
     private void addCar(List<Listing> listings) {
         String sql = "select c.carId, c.horsepower, c.drivetrain, c.chassis, c.transmission "
                 + "from listings l "
@@ -160,6 +188,19 @@ public class ListingDbRepo implements ListingRepo {
             l.setCar(car);
         }
 
+    }
+
+    private void addCar(Listing listing) {
+        String sql = "select c.carId, c.horsepower, c.drivetrain, c.chassis, c.transmission "
+                + "from listings l "
+                + "inner join cars c on l.carId = c.carId "
+                + "where l.listingId = ?;";
+
+        Car car = template.query(sql, new CarMapper(), listing.getListingId()).stream()
+                .findFirst().orElse(null);
+
+        addMake(car);
+        listing.setCar(car);
     }
 
     private void addMake(Car car){
