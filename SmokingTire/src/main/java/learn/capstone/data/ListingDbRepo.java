@@ -97,7 +97,7 @@ public class ListingDbRepo implements ListingRepo {
     public List<Listing> findByPriceRange(Integer min, Integer max) {
         final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price "
                 + "from listings "
-                + "where price is between ? and ?;";
+                + "where price between ? and ?;";
 
         List<Listing> result = template.query(sql, new ListingMapper(), min, max).stream()
                 .collect(Collectors.toList());
