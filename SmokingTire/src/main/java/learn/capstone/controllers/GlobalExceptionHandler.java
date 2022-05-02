@@ -35,11 +35,6 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(RanOutOfSpaceDataException.class)
-    public ResponseEntity<String> handleRanOutOfSpaceException( RanOutOfSpaceDataException ex ){
-        return new ResponseEntity<>( ex.getMessage(), HttpStatus.INSUFFICIENT_STORAGE);
-    }
-
 
 
 }

@@ -1,5 +1,6 @@
 package learn.capstone.domain;
 
+import learn.capstone.data.ListingDbRepo;
 import learn.capstone.data.ListingRepo;
 import learn.capstone.models.Listing;
 import org.springframework.beans.factory.annotation.Autowired;

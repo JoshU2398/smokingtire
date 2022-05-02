@@ -11,6 +11,7 @@ public class AppUser extends User {
     Set<String> roles;
     Integer userId;
 
+
     public AppUser( Integer userId, String username, String password, Set<String> roles ){
         super( username, password,
                 roles.stream().map(
