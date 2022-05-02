@@ -2,19 +2,30 @@ package learn.capstone.models;
 
 import learn.capstone.App;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Listing {
     Integer listingId;
+    @NotNull(message = "Price is required.")
+    @Min(value = 0, message = "Price cannot be less than zero.")
     Integer price;
+    @NotNull(message = "Mileage is required")
+    @Min(value = 0, message = "Mileage can't be less than zero.")
     Integer mileage;
+    @NotNull(message = "Post date is required.")
     LocalDate postDate;
+    @NotNull(message = "Description is required.")
     String description;
     Integer viewCount;
+    @NotNull(message = "User is required.")
     AppUser user;
+    @NotNull(message = "Car is required.")
     Car car;
-    boolean isAvailable;
+    Boolean isAvailable;
 
 
     public Listing() {
@@ -96,11 +107,11 @@ public class Listing {
         this.user = user;
     }
 
-    public boolean isAvailable() {
+    public Boolean isAvailable() {
         return isAvailable;
     }
 
-    public void setAvailable(boolean available) {
+    public void setAvailable(Boolean available) {
         isAvailable = available;
     }
 
