@@ -44,7 +44,7 @@ public class ListingDbRepo implements ListingRepo {
         final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price, l.isAvailable "
                 + "from listings l "
                 + "inner join users u on l.userId = u.userId "
-                + "where l.isAvailable = false and where u.username = ?;";
+                + "where l.isAvailable = false and u.username = ?;";
 
         List<Listing> result = template.query(sql, new ListingMapper(), username).stream().collect(Collectors.toList());
 
@@ -128,7 +128,7 @@ public class ListingDbRepo implements ListingRepo {
     @Override
     public Listing add(Listing toAdd) {
         final String sql = "insert into listings (listingText, userId, carId, createDate, views, mileage, price, isAvailable)"
-                + "values (?,?,?,?,?,?,?)";
+                + "values (?,?,?,?,?,?,?,?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = template.update(connection -> {
@@ -153,12 +153,12 @@ public class ListingDbRepo implements ListingRepo {
 
     @Override
     public boolean edit(Listing toEdit) {
-        final String sql = "update listing set "
+        final String sql = "update listings set "
                 + "listingText = ?, "
                 + "createDate = ?, "
                 + "views = ?, "
                 + "mileage = ?, "
-                + "price = ?, "
+                + "price = ? "
                 + "where listingId = ?;";
 
         return template.update(sql,
@@ -249,7 +249,7 @@ public class ListingDbRepo implements ListingRepo {
     }
 
     private void addModel(Make make){
-        final String sql = "select m.makeId, m.makeName, m.modelId "
+        final String sql = "select mo.modelId, mo.modelName, mo.modelYear "
                 + "from listings l "
                 + "inner join cars c on c.carId = l.carId "
                 + "inner join makes m on m.makeId = c.makeId "

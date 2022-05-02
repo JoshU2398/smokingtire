@@ -15,7 +15,6 @@ public class CarMapper implements RowMapper<Car> {
                 toReturn.setDrivetrain(rs.getString("drivetrain"));
                 toReturn.setChassis(rs.getString("chassis"));
                 toReturn.setTransmission(rs.getString("transmission"));
-                toReturn.setMakeId(rs.getInt("makeId"));
 
         return toReturn;
     }

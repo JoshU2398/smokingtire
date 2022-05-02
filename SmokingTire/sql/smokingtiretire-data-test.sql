@@ -157,8 +157,8 @@ price,
 isAvailable
 ) 
 values 
-('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000, 1), 
-('this is a public listing', 2, 1, '2020-04-05', 8792, 2000, 120000, 1);
+('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000, 0), 
+('this is a public listing', 1, 1, '2020-04-05', 8792, 2000, 120000, 1);
 
 
 

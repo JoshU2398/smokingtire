@@ -1,12 +1,14 @@
 package learn.capstone.data;
 
-import learn.capstone.models.Listing;
+import learn.capstone.models.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,11 +32,20 @@ class ListingDbRepoTest {
 
 
     @Test
-    void shouldFindAllListings() {
+    void shouldFindAllAvailableListings() {
+        List<Listing> actual = repo.findAllAvailableListings();
+        assertEquals(1, actual.size());
+    }
+
+    @Test
+    void shouldFindAllPurchasedListings() {
+        List<Listing> actual = repo.findPurchasedListingsByUser("bob");
+        assertEquals(1, actual.size());
     }
 
     @Test
     void shouldFindByMakeId() {
+
     }
 
     @Test
@@ -46,28 +57,30 @@ class ListingDbRepoTest {
     }
 
     @Test
+    void shouldFindById() {
+        Listing actual = repo.findById(2);
+        assertEquals("this is a public listing", actual.getDescription());
+        assertEquals("bob", actual.getUser().getUsername());
+        assertEquals("Viper", actual.getCar().getMake().getModel().getModelName());
+    }
+
+    @Test
     void shouldAdd() {
         Listing listing = makeListing();
         Listing actual = repo.add(listing);
         assertNotNull(actual);
-        assertEquals(NEXT_ID, actual.getListingId());
-
-        listing = makeListing();
-        listing.setPostDate(null);
-        actual = repo.add(listing);
-        assertNotNull(actual);
-        assertEquals(NEXT_ID + 1, actual.getListingId());
-
+        assertEquals(3, actual.getListingId());
     }
 
 
     @Test
     void shouldEdit() {
-        Listing listing = makeListing();
-        listing.setListingId(2);
+        Listing listing = repo.findById(3);
+        assertEquals("The Ultimate Driving Machine.", listing.getDescription());
+
+        listing.setDescription("The not so ultimate driving machine.");
         assertTrue(repo.edit(listing));
-        listing.setListingId(13);
-        assertFalse(repo.edit(listing));
+        assertEquals("The not so ultimate driving machine.", listing.getDescription());
     }
 
     @Test
@@ -82,11 +95,18 @@ class ListingDbRepoTest {
     private Listing makeListing() {
         Listing listing = new Listing();
         listing.setDescription("The Ultimate Driving Machine.");
-        listing.setPostDate(LocalDate.of(2021, 3, 4));
         listing.setViewCount(2200);
         listing.setPrice(67000);
-        listing.setCar("BMW M3");
-        listing.setUser("Marcus");
+        listing.setMileage(100000);
+
+        Model model = new Model(2, "Viper", 2004);
+        Make make = new Make(2, "Dodge", model);
+        Car car = new Car(1, 500, "rear-wheel drive", "roadster", "manual", make);
+        listing.setCar(car);
+
+        listing.setUser(new AppUser(1, "bob"
+                , "$2a$12$HqaU3VlN09ufZ60R8VrLHuIX8H6b1iFDA9AG./vzThpIzhxEIF8nC"
+                , Collections.singleton("USER")));
         return listing;
     }
 }
