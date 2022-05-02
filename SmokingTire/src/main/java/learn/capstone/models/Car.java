@@ -1,13 +1,19 @@
 package learn.capstone.models;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class Car {
     Integer carId;
+    @NotNull(message = "Horsepower cannot be empty.")
     Integer horsepower;
+    @NotNull(message = "drivetrain cannot be empty.")
     String drivetrain;
+    @NotNull(message = "Chassis cannot be empty.")
     String chassis;
+    @NotNull(message = "Transmission cannot be empty.")
     String transmission;
+    @NotNull(message = "Make cannot be empty.")
     Make make;
 
     public Car() {
