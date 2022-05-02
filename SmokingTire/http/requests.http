@@ -10,14 +10,37 @@ POST {{url}} HTTP/1.1
 Content-Type: application/json
 
 {
-"listingText": "Classic automobile ahead of its time.",
-"userId": ,
-"carId": ,
-"createDate": "2021-05-02",
+"description": "Classic automobile ahead of its time.",
+"user": {
+      "userId": 1,
+      "password": "$2a$12$HqaU3VlN09ufZ60R8VrLHuIX8H6b1iFDA9AG./vzThpIzhxEIF8nC",
+      "username": "bob",
+      "authorities": [
+        {
+          "authority": "ROLE_USER"
+        }
+      },
+"car": {
+      "carId": 1,
+      "horsepower": 500,
+      "drivetrain": "rear-wheel drive",
+      "chassis": "roadster",
+      "transmission": "manual",
+      "make": {
+        "makeId": 2,
+        "makeName": "Dodge",
+        "model": {
+          "modelId": 2,
+          "modelName": "Viper",
+          "modelYear": 2004
+        }
+      }
+    },
+"postDate": "2021-05-02",
 "views": 6509,
 "mileage": 12000,
 "price": 75000,
-"isAvailable": yes
+"isAvailable": true
 }
 
 ###
