@@ -19,7 +19,7 @@ public class ListingService {
 
     private final ListingRepo repo;
 
-    public ListingService(ListingRepo repo){
+    public ListingService(ListingDbRepo repo){
         this.repo = repo;
     }
 

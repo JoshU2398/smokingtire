@@ -45,20 +45,28 @@ class ListingDbRepoTest {
 
     @Test
     void shouldFindByMakeId() {
-
+        List<Listing> actual = repo.findByMakeId(1);
+        assertEquals(1, actual.size());
     }
 
     @Test
     void shouldFindByModelId() {
+        List<Listing> actual = repo.findByModelId(1);
+        assertEquals(1, actual.size());
     }
 
     @Test
     void shouldFindByPriceRange() {
+        List<Listing> actual = repo.findByPriceRange(50000, 80000);
+        assertEquals(1, actual.size());
+
+        actual = repo.findByPriceRange(100000, 130000);
+        assertEquals(1, actual.size());
     }
 
     @Test
     void shouldFindById() {
-        Listing actual = repo.findById(2);
+        Listing actual = repo.findByListingId(2);
         assertEquals("this is a public listing", actual.getDescription());
         assertEquals("bob", actual.getUser().getUsername());
         assertEquals("Viper", actual.getCar().getMake().getModel().getModelName());
@@ -75,7 +83,7 @@ class ListingDbRepoTest {
 
     @Test
     void shouldEdit() {
-        Listing listing = repo.findById(3);
+        Listing listing = repo.findByListingId(3);
         assertEquals("The Ultimate Driving Machine.", listing.getDescription());
 
         listing.setDescription("The not so ultimate driving machine.");
@@ -86,9 +94,33 @@ class ListingDbRepoTest {
     @Test
     void shouldDeleteById() {
 
-    assertTrue(repo.deleteById(1));
-    assertFalse(repo.deleteById(1));
+        assertTrue(repo.deleteById(1));
+        assertFalse(repo.deleteById(1));
 
+    }
+
+    @Test
+    void shouldIncreaseViewCount() {
+        Listing actual = repo.findByListingId(1);
+        assertEquals(6523, actual.getViewCount());
+
+        assertTrue(repo.increaseViewCount(actual));
+        actual = repo.findByListingId(1);
+        assertEquals(6524, actual.getViewCount());
+    }
+
+    @Test
+    void shouldConvertToSold() {
+        Listing actual = repo.findByListingId(2);
+        assertEquals(1, repo.findAllAvailableListings().size());
+
+        AppUser purchaser = new AppUser(2, "june"
+                , "$2a$12$k2TB.cQ1TLHLOYn.pbbiTuQ5HoUxozWkl.ZgFZ.9eioAeMxndT5AS"
+                , Collections.singleton("ADMIN"));
+
+        assertTrue(repo.convertToSold(actual, purchaser));
+
+        assertEquals(0, repo.findAllAvailableListings().size());
     }
 
 

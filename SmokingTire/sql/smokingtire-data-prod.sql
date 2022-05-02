@@ -17,7 +17,7 @@ username      varchar(300) not null unique,
 create table models(
 modelId        int primary key auto_increment,
 modelName      varchar(20) not null,
-modelYear      date not null
+modelYear      year not null
     );
 
 
@@ -53,6 +53,7 @@ createDate       date not null,
 views            int not null,
 mileage       int not null,
 price         int not null,
+isAvailable	  boolean not null,
 constraint fk_listings_users foreign key (userId) references users(userId),
 constraint fk_listings_cars foreign key (carId) references cars(carId)
 
@@ -77,8 +78,6 @@ constraint fk_roles_userroles foreign key (roleId) references roles(roleId)
     
     );
     
-    
-    
     insert into users (username, password) 
  values 
  ('bob', '$2a$12$HqaU3VlN09ufZ60R8VrLHuIX8H6b1iFDA9AG./vzThpIzhxEIF8nC');   -- pw is password
@@ -96,6 +95,39 @@ insert into userroles (userId, roleId)
 VALUES 
 (1,1), (2,2); 
   
+
+
+
+insert into models(
+modelName,
+modelYear
+)
+values
+('Supra', '1998'),
+('Viper', '2004');
+
+
+insert into makes(
+makeName,
+modelId
+)
+values
+('Toyota', 1),
+('Dodge', 2);
+
+
+insert into cars(
+horsepower,
+drivetrain,
+chassis,
+transmission,
+makeId
+)
+values
+(500, 'rear-wheel drive', 'roadster', 'manual', 2),
+(276, 'rear-wheel drive', 'coupe', 'manual', 1);
+
+
 insert into listings (
 listingText,
 userId,
@@ -103,9 +135,10 @@ carId,
 createDate,
 views,
 mileage,
-price
+price,
+isAvailable
 ) 
 values 
-('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000), 
-('this is a public listing', 2, 1, '2020-04-05', 8792, 2000, 120000);
+('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000, 0), 
+('this is a public listing', 1, 1, '2020-04-05', 8792, 2000, 120000, 1);
     
