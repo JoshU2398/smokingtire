@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping("/api/listings")
 public class ListingController {
 
@@ -27,12 +27,10 @@ public class ListingController {
     }
 
 
-    @GetMapping("/{userId}")
-    public List<Listing> findPurchasedListingsByUser(@PathVariable String username){
+    @GetMapping("/{username}")
+    public List<Listing> findPurchasedListingsByUser(@PathVariable String username) {
         return service.findPurchasedListingsByUser(username);
     }
-
-
 
     @GetMapping("/{makeId}")
     public List<Listing> findByMakeId(@PathVariable int makeId){
@@ -45,11 +43,10 @@ public class ListingController {
     }
 
 
-    @GetMapping("/{}")
+    @GetMapping("/{min}/{max}")
     public List<Listing> findByPriceRange(@PathVariable Integer min, @PathVariable Integer max){
         return service.findByPriceRange(min, max);
     }
-
 
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody Listing listing){
@@ -73,7 +70,6 @@ public class ListingController {
 
         return ErrorResponse.build(result);
     }
-
 
     @DeleteMapping
     public ResponseEntity<Void> deleteById(@PathVariable int listingId){
