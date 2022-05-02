@@ -66,7 +66,7 @@ class ListingDbRepoTest {
 
     @Test
     void shouldFindById() {
-        Listing actual = repo.findById(2);
+        Listing actual = repo.findByListingId(2);
         assertEquals("this is a public listing", actual.getDescription());
         assertEquals("bob", actual.getUser().getUsername());
         assertEquals("Viper", actual.getCar().getMake().getModel().getModelName());
@@ -83,7 +83,7 @@ class ListingDbRepoTest {
 
     @Test
     void shouldEdit() {
-        Listing listing = repo.findById(3);
+        Listing listing = repo.findByListingId(3);
         assertEquals("The Ultimate Driving Machine.", listing.getDescription());
 
         listing.setDescription("The not so ultimate driving machine.");
