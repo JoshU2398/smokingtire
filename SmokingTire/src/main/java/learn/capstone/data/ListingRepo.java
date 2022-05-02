@@ -16,7 +16,7 @@ public interface ListingRepo {
 
     List<Listing> findByPriceRange(Integer min, Integer max);
 
-    Listing findById(int listingId);
+    Listing findByListingId(int listingId);
 
     Listing add(Listing toAdd);
 

@@ -110,7 +110,7 @@ public class ListingDbRepo implements ListingRepo {
     }
 
     @Override
-    public Listing findById(int listingId) {
+    public Listing findByListingId(int listingId) {
         final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price "
                 + "from listings "
                 + "where listingId = ?;";
