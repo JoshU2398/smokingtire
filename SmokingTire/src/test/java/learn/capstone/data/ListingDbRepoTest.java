@@ -45,15 +45,23 @@ class ListingDbRepoTest {
 
     @Test
     void shouldFindByMakeId() {
-
+        List<Listing> actual = repo.findByMakeId(1);
+        assertEquals(1, actual.size());
     }
 
     @Test
     void shouldFindByModelId() {
+        List<Listing> actual = repo.findByModelId(1);
+        assertEquals(1, actual.size());
     }
 
     @Test
     void shouldFindByPriceRange() {
+        List<Listing> actual = repo.findByPriceRange(50000, 80000);
+        assertEquals(1, actual.size());
+
+        actual = repo.findByPriceRange(100000, 130000);
+        assertEquals(1, actual.size());
     }
 
     @Test
