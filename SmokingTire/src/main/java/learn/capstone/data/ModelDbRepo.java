@@ -17,7 +17,7 @@ public class ModelDbRepo implements ModelRepo {
 
     @Override
     public List<Model> findAll() {
-        String sql = "select modelId, modelName, modelYear from listings;";
+        String sql = "select modelId, modelName, modelYear from models;";
 
         return template.query(sql, new ModelMapper()).stream().collect(Collectors.toList());
     }
