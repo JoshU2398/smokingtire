@@ -1,7 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import AuthContext from "./AuthContext";
+import Home from "./Home";
 
 function App() {
+
+  const [user, setUser] = useState(null);
+
+
+  useEffect(() => {
+    const jwt_token = localStorage.getItem("token");
+    if(jwt_token){
+
+    }
+  })
+
+
   return (
     <div className="App">
       <header className="App-header">
