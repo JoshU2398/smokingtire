@@ -1,5 +1,6 @@
 package learn.capstone.domain;
 
+import learn.capstone.data.ListingDbRepo;
 import learn.capstone.data.ListingRepo;
 import learn.capstone.models.Listing;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class ListingService {
 
     private final ListingRepo repo;
 
-    public ListingService(ListingRepo repo){
+    public ListingService(ListingDbRepo repo){
         this.repo = repo;
     }
 
