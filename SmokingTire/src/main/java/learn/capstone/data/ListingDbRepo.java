@@ -156,7 +156,6 @@ public class ListingDbRepo implements ListingRepo {
         final String sql = "update listings set "
                 + "listingText = ?, "
                 + "createDate = ?, "
-                + "views = ?, "
                 + "mileage = ?, "
                 + "price = ? "
                 + "where listingId = ?;";
@@ -164,7 +163,6 @@ public class ListingDbRepo implements ListingRepo {
         return template.update(sql,
                 toEdit.getDescription(),
                 toEdit.getPostDate(),
-                toEdit.getViewCount(),
                 toEdit.getMileage(),
                 toEdit.getPrice(),
                 toEdit.getListingId()
@@ -176,6 +174,30 @@ public class ListingDbRepo implements ListingRepo {
         return template.update(
                 "delete from listings where listingId = ?", listingId
         ) > 0;
+    }
+
+    @Override
+    public boolean increaseViewCount(Listing toUpdate) {
+        final String sql = "update listings set "
+                + "views = ? "
+                + "where listingId = ?;";
+
+        int views = toUpdate.getViewCount();
+        views++;
+
+        return template.update(sql, views, toUpdate.getListingId()) > 0;
+    }
+
+    @Override
+    public boolean convertToSold(Listing toConvert, AppUser purchaser) {
+        final String sql = "update listings set "
+                + "userId = ?, "
+                + "isAvailable = false "
+                + "where listingId = ?;";
+
+        toConvert.setUser(purchaser);
+
+        return template.update(sql, toConvert.getUser().getUserId(), toConvert.getListingId()) > 0;
     }
 
     private void addUser(List<Listing> listings) {

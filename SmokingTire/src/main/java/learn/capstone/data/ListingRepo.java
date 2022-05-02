@@ -1,5 +1,6 @@
 package learn.capstone.data;
 
+import learn.capstone.models.AppUser;
 import learn.capstone.models.Listing;
 
 import java.util.List;
@@ -23,5 +24,9 @@ public interface ListingRepo {
     boolean edit(Listing toEdit);
 
     boolean deleteById(int listingId);
+
+    boolean increaseViewCount(Listing toUpdate);
+
+    boolean convertToSold(Listing toConvert, AppUser purchaser);
 
 }
