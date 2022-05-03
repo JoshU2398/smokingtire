@@ -48,10 +48,10 @@ public class ListingController {
         return service.findByPriceRange(min, max);
     }
 
-//    @GetMapping("/findListing/{listingId}")
-//    public Listing findByListingId(@PathVariable Integer listingId) {
-//        return service.findByListingId(listingId);
-//    }
+    @GetMapping("/findListing/{listingId}")
+    public Listing findByListingId(@PathVariable Integer listingId) {
+        return service.findByListingId(listingId);
+    }
 
     @PostMapping("/add")
     public ResponseEntity<Object> add(@RequestBody Listing listing){
