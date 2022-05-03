@@ -4,12 +4,9 @@ package learn.capstone.data;
 import learn.capstone.data.mappers.UserMapper;
 import learn.capstone.models.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,16 +75,11 @@ public class UserDbRepo implements UserRepo {
     public AppUser add(AppUser toAdd) {
         String sql = "insert into users (username, password) values (?, ?);";
 
-        String username = toAdd.getUsername();
-        String password = toAdd.getPassword();
-
- //       String encodedPassword = passwordEncoder().encode(password);
-
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = template.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, username);
- //           ps.setString(2, encodedPassword);
+            ps.setString(1, toAdd.getUsername());
+            ps.setString(2, toAdd.getPassword());
             return ps;
         }, keyHolder);
 
@@ -108,11 +100,10 @@ public class UserDbRepo implements UserRepo {
     }
 
     @Override
-    public void edit(AppUser updated) {
+    public boolean edit(AppUser updated) {
         String sql = "update users set username = ?, password = ? where userId = ?;";
-//        String encodedPassword = passwordEncoder().encode(updated.getPassword());
 
-      //  template.update(sql, updated.getUsername(), encodedPassword, updated.getUserId());
+        return template.update(sql, updated.getUsername(), updated.getPassword(), updated.getUserId()) > 0;
     }
 
     private void setUserRole(Integer userId) {

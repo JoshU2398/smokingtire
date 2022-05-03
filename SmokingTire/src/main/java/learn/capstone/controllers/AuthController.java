@@ -1,6 +1,8 @@
 package learn.capstone.controllers;
 
+import learn.capstone.domain.Result;
 import learn.capstone.domain.UserService;
+import learn.capstone.models.AppUser;
 import learn.capstone.security.JwtConverter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,4 +49,36 @@ public class AuthController {
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
+
+    @PostMapping("/register/{username}/{password}")
+    public ResponseEntity register(@PathVariable String username, @PathVariable String password) {
+        Result<AppUser> result = userService.create(username, password);
+
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+        }
+        return ErrorResponse.build(result);
+    }
+
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity deleteUser(@PathVariable Integer userId) {
+        if (userService.remove(userId)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/update/{userId}")
+    public ResponseEntity updateUser(@PathVariable Integer userId, @RequestBody AppUser toUpdate) {
+        if (userId != toUpdate.getUserId()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        Result<AppUser> result = userService.edit(toUpdate);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
+
 }

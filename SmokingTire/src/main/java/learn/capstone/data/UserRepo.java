@@ -10,7 +10,7 @@ public interface UserRepo {
 
     boolean remove( Integer userId );
 
-    void edit( AppUser updated );
+    boolean edit( AppUser updated );
 
     AppUser findById(Integer userId);
 
