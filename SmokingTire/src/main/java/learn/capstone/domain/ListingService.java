@@ -43,6 +43,10 @@ public class ListingService {
         return repo.findByPriceRange(min, max);
     }
 
+    public Listing findByListingId(Integer listingId){
+        return repo.findByListingId(listingId);
+    }
+
     public Result<Listing> add(Listing listing){
         Result<Listing> result = new Result<>();
 
