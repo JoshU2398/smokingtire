@@ -3,6 +3,7 @@ package learn.capstone.controllers;
 
 import learn.capstone.domain.ListingService;
 import learn.capstone.domain.Result;
+import learn.capstone.models.AppUser;
 import learn.capstone.models.Listing;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,30 +84,26 @@ public class ListingController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-//    @PutMapping("/increaseViewCount/{listingId}")
-//    public ResponseEntity<Object> increaseViewCount(@PathVariable Integer listingId, @RequestBody Listing listing) {
-//        if (listingId != listing.getListingId()) {
-//            return new ResponseEntity<>(HttpStatus.CONFLICT);
-//        }
-//
-//        Result<Listing> result = service.increaseViewCount(listing);
-//        if (result.isSuccess()) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
-//        return ErrorResponse.build(result);
-//    }
-//
-//    @PutMapping("/convertToSold/{listingId}")
-//    public ResponseEntity<Object> convertToSold(@PathVariable Integer listingId, @RequestBody Listing listing) {
-//        if (listingId != listing.getListingId()) {
-//            return new ResponseEntity<>(HttpStatus.CONFLICT);
-//        }
-//
-//        Result<Listing> result = service.convertToSold(listing);
-//        if (result.isSuccess()) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
-//        return ErrorResponse.build(result);
-//    }
+    @PutMapping("/increaseViewCount/{listingId}")
+    public ResponseEntity<Object> increaseViewCount(@PathVariable Integer listingId, @RequestBody Listing listing) {
+        if (listingId != listing.getListingId()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        Result<Listing> result = service.increaseViewCount(listing);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
+
+    @PutMapping("/convertToSold/{listingId}")
+    public ResponseEntity<Object> convertToSold(@PathVariable Integer listingId, @RequestBody AppUser purchaser) {
+        Result<Listing> result = service.convertToSold(listingId, purchaser);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
 
 }
