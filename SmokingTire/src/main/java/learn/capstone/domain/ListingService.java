@@ -2,6 +2,7 @@ package learn.capstone.domain;
 
 import learn.capstone.data.ListingDbRepo;
 import learn.capstone.data.ListingRepo;
+import learn.capstone.models.AppUser;
 import learn.capstone.models.Listing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,6 +91,51 @@ public class ListingService {
 
     public boolean deleteById(Integer listingId){
         return repo.deleteById(listingId);
+    }
+
+    public Result<Listing> increaseViewCount(Listing toUpdate){
+        Result<Listing> result = new Result<>();
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
+        Set<ConstraintViolation<Listing>> violations = validator.validate(toUpdate);
+
+        if(!violations.isEmpty()) {
+            for (ConstraintViolation<Listing> violation : violations) {
+                result.addMessage(violation.getMessage(), ResultType.INVALID);
+            }
+            return result;
+        }
+        if (!repo.increaseViewCount(toUpdate)){
+            String msg = String.format("ListingId: %s, not found", toUpdate.getListingId());
+            result.addMessage(msg, ResultType.NOT_FOUND);
+        }
+
+        return result;
+    }
+
+    public Result<Listing> convertToSold(int listingId, AppUser purchaser){
+        Result<Listing> result = new Result<>();
+        Listing toUpdate = repo.findByListingId(listingId);
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
+        Set<ConstraintViolation<Listing>> violations = validator.validate(toUpdate);
+
+        if(!violations.isEmpty()) {
+            for (ConstraintViolation<Listing> violation : violations) {
+                result.addMessage(violation.getMessage(), ResultType.INVALID);
+            }
+            return result;
+        }
+        if (!repo.convertToSold(listingId, purchaser)){
+            String msg = String.format("ListingId: %s, not found", toUpdate.getListingId());
+            result.addMessage(msg, ResultType.NOT_FOUND);
+        }
+
+        return result;
     }
 
 }
