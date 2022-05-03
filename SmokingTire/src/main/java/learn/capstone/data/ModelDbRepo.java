@@ -3,10 +3,11 @@ package learn.capstone.data;
 import learn.capstone.data.mappers.ModelMapper;
 import learn.capstone.models.Model;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Repository
 public class ModelDbRepo implements ModelRepo {
 
     private final JdbcTemplate template;
