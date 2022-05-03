@@ -7,4 +7,7 @@ import java.util.List;
 public interface ModelRepo {
 
     List<Model> findAll();
+
+    List<Model> findAllByMake(Integer makeId);
+
 }

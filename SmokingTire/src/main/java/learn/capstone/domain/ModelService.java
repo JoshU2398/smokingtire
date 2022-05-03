@@ -16,4 +16,8 @@ public class ModelService {
     public List<Model> findAll(){
         return repo.findAll();
     }
+
+    public List<Model> findAllByMake(Integer makeId) {
+        return repo.findAllByMake(makeId);
+    }
 }
