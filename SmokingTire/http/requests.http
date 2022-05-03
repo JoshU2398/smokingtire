@@ -1,25 +1,37 @@
 
-@url = http://localhost:8080/api/listings
+GET http://localhost:8080/api/listings/findAvailable HTTP/1.1
 
-GET {{url}} HTTP/1.1
+###
+GET http://localhost:8080/api/listings/userPurchased/bob HTTP/1.1
 
+###
+GET http://localhost:8080/api/listings/findByMake/1 HTTP/1.1
+
+###
+GET http://localhost:8080/api/listings/findByModel/2 HTTP/1.1
+
+###
+GET http://localhost:8080/api/listings/findByPriceRange/50000/100000 HTTP/1.1
+
+###
+GET http://localhost:8080/api/listings/findListing/1 HTTP/1.1
 
 ###
 
-POST {{url}} HTTP/1.1
+POST http://localhost:8080/api/listings/add HTTP/1.1
 Content-Type: application/json
 
 {
 "description": "Classic automobile ahead of its time.",
 "user": {
       "userId": 1,
-      "password": "$2a$12$HqaU3VlN09ufZ60R8VrLHuIX8H6b1iFDA9AG./vzThpIzhxEIF8nC",
+      "password": "password",
       "username": "bob",
-      "authorities": [
-        {
-          "authority": "ROLE_USER"
-        }
-      },
+      "roles": [
+        
+          "USER"
+        
+      ]},
 "car": {
       "carId": 1,
       "horsepower": 500,
@@ -37,7 +49,7 @@ Content-Type: application/json
       }
     },
 "postDate": "2021-05-02",
-"views": 6509,
+"viewCount": 6509,
 "mileage": 12000,
 "price": 75000,
 "isAvailable": true
@@ -45,22 +57,45 @@ Content-Type: application/json
 
 ###
 
-PUT {{url}} HTTP/1.1
+PUT http://localhost:8080/api/listings/edit/3 HTTP/1.1
 Content-Type: application/json
 
 {
-"listingId": 1,
-"listingText": "A legend that famously graced the big screen in the original Fast and Furious.",
-"userId": ,
-"carId": ,
-"createDate": "2019-07-04",
+"listingId": 3,
+"description": "A legend that famously graced the big screen in the original Fast and Furious.",
+"user": {
+      "userId": 1,
+      "password": "password",
+      "username": "bob",
+      "roles": [
+        
+          "USER"
+        
+      ]},
+"car": {
+      "carId": 1,
+      "horsepower": 500,
+      "drivetrain": "rear-wheel drive",
+      "chassis": "roadster",
+      "transmission": "manual",
+      "make": {
+        "makeId": 2,
+        "makeName": "Dodge",
+        "model": {
+          "modelId": 2,
+          "modelName": "Viper",
+          "modelYear": 2004
+        }
+      }
+    },
+"postDate": "2019-07-04",
 "views": 11000,
 "mileage": 3000,
 "price": 500000,
-"isAvailable": yes
+"isAvailable": true
 }
 
 
 ###
 
-DELETE {{url}}/2 HTTP/1.1
+DELETE http://localhost:8080/api/listings/delete/4 HTTP/1.1
