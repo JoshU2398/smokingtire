@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import AuthContext from "./AuthContext";
 import Home from "./Home";
 import Nav from "./Nav";
-// import Login from "./Login";
+import Login from "./Login";
 import jwtDecode from "jwt-decode";
 import NotFound from './NotFound';
 
@@ -26,7 +26,7 @@ function App() {
       <Nav />
       <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/login" element={<Login />} />  */}
+          <Route path="/login" element={<Login />} /> 
           <Route path="*" element={<NotFound/>} />
       </Routes>
     </div>
