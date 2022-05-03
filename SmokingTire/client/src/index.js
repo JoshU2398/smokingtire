@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactDOMClient from 'react-dom/client'
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
@@ -11,4 +12,5 @@ root.render(
   <BrowserRouter>
     <App />
   </BrowserRouter>);
+
 
