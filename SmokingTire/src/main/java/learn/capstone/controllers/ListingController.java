@@ -21,34 +21,34 @@ public class ListingController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public List<Listing> findAllAvailableListings(){
         return service.findAllAvailableListings();
     }
 
 
-    @GetMapping("/{username}")
+    @GetMapping("/userPurchased/{username}")
     public List<Listing> findPurchasedListingsByUser(@PathVariable String username) {
         return service.findPurchasedListingsByUser(username);
     }
 
-    @GetMapping("/{makeId}")
+    @GetMapping("/findByMake/{makeId}")
     public List<Listing> findByMakeId(@PathVariable int makeId){
         return service.findByMakeId(makeId);
     }
 
-    @GetMapping("/{modelId}")
+    @GetMapping("/findByModel/{modelId}")
     public List<Listing> findByModelId(@PathVariable int modelId){
         return service.findByModelId(modelId);
     }
 
 
-    @GetMapping("/{min}/{max}")
+    @GetMapping("/findByPriceRange/{min}/{max}")
     public List<Listing> findByPriceRange(@PathVariable Integer min, @PathVariable Integer max){
         return service.findByPriceRange(min, max);
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<Object> add(@RequestBody Listing listing){
         Result<Listing> result = service.add(listing);
         if(result.isSuccess()){
@@ -57,7 +57,7 @@ public class ListingController {
         return ErrorResponse.build(result);
     }
 
-    @PutMapping("/{listingId}")
+    @PutMapping("/edit/{listingId}")
     public ResponseEntity<Object> edit(@PathVariable int listingId, @RequestBody Listing listing){
         if(listingId != listing.getListingId()){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -71,7 +71,7 @@ public class ListingController {
         return ErrorResponse.build(result);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteById(@PathVariable int listingId){
         if(service.deleteById(listingId)){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

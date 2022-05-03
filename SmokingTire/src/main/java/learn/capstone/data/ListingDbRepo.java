@@ -197,7 +197,7 @@ public class ListingDbRepo implements ListingRepo {
 
         toConvert.setUser(purchaser);
 
-        return template.update(sql, toConvert.getUser().getUserId(), toConvert.getListingId()) > 0;
+        return template.update(sql, purchaser.getUserId(), toConvert.getListingId()) > 0;
     }
 
     private void addUser(List<Listing> listings) {
