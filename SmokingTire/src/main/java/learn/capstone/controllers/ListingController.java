@@ -33,6 +33,11 @@ public class ListingController {
         return service.findPurchasedListingsByUser(username);
     }
 
+    @GetMapping("/userSelling/{username}")
+    public List<Listing> findAllAvailableByUser(@PathVariable String username) {
+        return service.findAllAvailableByUser(username);
+    }
+
     @GetMapping("/findByMake/{makeId}")
     public List<Listing> findByMakeId(@PathVariable int makeId){
         return service.findByMakeId(makeId);

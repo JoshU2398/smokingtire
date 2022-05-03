@@ -32,6 +32,10 @@ public class ListingService {
         return repo.findPurchasedListingsByUser(username);
     }
 
+    public List<Listing> findAllAvailableByUser(String username) {
+        return repo.findAllAvailableByUser(username);
+    }
+
     public List<Listing> findByMakeId(Integer makeId){
         return repo.findByMakeId(makeId);
     }
