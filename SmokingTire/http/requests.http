@@ -147,6 +147,25 @@ Content-Type: application/json
     "password": "admin-password",
     "username": "june",
     "roles": [
-        "USER"
+        "ADMIN"
+    ]
+}
+
+###
+POST http://localhost:8080/api/security/register/eirik/really-good-password HTTP/1.1
+
+###
+DELETE http://localhost:8080/api/security/delete/3 HTTP/1.1
+
+###
+PUT http://localhost:8080/api/security/update/2 HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId": 2,
+    "password": "admin-password-2.0",
+    "username": "juniper",
+    "roles": [
+        "ADMIN"
     ]
 }

@@ -22,7 +22,7 @@ public class ModelController {
         return service.findAll();
     }
 
-    @GetMapping("findByMake/{makeId}")
+    @GetMapping("/findByMake/{makeId}")
     public List<Model> findAllByMake(@PathVariable Integer makeId) {
         return service.findAllByMake(makeId);
     }
