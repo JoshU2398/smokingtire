@@ -2,10 +2,7 @@ package learn.capstone.controllers;
 
 import learn.capstone.domain.ModelService;
 import learn.capstone.models.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,4 +21,10 @@ public class ModelController {
     public List<Model> findAll(){
         return service.findAll();
     }
+
+    @GetMapping("/findByMake/{makeId}")
+    public List<Model> findAllByMake(@PathVariable Integer makeId) {
+        return service.findAllByMake(makeId);
+    }
+    
 }

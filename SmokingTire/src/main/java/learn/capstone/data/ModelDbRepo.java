@@ -23,4 +23,14 @@ public class ModelDbRepo implements ModelRepo {
         return template.query(sql, new ModelMapper()).stream().collect(Collectors.toList());
     }
 
+    @Override
+    public List<Model> findAllByMake(Integer makeId) {
+        String sql = "select mo.modelId, mo.modelName, mo.modelYear "
+                + "from makes m "
+                + "inner join models mo on m.makeId = mo.makeId "
+                + "where m.makeId = ?;";
+
+        return template.query(sql, new ModelMapper(), makeId).stream().collect(Collectors.toList());
+    }
+
 }
