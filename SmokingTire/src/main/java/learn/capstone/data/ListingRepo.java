@@ -11,6 +11,8 @@ public interface ListingRepo {
 
     List<Listing> findPurchasedListingsByUser(String username);
 
+    List<Listing> findAllAvailableByUser(String username);
+
     List<Listing> findByMakeId(int makeId);
 
     List<Listing> findByModelId(int modelId);

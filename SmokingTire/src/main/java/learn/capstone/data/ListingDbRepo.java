@@ -56,6 +56,22 @@ public class ListingDbRepo implements ListingRepo {
     }
 
     @Override
+    public List<Listing> findAllAvailableByUser(String username) {
+        final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price, l.isAvailable "
+                + "from listings l "
+                + "inner join users u on l.userId = u.userId "
+                + "where l.isAvailable = true and u.username = ?;";
+
+        List<Listing> result = template.query(sql, new ListingMapper(), username).stream().collect(Collectors.toList());
+
+        if(result.size() != 0){
+            addCar(result);
+            addUser(result);
+        }
+        return result;
+    }
+
+    @Override
     @Transactional
     public List<Listing> findByMakeId(int makeId) {
         final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price "
