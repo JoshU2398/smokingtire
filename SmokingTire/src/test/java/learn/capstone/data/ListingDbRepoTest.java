@@ -118,7 +118,7 @@ class ListingDbRepoTest {
                 , "$2a$12$k2TB.cQ1TLHLOYn.pbbiTuQ5HoUxozWkl.ZgFZ.9eioAeMxndT5AS"
                 , Collections.singleton("ADMIN"));
 
-        assertTrue(repo.convertToSold(actual, purchaser));
+        assertTrue(repo.convertToSold(actual.getListingId(), purchaser));
 
         assertEquals(0, repo.findAllAvailableListings().size());
     }

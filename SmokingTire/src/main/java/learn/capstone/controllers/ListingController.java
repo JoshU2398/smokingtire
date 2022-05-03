@@ -48,10 +48,10 @@ public class ListingController {
         return service.findByPriceRange(min, max);
     }
 
-    @GetMapping("/findListing/{listingId}")
-    public Listing findByListingId(@PathVariable Integer listingId) {
-        return service.findByListingId(listingId);
-    }
+//    @GetMapping("/findListing/{listingId}")
+//    public Listing findByListingId(@PathVariable Integer listingId) {
+//        return service.findByListingId(listingId);
+//    }
 
     @PostMapping("/add")
     public ResponseEntity<Object> add(@RequestBody Listing listing){
@@ -75,7 +75,7 @@ public class ListingController {
         return ErrorResponse.build(result);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{listingId}")
     public ResponseEntity<Void> deleteById(@PathVariable int listingId){
         if(service.deleteById(listingId)){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -83,30 +83,30 @@ public class ListingController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/increaseViewCount/{listingId}")
-    public ResponseEntity<Object> increaseViewCount(@PathVariable Integer listingId, @RequestBody Listing listing) {
-        if (listingId != listing.getListingId()) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
-
-        Result<Listing> result = service.increaseViewCount(listing);
-        if (result.isSuccess()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return ErrorResponse.build(result);
-    }
-
-    @PutMapping("/convertToSold/{listingId}")
-    public ResponseEntity<Object> convertToSold(@PathVariable Integer listingId, @RequestBody Listing listing) {
-        if (listingId != listing.getListingId()) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
-
-        Result<Listing> result = service.convertToSold(listing);
-        if (result.isSuccess()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return ErrorResponse.build(result);
-    }
+//    @PutMapping("/increaseViewCount/{listingId}")
+//    public ResponseEntity<Object> increaseViewCount(@PathVariable Integer listingId, @RequestBody Listing listing) {
+//        if (listingId != listing.getListingId()) {
+//            return new ResponseEntity<>(HttpStatus.CONFLICT);
+//        }
+//
+//        Result<Listing> result = service.increaseViewCount(listing);
+//        if (result.isSuccess()) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        return ErrorResponse.build(result);
+//    }
+//
+//    @PutMapping("/convertToSold/{listingId}")
+//    public ResponseEntity<Object> convertToSold(@PathVariable Integer listingId, @RequestBody Listing listing) {
+//        if (listingId != listing.getListingId()) {
+//            return new ResponseEntity<>(HttpStatus.CONFLICT);
+//        }
+//
+//        Result<Listing> result = service.convertToSold(listing);
+//        if (result.isSuccess()) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        return ErrorResponse.build(result);
+//    }
 
 }
