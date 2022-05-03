@@ -21,7 +21,7 @@ public class ListingController {
         this.service = service;
     }
 
-    @GetMapping("/findAll")
+    @GetMapping("/findAvailable")
     public List<Listing> findAllAvailableListings(){
         return service.findAllAvailableListings();
     }
@@ -83,6 +83,30 @@ public class ListingController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/increaseViewCount/{listing}")
+    @PutMapping("/increaseViewCount/{listingId}")
+    public ResponseEntity<Object> increaseViewCount(@PathVariable Integer listingId, @RequestBody Listing listing) {
+        if (listingId != listing.getListingId()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        Result<Listing> result = service.increaseViewCount(listing);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
+
+    @PutMapping("/convertToSold/{listingId}")
+    public ResponseEntity<Object> convertToSold(@PathVariable Integer listingId, @RequestBody Listing listing) {
+        if (listingId != listing.getListingId()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        Result<Listing> result = service.convertToSold(listing);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
 
 }
