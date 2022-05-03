@@ -189,15 +189,13 @@ public class ListingDbRepo implements ListingRepo {
     }
 
     @Override
-    public boolean convertToSold(Listing toConvert, AppUser purchaser) {
+    public boolean convertToSold(int listingId, AppUser purchaser) {
         final String sql = "update listings set "
                 + "userId = ?, "
                 + "isAvailable = false "
                 + "where listingId = ?;";
 
-        toConvert.setUser(purchaser);
-
-        return template.update(sql, purchaser.getUserId(), toConvert.getListingId()) > 0;
+        return template.update(sql, purchaser.getUserId(), listingId) > 0;
     }
 
     private void addUser(List<Listing> listings) {

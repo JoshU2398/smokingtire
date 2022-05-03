@@ -48,6 +48,11 @@ public class ListingController {
         return service.findByPriceRange(min, max);
     }
 
+    @GetMapping("/findListing/{listingId}")
+    public Listing findByListingId(@PathVariable Integer listingId) {
+        return service.findByListingId(listingId);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<Object> add(@RequestBody Listing listing){
         Result<Listing> result = service.add(listing);
@@ -67,7 +72,6 @@ public class ListingController {
         if(result.isSuccess()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
         return ErrorResponse.build(result);
     }
 
@@ -76,9 +80,9 @@ public class ListingController {
         if(service.deleteById(listingId)){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
     }
+
+    @PutMapping("/increaseViewCount/{listing}")
 
 }

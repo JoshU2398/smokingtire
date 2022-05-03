@@ -27,6 +27,6 @@ public interface ListingRepo {
 
     boolean increaseViewCount(Listing toUpdate);
 
-    boolean convertToSold(Listing toConvert, AppUser purchaser);
+    boolean convertToSold(int listingId, AppUser purchaser);
 
 }
