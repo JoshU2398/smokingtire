@@ -18,8 +18,8 @@ function Listing(props){
             <p>Created: {postDate}</p>
             {user?.user.sub === userId || user?.user.authorities.includes("USER") ? (
                 <>
-                <Link to={'/editListing/' + listingId}>Edit</Link>
-                <Link to={'/deleteListing/' + listingId}>Delete</Link>
+                <Link to={'/edit/listing/' + listingId}>Edit</Link>
+                <Link to={'/delete/listing/' + listingId}>Delete</Link>
                 </>
             ) : (
                 null
