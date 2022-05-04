@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function DeleteListing() { 
     const [toDelete, setToDelete] = useState(null);
-    const {id} = useParams(toDelete);
+    const {id} = useParams();
     const navigate = useNavigate();
 
     useEffect(
