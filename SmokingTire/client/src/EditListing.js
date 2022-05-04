@@ -9,7 +9,7 @@ import AuthContext from "./AuthContext";
 function EditListing(){
     const[toEdit, setToEdit] = useState(null);
 
-    const {someId} = useParams();
+    const {id} = useParams();
 
     const[userStatus, setUserStatus] = useContext(AuthContext);
 
@@ -21,7 +21,7 @@ function EditListing(){
             const jwt = localStorage.getItem("token");
             if(jwt){
 
-                fetch("http://localhost:8080/api/listing/" + someId,
+                fetch("http://localhost:8080/api/listings/findListing/" + id,
                 {
                     headers: {
                         Authorization: "Bearer " + jwt
@@ -53,7 +53,7 @@ function EditListing(){
 
             function handleTextChange(event){
                 let copy = {...toEdit};
-                copy.listingText = event.target.value;
+                copy.description = event.target.value;
                 setToEdit(copy);
 
             }
@@ -63,15 +63,6 @@ function EditListing(){
             //     copy.createDate = event.target.value;
             //     setToEdit(copy);
             // }
-
-
-
-            function handleAvailabilityChange(event){
-                let copy = {...toEdit};
-                copy.isAvailable = event.target.value;
-                setToEdit(copy);
-
-            }
 
             function handleMileageChange(event){
                 let copy = {...toEdit};
@@ -94,7 +85,7 @@ function EditListing(){
 
                 const jwt = localStorage.getItem("token");
 
-                fetch("http://localhost:8080/api/listing", {
+                fetch("http://localhost:8080/api/listings/edit/" + id, {
                     method: "PUT",
                     headers: {
                         Authorization: "Bearer " + jwt,
@@ -120,11 +111,8 @@ function EditListing(){
             return toEdit ? <form onSubmit={handleEditSubmit}>
 
 
-                        <label htmlFor="listingText">Text: </label><br/>
-                        <textarea className="listing-edit" id="listingText" value={toEdit?.listingText} onChange={handleTextChange}></textarea><br/>
-
-                        <label htmlFor="listingAvailability">Available?: </label><br/>
-                        <textarea className="listing-edit" id="listingAvailability" value={toEdit?.isAvailable} onChange={handleAvailabilityChange}></textarea><br/>
+                        <label htmlFor="listingText">Description: </label><br/>
+                        <textarea className="listing-edit" id="listingText" value={toEdit?.description} onChange={handleTextChange}></textarea><br/>
 
                         <label htmlFor="listingPrice">Price: </label><br/>
                         <textarea className="listing-edit" id="listingPrice" value={toEdit?.price} onChange={handlePriceChange}></textarea><br/>
