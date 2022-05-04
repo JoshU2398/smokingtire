@@ -9,6 +9,7 @@ import jwtDecode from "jwt-decode";
 import NotFound from './NotFound';
 import EditListing from './EditListing';
 import DeleteListing from './DeleteListing';
+import EditUser from './EditUser';
 
 function App() {
 
