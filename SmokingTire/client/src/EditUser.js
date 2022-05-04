@@ -7,7 +7,7 @@ function EditUser(){
 
     const [toEdit, setToEdit] = useState(null);
 
-    const {someId} = useParams();
+    const {username} = useParams();
 
     const [userStatus, setUserStatus] = useContext(AuthContext);
 
@@ -18,7 +18,7 @@ function EditUser(){
         () => {
             const jwt = localStorage.getItem("token");
             if(jwt){
-                fetch("http://localhost:8080/api/security/update/" + someId,
+                fetch("http://localhost:8080/api/security/findUser/" + username,
                 {
                     headers: {
                         Authorization: "Bearer " + jwt
@@ -59,7 +59,7 @@ function EditUser(){
     function handlePasswordChange(event){
         let copy = {...toEdit};
         copy.password = event.target.value;
-        setToEdit( copy );
+        setToEdit( event.target.value );
     }
 
 
@@ -67,18 +67,19 @@ function EditUser(){
         event.preventDefault();
 
         const jwt = localStorage.getItem("token");
+        const updatedUser = {userId:toEdit.userId, username:toEdit.username, password:toEdit.password, roles:toEdit.roles};
 
-        fetch("http://localhost:8080/api/security/update", {
+        fetch("http://localhost:8080/api/security/update/" + toEdit?.userId, {
             method: "PUT",
             headers: {
                 Authorization: "Bearer " + jwt,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(toEdit)
+            body: JSON.stringify(updatedUser)
         })
         .then(response => {
-            if(response.status == 200){
-                nav("/");
+            if(response.status == 204){
+                nav("/userpage");
             }else{
                 console.log(response);
                 alert("update failed");
@@ -93,10 +94,10 @@ function EditUser(){
 
     return toEdit ? <form onSubmit={handleEditSubmit}>
             <label htmlFor="username">New Username: </label><br/>
-            <textarea className="username-edit" id="username" value={toEdit?.username} onChange={handleUsernameChange}></textarea><br/>
+            <input className="username-edit" id="username" value={toEdit?.username} onChange={handleUsernameChange}></input><br/>
 
             <label htmlFor="password">New Password: </label><br/>
-            <input type="password" id="password" value={toEdit.password} onChange={handlePasswordChange}></input><br/>
+            <input type="password" id="password" onChange={handlePasswordChange}></input><br/>
 
             <button>Submit</button>
 
