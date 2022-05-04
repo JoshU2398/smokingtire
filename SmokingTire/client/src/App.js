@@ -31,11 +31,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/userpage" element={<UserPage/>}/>
-          <Route path="/editListing/:id" element={<EditListing/>}/>
-          <Route path="/deleteListing/:id" element={<DeleteListing/>}/>
+          <Route path="/edit/user/:id" element={<EditUser/>} />
+          <Route path="/edit/listing/:id" element={<EditListing/>}/>
+          <Route path="/delete/listing/:id" element={<DeleteListing/>}/>
           <Route path="*" element={<NotFound/>} />
-          <Route path="/edit" element={<EditListing/>} />
-          <Route path="/edit/user" element={<EditUser/>} />
       </Routes>
     </div>
     </AuthContext.Provider>
