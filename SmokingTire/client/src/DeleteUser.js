@@ -24,7 +24,7 @@ function DeleteUser() {
                 if (response.status === 204) {
                     navigate("/home");
                     localStorage.removeItem("token");
-                    setUser((prev) => ({...prev, user : null}));
+                    setToDelete((prev) => ({...prev, toDelete : null}));
                 } else if (response.status === 404) {
                     alert("User not found.");
                 } else {
@@ -40,7 +40,7 @@ function DeleteUser() {
     }
 
     function cancel() {
-        navigate("/listings");
+        navigate("/userpage");
     }
 
     return (
@@ -50,7 +50,7 @@ function DeleteUser() {
             <div className="delete-user-card">
                 <p>Are you sure you want to delete this account? This action can not be undone.</p>
 
-                <button id="delete-agent" onClick={handleDelete}>Delete</button>&nbsp;
+                <button id="delete-user" onClick={handleDelete}>Delete</button>&nbsp;
                 <button onClick={cancel}>Cancel</button>
             </div>
         </div>

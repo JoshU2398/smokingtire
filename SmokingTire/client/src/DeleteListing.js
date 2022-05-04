@@ -56,7 +56,7 @@ function DeleteListing() {
             .then(response => {
 
                 if (response.status === 204) {
-                    navigate("/listings")
+                    navigate("/userpage")
                 } else if (response.status === 404) {
                     alert("Listing not found.");
                 } else {
@@ -72,7 +72,7 @@ function DeleteListing() {
     }
 
     function cancel() {
-        navigate("/listings");
+        navigate("/userpage");
     }
 
     return (
