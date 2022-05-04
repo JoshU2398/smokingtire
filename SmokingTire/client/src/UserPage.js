@@ -1,4 +1,5 @@
 import {useState, useEffect, useContext} from 'react';
+import Listing from "./Listing";
 import AuthContext from './AuthContext';
 
 function UserPage() {
@@ -8,7 +9,7 @@ function UserPage() {
     const [usersPurchased, setUsersPurchased] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/listings/userSelling/" + user?.username)
+        fetch("http://localhost:8080/api/listings/userSelling/" + user.user.sub)
         .then(response => {
             if(response.status === 200){
                     return response.json();
@@ -23,7 +24,7 @@ function UserPage() {
     }, []);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/listings/userPurchased/" + user?.username)
+        fetch("http://localhost:8080/api/listings/userPurchased/" + user.user.sub)
         .then(response => {
             if(response.status === 200){
                     return response.json();
@@ -38,12 +39,12 @@ function UserPage() {
     }, []);
 
     function removeListingFromState(listingId){
-        setListings(listings.filter(listing => listing.listingId !== listingId));
+        setUsersListings(usersListings.filter(listing => listing.listingId !== listingId));
 
     }
 
-    function listingFactory(listings) {
-        return listings.map(listing => <Listing
+    function listingFactory(props) {
+        return props.map(listing => <Listing
         key={listing.listingId}
         listingObj={listing}
         removeFromState={removeListingFromState}
@@ -52,12 +53,19 @@ function UserPage() {
 
     return (
         <>
-        <h2>{user?.username}'s info</h2>
+        <div>
+            <h2>{user.user.sub}'s info</h2>
+        </div>
 
+        <div>
         <h3>Purchased Listings</h3>
         {listingFactory(usersPurchased)}
+        </div>
+
+        <div>
         <h3>Your Active Listings</h3>
         {listingFactory(usersListings)}
+        </div>
         </>
     )
 }

@@ -20,7 +20,14 @@ function Nav(){
                     </li>
 
                     {user?.user ? (
-                        <li><button onClick={handleLogout}>Logout {user.user.sub}</button></li>
+                        <>
+                            <li>
+                                <Link to="/userpage">User Profile Page</Link>
+                            </li>
+                            <li>
+                                <button onClick={handleLogout}>Logout {user.user.sub}</button>
+                            </li>
+                        </>
                     ) : (
                         <li>
                             <Link to="/login">Login</Link>
