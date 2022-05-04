@@ -28,6 +28,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} /> 
           <Route path="*" element={<NotFound/>} />
+          <Route path="/edit" element={<EditListing/>} />
       </Routes>
     </div>
     </AuthContext.Provider>
