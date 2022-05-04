@@ -19,6 +19,7 @@ public class ListingMapper implements RowMapper<Listing> {
         if(rs.getDate("createDate") != null){
             listing.setPostDate(rs.getDate("createDate").toLocalDate());
         }
+        listing.setAvailable(rs.getBoolean("isAvailable"));
 
         return listing;
     }
