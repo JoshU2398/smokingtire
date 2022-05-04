@@ -18,7 +18,7 @@ function EditUser(){
         () => {
             const jwt = localStorage.getItem("token");
             if(jwt){
-                fetch("http://localhost:8080/api/" + someId,
+                fetch("http://localhost:8080/api/security/update/" + someId,
                 {
                     headers: {
                         Authorization: "Bearer " + jwt
@@ -68,7 +68,7 @@ function EditUser(){
 
         const jwt = localStorage.getItem("token");
 
-        fetch("http://localhost:8080/api", {
+        fetch("http://localhost:8080/api/security/update", {
             method: "PUT",
             headers: {
                 Authorization: "Bearer " + jwt,
