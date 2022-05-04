@@ -94,8 +94,8 @@ function EditListing(){
                     body: JSON.stringify(toEdit)
                 })
                 .then(response => {
-                    if(response.status == 200){
-                        nav("/");
+                    if(response.status == 204){
+                        nav("/userpage");
                     }else{
                         console.log(response);
                         alert("edit failed");

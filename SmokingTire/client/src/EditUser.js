@@ -59,7 +59,7 @@ function EditUser(){
     function handlePasswordChange(event){
         let copy = {...toEdit};
         copy.password = event.target.value;
-        setToEdit( event.target.value );
+        setToEdit( copy );
     }
 
 
@@ -94,7 +94,7 @@ function EditUser(){
 
     return toEdit ? <form onSubmit={handleEditSubmit}>
             <label htmlFor="username">New Username: </label><br/>
-            <input className="username-edit" id="username" value={toEdit?.username} onChange={handleUsernameChange}></input><br/>
+            <textarea className="username-edit" id="username" value={toEdit?.username} onChange={handleUsernameChange}></textarea><br/>
 
             <label htmlFor="password">New Password: </label><br/>
             <input type="password" id="password" onChange={handlePasswordChange}></input><br/>
