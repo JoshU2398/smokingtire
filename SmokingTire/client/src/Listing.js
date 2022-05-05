@@ -2,15 +2,12 @@
 import { useContext, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
-import DeleteListing from "./DeleteListing";
 
 function Listing(props){
     const {listingId, description, userId, carId, postDate, viewCount, mileage, price, isAvailable} = props.listingObj;
 
     const [user, setUser] = useContext(AuthContext);
-
     const nav = useNavigate();
-
     const { someId } = useParams();
 
     function increaseViewCount() {
@@ -20,7 +17,7 @@ function Listing(props){
             fetch("http://localhost:8080/api/increaseViewCount/" + someId,
                 {
                     headers: {
-                        Authorization: "Bearer " + jwt
+                        Authorization: "Bearer " + jwt,
                     }
                 }
 
@@ -47,7 +44,7 @@ function Listing(props){
         }
 
 
-        var viewContainer = document.querySelector(".webiste-counter");
+        var viewContainer = document.querySelector(".website-counter");
         var viewCount = localStorage.getItem("page_view");
 
         if (viewCount) {
@@ -76,9 +73,6 @@ function Listing(props){
             <p>Created: {postDate}</p>
             {user?.user.sub === userId || user?.user.authorities.includes("USER") ? (
                 <>
-
-                    <Link to={'/edit/' + listingId}>Edit</Link>
-                    <DeleteListing listingId={listingId} removeFromState={props.removeFromState} />
 
                 <Link to={'/edit/listing/' + listingId}>Edit</Link>
                 <Link to={'/delete/listing/' + listingId}>Delete</Link>
