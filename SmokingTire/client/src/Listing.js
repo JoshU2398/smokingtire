@@ -4,7 +4,9 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
 function Listing(props){
-    const {listingId, description, listingUser, car, postDate, viewCount, mileage, price, isAvailable} = props.listingObj;
+    console.log(props.listingObj);
+
+    const {listingId, description, listingUser, car, postDate, viewCount, mileage, price, available} = props.listingObj;
     const make = car.make.makeName;
     const model = car.make.model.modelName;
     const modelYear = car.make.model.modelYear;
@@ -58,20 +60,16 @@ function Listing(props){
             viewCount = 1;
             localStorage.setItem("page_view", 1);
         }
-
-
         viewContainer.innerHTML = viewCount;
-
-
     }
 
     return (
         <div className="listing-item">
             <h3>{modelYear} {make} {model}</h3>
+            <h4>Owner: {listingUser.username}</h4>
             <p>Posted on: {postDate}</p>
-            <p>Price: ${price}</p>
-            <h4>User: {listingUser.username}</h4>
             <p>Views: {viewCount}</p>
+            <p>Price: ${price}</p>
             <p>Description: {description}</p>
 
             <div className="car-details">
@@ -82,13 +80,13 @@ function Listing(props){
                 <p>Transmission: {car.transmission}</p>
             </div>
 
-            {user?.user.authorities.includes("USER") ? (
+            {user?.user.sub === listingUser.username || user?.user.authorities.includes("ADMIN") ? available === true ? (
                 <>
-
                 <Link to={'/edit/listing/' + listingId}>Edit</Link>
                 <Link to={'/delete/listing/' + listingId}>Delete</Link>
-
                 </>
+            ) : (
+                null
             ) : (
                 null
             )}
