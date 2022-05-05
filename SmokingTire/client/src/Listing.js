@@ -5,8 +5,16 @@ import AuthContext from "./AuthContext";
 
 function Listing(props){
     console.log(props.listingObj);
+    const temp = props.listingObj;
 
-    const {listingId, description, listingUser, car, postDate, viewCount, mileage, price, available} = props.listingObj;
+    const listing = {
+        listingId:temp.listingId, description:temp.description, listingUser:temp.listingUser, 
+        car:temp.car, postDate:temp.postDate, viewCount:temp.viewCount, mileage:temp.mileage, 
+        price:temp.price, isAvailable:temp.available
+    };
+    console.log(listing);
+    
+    const car = listing.car
     const make = car.make.makeName;
     const model = car.make.model.modelName;
     const modelYear = car.make.model.modelYear;
@@ -18,14 +26,14 @@ function Listing(props){
  
         const jwt = localStorage.getItem("token");
         if (jwt) {
-            fetch("http://localhost:8080/api/listings/increaseViewCount/" + listingId,
+            fetch("http://localhost:8080/api/listings/increaseViewCount/" + listing.listingId,
                 {
                     method: "PUT",
                     headers: {
                         Authorization: "Bearer " + jwt,
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify(props.listingObj)
+                    body: JSON.stringify(listing)
                 }
             )
                 .then(response => {
@@ -53,25 +61,25 @@ function Listing(props){
     return (
         <div className="listing-item">
             <h3>{modelYear} {make} {model}</h3>
-            <h4>Owner: {listingUser.username}</h4>
-            <p>Posted on: {postDate}</p>
-            <p>Views: {viewCount}</p>
-            <p>Price: ${price}</p>
-            <p>Description: {description}</p>
+            <h4>Owner: {listing.listingUser.username}</h4>
+            <p>Posted on: {listing.postDate}</p>
+            <p>Views: {listing.viewCount}</p>
+            <p>Price: ${listing.price}</p>
+            <p>Description: {listing.description}</p>
 
             <div className="car-details">
                 <p>Body: {car.chassis}</p>
-                <p>Mileage: {mileage}</p>
+                <p>Mileage: {listing.mileage}</p>
                 <p>Horsepower: {car.horsepower}</p>
                 <p>Drivetrain: {car.drivetrain}</p>
                 <p>Transmission: {car.transmission}</p>
             </div>
-            <Link to={'/view/listing/' + listingId} onClick={increaseViewCount}>View</Link>
+            <Link to={'/view/listing/' + listing.listingId} onClick={increaseViewCount}>View</Link>
 
-            {user?.user.sub === listingUser.username || user?.user.authorities.includes("ADMIN") ? available === true ? (
+            {user?.user.sub === listing.listingUser.username || user?.user.authorities.includes("ADMIN") ? listing.isAvailable === true ? (
                 <>
-                <Link to={'/edit/listing/' + listingId}>Edit</Link>
-                <Link to={'/delete/listing/' + listingId}>Delete</Link>
+                <Link to={'/edit/listing/' + listing.listingId}>Edit</Link>
+                <Link to={'/delete/listing/' + listing.listingId}>Delete</Link>
                 </>
             ) : (
                 null
