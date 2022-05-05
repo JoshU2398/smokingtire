@@ -54,9 +54,9 @@ function UserPage() {
     return (
         <>
         <div>
-            <h2>{user.user.sub} Account Actions</h2>
-            <Link to={'/edit/user/' + user.user.sub}>Edit</Link>
-            <p>Password: </p>
+            <h2>Account Details</h2>
+            <Link to={'/edit/user/' + user.user.sub}>Edit Account</Link>
+            <Link to={'/delete/user/' + user.user.sub}>Delete Account</Link>
         </div>
 
         <div className='purchased-listings'>
