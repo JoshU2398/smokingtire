@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
@@ -7,12 +7,10 @@ function AddListing(){
 
     const [price, setPrice] = useState(0);
     const [mileage, setMileage] = useState(0);
-    const [postDate, setPostDate] = useState("");
     const [description, setDescription] = useState("");
     const [viewCount, setViewCount] = useState(0);
     const [user, setUser] = useContext(AuthContext);
     const [car, setCar] = useState({});
-    const [isAvailable, setAvailable] = useState(true);
     const [horsepower, setHorsepower] = useState(0);
     const [drivetrain, setDrivetrain] = useState("");
     const [chassis, setChassis] = useState("");
@@ -26,11 +24,13 @@ function AddListing(){
     const navigate = useNavigate();
     const jwt = localStorage.getItem("token");
 
-    if(jwt){
-        navigate("addListing");
-    } else {
-        navigate("/");
-    }
+    useEffect(() => {
+        if(jwt){
+            navigate("/addListing");
+        } else {
+            navigate("/");
+        }
+    }, []);
 
 
     function addPriceHandler(e){
@@ -41,9 +41,6 @@ function AddListing(){
         setMileage(e.target.value);
     }
 
-    function addPostDateHandler(e){
-        setPostDate(e.target.value);
-    }
 
     function addDescriptionHandler(e){
         setDescription(e.target.value);
@@ -102,11 +99,13 @@ function AddListing(){
             modelName: modelName,
             modelYear: modelYear
         }
+        console.log(newModel);
 
         let newMake = {
             makeName: makeName,
             model: newModel
         }
+        console.log(newMake);
 
         let newCar = {
             horsepower: horsepower,
@@ -115,18 +114,18 @@ function AddListing(){
             transmission: transmission,
             make: newMake
         }
+            console.log(newCar);
         
         let newListing = {
             price: price,
             mileage: mileage,
-            postDate: postDate,
             description: description,
             viewCount: viewCount,
             user: user,
-            car: newCar,
-            isAvailable: isAvailable};
+            car: newCar};
 
-            fetch("http://localhost:8080/api/add", {
+            console.log(newListing);
+            fetch("http://localhost:8080/api/listings/add", {
                 method: "POST",
                 headers: {
                     Authorization: "Bearer " + jwt,
@@ -165,25 +164,11 @@ function AddListing(){
                         onChange={addMileageHandler}></input>
                 </div>
                 <div className="stringInput">
-                    <label htmlFor="postDate"><b>Enter Post Date</b></label>
-                    <input
-                        name="postDate"
-                        placeholder="mm-dd-yyyy"
-                        onChange={addPostDateHandler}></input>
-                </div>
-                <div className="stringInput">
                     <label htmlFor="description"><b>Enter Description</b></label>
-                    <text
+                    <textarea
                         name="Description"
                         placeholder="dummy text"
-                        onChange={addDescriptionHandler}></text>
-                </div>
-                <div className="numInput">
-                    <label htmlFor="viewCount"><b>Enter View Count</b></label>
-                    <input
-                        name="viewCount"
-                        placeholder="0"
-                        onChange={addViewCountHandler}></input>
+                        onChange={addDescriptionHandler}></textarea>
                 </div>
                 <div className="stringInput">
                     <label htmlFor="makeName"><b>Enter Make</b></label>
@@ -206,6 +191,7 @@ function AddListing(){
                         placeholder="0"
                         onChange={addModelYearHandler}></input>
                 </div>
+                <button>Submit</button>
             </form>
         </>
 
