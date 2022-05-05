@@ -3,6 +3,7 @@ package learn.capstone.controllers;
 import learn.capstone.domain.Result;
 import learn.capstone.domain.UserService;
 import learn.capstone.models.AppUser;
+import learn.capstone.models.Listing;
 import learn.capstone.security.JwtConverter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -29,6 +31,11 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
         this.jwtConverter = jwtConverter;
         this.userService = userService;
+    }
+
+    @GetMapping("/findUser/{username}")
+    public UserDetails findByUsername(@PathVariable String username) {
+        return userService.loadUserByUsername(username);
     }
 
     @PostMapping("/login")
