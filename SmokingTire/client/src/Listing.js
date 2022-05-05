@@ -20,7 +20,7 @@ function Listing(props) {
                 fetch("http://localhost:8080/api/increaseViewCount/" + someId,
                     {
                         headers: {
-                            Authorization: "Bearer " + jwt;
+                            Authorization: "Bearer " + jwt,
                         }
                     }
 
