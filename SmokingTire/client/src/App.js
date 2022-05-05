@@ -10,6 +10,7 @@ import NotFound from './NotFound';
 import EditListing from './EditListing';
 import DeleteListing from './DeleteListing';
 import EditUser from './EditUser';
+import DeleteUser from './DeleteUser';
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/userpage" element={<UserPage/>}/>
           <Route path="/edit/user/:username" element={<EditUser/>} />
+          <Route path="/delete/user/:username" element={<DeleteUser/>} />
           <Route path="/edit/listing/:id" element={<EditListing/>}/>
           <Route path="/delete/listing/:id" element={<DeleteListing/>}/>
           <Route path="*" element={<NotFound/>} />

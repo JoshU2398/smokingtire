@@ -82,6 +82,7 @@ useEffect(
             event.preventDefault();
 
             const jwt = localStorage.getItem("token");
+            console.log(toEdit);
 
             fetch("http://localhost:8080/api/listings/edit/" + id, {
                 method: "PUT",
