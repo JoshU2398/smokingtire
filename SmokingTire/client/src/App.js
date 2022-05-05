@@ -7,6 +7,7 @@ import Login from "./Login";
 import UserPage from './UserPage';
 import jwtDecode from "jwt-decode";
 import NotFound from './NotFound';
+import AddListing from './AddListing';
 import EditListing from './EditListing';
 import DeleteListing from './DeleteListing';
 
@@ -29,6 +30,8 @@ function App() {
       <Nav />
       <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} /> 
+          <Route path="/addListing" element={<AddListing/>}/>
           <Route path="/login" element={<Login />} />
           <Route path="/userpage" element={<UserPage/>}/>
           <Route path="/edit/user/:id" element={<EditUser/>} />

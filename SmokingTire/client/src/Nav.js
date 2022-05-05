@@ -22,6 +22,10 @@ function Nav(){
                         <Link to="/edit/user">Edit User</Link>
                     </li>
 
+                    <li>
+                        <Link to="/addListing">Add Listing</Link>
+                    </li>
+
                     {user?.user ? (
                         <>
                             <li>
