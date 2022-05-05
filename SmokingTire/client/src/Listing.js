@@ -1,16 +1,6 @@
 
 import { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
-
-
-
-
-
-
-function Listing(props) {
-    const { listingId, listingText, userId, carId, createDate, views, mileage, price, isAvailable } = props.listingObj;
-
-import { useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import AuthContext from "./AuthContext";
 import DeleteListing from "./DeleteListing";
 import { Link } from "react-router-dom";
@@ -20,17 +10,18 @@ function Listing(props){
 
     const [user, setUser] = useContext(AuthContext);
 
+    const nav = useNavigate();
 
 
     function increaseViewCount() {
-        const { someId } = useParams();
         useEffect(() => {
+            const { someId } = useParams();
             const jwt = localStorage.getItem("token");
             if (jwt) {
                 fetch("http://localhost:8080/api/increaseViewCount/" + someId,
                     {
                         headers: {
-                            Authorization: "Bearer " + jwt;
+                            Authorization: "Bearer " + jwt,
                         }
                     }
 
