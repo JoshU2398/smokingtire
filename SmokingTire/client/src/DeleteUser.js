@@ -22,7 +22,7 @@ function DeleteUser() {
             .then(response => {
 
                 if (response.status === 204) {
-                    navigate("/home");
+                    navigate("/");
                     localStorage.removeItem("token");
                     setToDelete((prev) => ({...prev, toDelete : null}));
                 } else if (response.status === 404) {

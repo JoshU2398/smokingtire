@@ -4,8 +4,13 @@ import AuthContext from "./AuthContext";
 import Home from "./Home";
 import Nav from "./Nav";
 import Login from "./Login";
+import UserPage from './UserPage';
 import jwtDecode from "jwt-decode";
 import NotFound from './NotFound';
+import AddListing from './AddListing';
+import EditListing from './EditListing';
+import DeleteListing from './DeleteListing';
+import EditUser from './EditUser';
 
 function App() {
 
@@ -27,9 +32,13 @@ function App() {
       <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} /> 
+          <Route path="/addListing" element={<AddListing/>}/>
+          <Route path="/login" element={<Login />} />
+          <Route path="/userpage" element={<UserPage/>}/>
+          <Route path="/edit/user/:username" element={<EditUser/>} />
+          <Route path="/edit/listing/:id" element={<EditListing/>}/>
+          <Route path="/delete/listing/:id" element={<DeleteListing/>}/>
           <Route path="*" element={<NotFound/>} />
-          <Route path="/edit" element={<EditListing/>} />
-          <Route path="/edit/user" element={<EditUser/>} />
       </Routes>
     </div>
     </AuthContext.Provider>
