@@ -19,6 +19,10 @@ function Nav(){
                         <Link to="/">Home</Link>
                     </li>
 
+                    <li>
+                        <Link to="/addListing">Add Listing</Link>
+                    </li>
+
                     {user?.user ? (
                         <li><button onClick={handleLogout}>Logout {user.user.sub}</button></li>
                     ) : (

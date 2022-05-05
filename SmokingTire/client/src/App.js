@@ -6,6 +6,7 @@ import Nav from "./Nav";
 import Login from "./Login";
 import jwtDecode from "jwt-decode";
 import NotFound from './NotFound';
+import AddListing from './AddListing';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
       <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} /> 
+          <Route path="/addListing" element={<AddListing/>}/>
           <Route path="*" element={<NotFound/>} />
       </Routes>
     </div>
