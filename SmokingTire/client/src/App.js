@@ -10,6 +10,7 @@ import NotFound from './NotFound';
 import AddListing from './AddListing';
 import EditListing from './EditListing';
 import DeleteListing from './DeleteListing';
+import EditUser from './EditUser';
 
 function App() {
 
