@@ -9,13 +9,12 @@ function Listing(props){
     const {listingId, description, userId, carId, postDate, viewCount, mileage, price, isAvailable} = props.listingObj;
 
     const [user, setUser] = useContext(AuthContext);
-
     const nav = useNavigate();
+    const { someId } = useParams();
+
 
 
     function increaseViewCount() {
-        useEffect(() => {
-            const { someId } = useParams();
             const jwt = localStorage.getItem("token");
             if (jwt) {
                 fetch("http://localhost:8080/api/increaseViewCount/" + someId,
@@ -37,7 +36,7 @@ function Listing(props){
                     })
                     .then(retrievedViews => {
                         console.log(retrievedViews);
-                        setToEdit();
+                        // setToEdit();
                     })
                     .catch(rejection => {
                         console.log(rejection);
@@ -47,9 +46,8 @@ function Listing(props){
             } else {
                 nav();
             }
-        }, []);
 
-        var viewContainer = document.querySelector(".webiste-counter");
+        var viewContainer = document.querySelector(".website-counter");
         var viewCount = localStorage.getItem("page_view");
 
         if (viewCount) {
