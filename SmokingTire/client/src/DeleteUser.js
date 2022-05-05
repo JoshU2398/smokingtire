@@ -4,8 +4,41 @@ import AuthContext from './AuthContext';
 
 function DeleteUser() { 
     const [toDelete, setToDelete] = useContext(AuthContext);
-    const {id} = useParams(toDelete);
+    const {username} = useParams(toDelete);
     const navigate = useNavigate();
+
+    useEffect(
+        () => {
+            const jwt = localStorage.getItem("token");
+            if(jwt){
+                fetch("http://localhost:8080/api/security/findUser/" + username,
+                {
+                    headers: {
+                        Authorization: "Bearer " + jwt
+                    }
+                })
+                .then(response => {
+                    if(response.status == 200){
+                        return response.json();
+                    }else{
+                        console.log(response);
+                        alert("retrieving toDelete failed");
+                    }
+                })
+                .then(retrievedUser => {
+                    console.log(retrievedUser);
+                    setToDelete(retrievedUser);
+                })
+                .catch(rejection => {
+                    console.log(rejection);
+                    alert("Something very bad happened...");
+                });
+            }else{
+                navigate("/login");
+            }
+        },
+        []
+    );
 
     function handleDelete(event) {
         event.preventDefault();
@@ -13,7 +46,7 @@ function DeleteUser() {
         const jwt = localStorage.getItem("token");
 
         if (jwt) {
-            fetch("http://localhost:8080/api/security/delete/" + id, {
+            fetch("http://localhost:8080/api/security/delete/" + toDelete?.userId, {
                 method: "DELETE",
                 headers: {
                     Authorization: "Bearer " + jwt
@@ -23,8 +56,6 @@ function DeleteUser() {
 
                 if (response.status === 204) {
                     navigate("/");
-                    localStorage.removeItem("token");
-                    setToDelete((prev) => ({...prev, toDelete : null}));
                 } else if (response.status === 404) {
                     alert("User not found.");
                 } else {
