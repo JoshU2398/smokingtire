@@ -35,7 +35,7 @@ function App() {
           <Route path="/addListing" element={<AddListing/>}/>
           <Route path="/login" element={<Login />} />
           <Route path="/userpage" element={<UserPage/>}/>
-          <Route path="/edit/user/:id" element={<EditUser/>} />
+          <Route path="/edit/user/:username" element={<EditUser/>} />
           <Route path="/edit/listing/:id" element={<EditListing/>}/>
           <Route path="/delete/listing/:id" element={<DeleteListing/>}/>
           <Route path="*" element={<NotFound/>} />

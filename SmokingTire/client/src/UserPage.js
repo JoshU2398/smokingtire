@@ -1,4 +1,5 @@
 import {useState, useEffect, useContext} from 'react';
+import { Link } from 'react-router-dom';
 import Listing from "./Listing";
 import AuthContext from './AuthContext';
 
@@ -40,7 +41,6 @@ function UserPage() {
 
     function removeListingFromState(listingId){
         setUsersListings(usersListings.filter(listing => listing.listingId !== listingId));
-
     }
 
     function listingFactory(props) {
@@ -54,15 +54,17 @@ function UserPage() {
     return (
         <>
         <div>
-            <h2>{user.user.sub}'s info</h2>
+            <h2>{user.user.sub} Account Actions</h2>
+            <Link to={'/edit/user/' + user.user.sub}>Edit</Link>
+            <p>Password: </p>
         </div>
 
-        <div>
+        <div className='purchased-listings'>
         <h3>Purchased Listings</h3>
         {listingFactory(usersPurchased)}
         </div>
 
-        <div>
+        <div className='users-active-listings'>
         <h3>Your Active Listings</h3>
         {listingFactory(usersListings)}
         </div>

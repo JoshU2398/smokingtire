@@ -74,7 +74,7 @@ public class ListingDbRepo implements ListingRepo {
     @Override
     @Transactional
     public List<Listing> findByMakeId(int makeId) {
-        final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price "
+        final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price, l.isAvailable "
                 + "from listings l "
                 + "inner join cars c on c.carId = l.carId "
                 + "inner join makes m on m.makeId = c.makeId "
@@ -92,7 +92,7 @@ public class ListingDbRepo implements ListingRepo {
     @Override
     @Transactional
     public List<Listing> findByModelId(int modelId) {
-        final String sql = "select l.listingId, l.listingText, l.userId, l.carId, l.createDate, l.views, l.mileage, l.price "
+        final String sql = "select l.listingId, l.listingText, l.userId, l.carId, l.createDate, l.views, l.mileage, l.price, l.isAvailable "
                 + "from listings l "
                 + "inner join cars c on c.carId = l.carId "
                 + "inner join makes m on m.makeId = c.makeId "
@@ -111,7 +111,7 @@ public class ListingDbRepo implements ListingRepo {
 
     @Override
     public List<Listing> findByPriceRange(Integer min, Integer max) {
-        final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price "
+        final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price, isAvailable "
                 + "from listings "
                 + "where price between ? and ?;";
 
@@ -127,7 +127,7 @@ public class ListingDbRepo implements ListingRepo {
 
     @Override
     public Listing findByListingId(int listingId) {
-        final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price "
+        final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price, isAvailable "
                 + "from listings "
                 + "where listingId = ?;";
 
