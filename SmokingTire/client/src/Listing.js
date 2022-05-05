@@ -4,7 +4,10 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
 function Listing(props){
-    const {listingId, description, userId, carId, postDate, viewCount, mileage, price, isAvailable} = props.listingObj;
+    const {listingId, description, listingUser, car, postDate, viewCount, mileage, price, isAvailable} = props.listingObj;
+    const make = car.make.makeName;
+    const model = car.make.model.modelName;
+    const modelYear = car.make.model.modelYear;
 
     const [user, setUser] = useContext(AuthContext);
     const nav = useNavigate();
@@ -64,14 +67,22 @@ function Listing(props){
 
     return (
         <div className="listing-item">
-            <h1>Car: {carId}</h1>
+            <h3>{modelYear} {make} {model}</h3>
+            <p>Posted on: {postDate}</p>
+            <p>Price: ${price}</p>
+            <h4>User: {listingUser.username}</h4>
             <p>Views: {viewCount}</p>
-            <p>Mileage: {mileage}</p>
-            <p>Price: {price}</p>
             <p>Description: {description}</p>
-            <h3>User: {user.user.sub}</h3>
-            <p>Created: {postDate}</p>
-            {user?.user.sub === userId || user?.user.authorities.includes("USER") ? (
+
+            <div className="car-details">
+                <p>Body: {car.chassis}</p>
+                <p>Mileage: {mileage}</p>
+                <p>Horsepower: {car.horsepower}</p>
+                <p>Drivetrain: {car.drivetrain}</p>
+                <p>Transmission: {car.transmission}</p>
+            </div>
+
+            {user?.user.authorities.includes("USER") ? (
                 <>
 
                 <Link to={'/edit/listing/' + listingId}>Edit</Link>

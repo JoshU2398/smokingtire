@@ -1,9 +1,6 @@
 package learn.capstone.models;
 
-import learn.capstone.App;
-
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -22,7 +19,7 @@ public class Listing {
     String description;
     Integer viewCount;
     @NotNull(message = "User is required.")
-    AppUser user;
+    AppUser listingUser;
     @NotNull(message = "Car is required.")
     Car car;
     Boolean isAvailable;
@@ -38,7 +35,7 @@ public class Listing {
         this.postDate = postDate;
         this.description = description;
         this.viewCount = viewCount;
-        this.user = user;
+        this.listingUser = user;
         this.car = car;
         this.isAvailable = isAvailable;
     }
@@ -99,12 +96,12 @@ public class Listing {
         this.viewCount = viewCount;
     }
 
-    public AppUser getUser() {
-        return user;
+    public AppUser getListingUser() {
+        return listingUser;
     }
 
-    public void setUser(AppUser user) {
-        this.user = user;
+    public void setListingUser(AppUser listingUser) {
+        this.listingUser = listingUser;
     }
 
     public Boolean isAvailable() {
@@ -120,11 +117,11 @@ public class Listing {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Listing listing = (Listing) o;
-        return isAvailable == listing.isAvailable && Objects.equals(listingId, listing.listingId) && Objects.equals(price, listing.price) && Objects.equals(mileage, listing.mileage) && Objects.equals(postDate, listing.postDate) && Objects.equals(description, listing.description) && Objects.equals(viewCount, listing.viewCount) && Objects.equals(user, listing.user) && Objects.equals(car, listing.car);
+        return isAvailable == listing.isAvailable && Objects.equals(listingId, listing.listingId) && Objects.equals(price, listing.price) && Objects.equals(mileage, listing.mileage) && Objects.equals(postDate, listing.postDate) && Objects.equals(description, listing.description) && Objects.equals(viewCount, listing.viewCount) && Objects.equals(listingUser, listing.listingUser) && Objects.equals(car, listing.car);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(listingId, price, mileage, postDate, description, viewCount, user, car, isAvailable);
+        return Objects.hash(listingId, price, mileage, postDate, description, viewCount, listingUser, car, isAvailable);
     }
 }

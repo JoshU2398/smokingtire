@@ -150,7 +150,7 @@ public class ListingDbRepo implements ListingRepo {
         int rowsAffected = template.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, toAdd.getDescription());
-            ps.setInt(2, toAdd.getUser().getUserId());
+            ps.setInt(2, toAdd.getListingUser().getUserId());
             ps.setInt(3, toAdd.getCar().getCarId());
             ps.setDate(4, Date.valueOf(LocalDate.now()));
             ps.setInt(5, toAdd.getViewCount());
@@ -224,7 +224,7 @@ public class ListingDbRepo implements ListingRepo {
             AppUser user = template.query(sql, new UserMapper(Collections.singleton("USER")), l.getListingId()).stream()
                     .findFirst().orElse(null);
 
-            l.setUser(user);
+            l.setListingUser(user);
         }
 
     }
@@ -238,7 +238,7 @@ public class ListingDbRepo implements ListingRepo {
         AppUser user = template.query(sql, new UserMapper(Collections.singleton("USER")), listing.getListingId()).stream()
                 .findFirst().orElse(null);
 
-        listing.setUser(user);
+        listing.setListingUser(user);
     }
 
     private void addCar(List<Listing> listings) {
