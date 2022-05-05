@@ -2,10 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
-
-
-
-
 function EditListing(){
 const[toEdit, setToEdit] = useState(null);
 
@@ -107,6 +103,10 @@ useEffect(
 
         }
 
+        function cancel() {
+            nav("/userpage");
+        }
+
         return toEdit ? <form onSubmit={handleEditSubmit}>
                     <label htmlFor="listingText">Description: </label><br/>
                     <textarea className="listing-edit" id="listingText" value={toEdit?.description} onChange={handleTextChange}></textarea><br/>
@@ -117,6 +117,7 @@ useEffect(
                     <label htmlFor="listingMileage">Mileage: </label><br/>
                     <textarea className="listing-edit" id="listingMileage" value={toEdit?.mileage} onChange={handleMileageChange}></textarea><br/>
                     <button>Submit</button>
+                    <button onClick={cancel}>Cancel</button>
         </form> :
         <></>
 

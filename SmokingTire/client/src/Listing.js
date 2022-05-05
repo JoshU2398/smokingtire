@@ -13,23 +13,23 @@ function Listing(props){
 
     const [user, setUser] = useContext(AuthContext);
     const nav = useNavigate();
-    const { someId } = useParams();
 
     function increaseViewCount() {
  
         const jwt = localStorage.getItem("token");
         if (jwt) {
-            fetch("http://localhost:8080/api/increaseViewCount/" + someId,
+            fetch("http://localhost:8080/api/listings/increaseViewCount/" + listingId,
                 {
+                    method: "PUT",
                     headers: {
                         Authorization: "Bearer " + jwt,
-                    }
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(props.listingObj)
                 }
-
-
             )
                 .then(response => {
-                    if (response.status == 200) {
+                    if (response.status == 204) {
                         return response.json();
                     } else {
                         console.log(response);
@@ -48,19 +48,6 @@ function Listing(props){
             nav();
         }
 
-
-        var viewContainer = document.querySelector(".website-counter");
-        var viewCount = localStorage.getItem("page_view");
-
-        if (viewCount) {
-            viewCount = Number(viewCount) + 1;
-            localStorage.setItem("page_view", viewCount);
-        } else {
-
-            viewCount = 1;
-            localStorage.setItem("page_view", 1);
-        }
-        viewContainer.innerHTML = viewCount;
     }
 
     return (
@@ -79,6 +66,7 @@ function Listing(props){
                 <p>Drivetrain: {car.drivetrain}</p>
                 <p>Transmission: {car.transmission}</p>
             </div>
+            <Link to={'/view/listing/' + listingId} onClick={increaseViewCount}>View</Link>
 
             {user?.user.sub === listingUser.username || user?.user.authorities.includes("ADMIN") ? available === true ? (
                 <>
