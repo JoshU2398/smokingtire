@@ -1,9 +1,9 @@
 
-import { useContext, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
-function Listing(props){
+function Listing(props) {
     console.log(props.listingObj);
     const temp = props.listingObj;
 
@@ -48,16 +48,13 @@ function Listing(props){
                         alert("update to view count failed!");
                     }
                 })
-                .then(retrievedViews => {
-                    console.log(retrievedViews);
-                })
                 .catch(rejection => {
                     console.log(rejection);
                     alert("Rejected!")
                 });
 
         } else {
-            nav();
+            nav("/login");
         }
 
     }
@@ -78,7 +75,7 @@ function Listing(props){
                 <p>Drivetrain: {car.drivetrain}</p>
                 <p>Transmission: {car.transmission}</p>
             </div>
-            <Link to={'/view/listing/' + listing.listingId} onClick={increaseViewCount}>View</Link>
+            <Link to={'/view/listing/' + listing} onClick={increaseViewCount}>View</Link>
 
             {user?.user.sub === listing.listingUser.username || user?.user.authorities.includes("ADMIN") ? listing.isAvailable === true ? (
                 <>

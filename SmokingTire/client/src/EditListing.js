@@ -15,8 +15,8 @@ function EditListing(){
         () => {
 
             const jwt = localStorage.getItem("token");
-            if(jwt){
 
+            if(jwt) {
                 fetch("http://localhost:8080/api/listings/findListing/" + id,
                 {
                     headers: {
@@ -42,8 +42,7 @@ function EditListing(){
                 }else{
                     nav("/login");
                 }
-            },
-            []
+            },[]
     );
 
 
@@ -79,7 +78,7 @@ function EditListing(){
 
         const jwt = localStorage.getItem("token");
         console.log(toEdit);
-        
+
         const listingUser = { 
             userId:toEdit.listingUser.userId, username:toEdit.listingUser.username,
             password:toEdit.listingUser.password, roles:toEdit.listingUser.roles 
