@@ -4,7 +4,7 @@ import AuthContext from "./AuthContext";
 
 function ViewListing() {
 
-    const [listing, setListing] = useState({});
+    const [listing, setListing] = useState(null);
     const {id} = useParams();
 
     const[userStatus, setUserStatus] = useContext(AuthContext);
@@ -13,20 +13,20 @@ function ViewListing() {
 
     useEffect(
         () => {
-
+    
             const jwt = localStorage.getItem("token");
             if(jwt){
-
-                fetch("http://localhost:8080/api/listings/findListing/" + id,
-                {
+    
+                fetch("http://localhost:8080/api/listings/findListing/" + id, {
                     headers: {
                         Authorization: "Bearer " + jwt
                     }
-                }
-                ).then(response => {
-                    if(response.status == 200){
+                })
+                .then(response => {
+                    if(response.status == 200) {
+                        console.log(response.json());
                         return response.json();
-                    }else{
+                    } else {
                         console.log(response);
                         alert("retrieving toEdit failed");
                     }
@@ -38,8 +38,8 @@ function ViewListing() {
                 .catch(rejection => {
                     console.log(rejection);
                     alert("Rejected!");
-                });
-                }else{
+                })
+                } else {
                     nav("/login");
                 }
             },
@@ -69,6 +69,7 @@ function ViewListing() {
                 <p>Drivetrain: {car.drivetrain}</p>
                 <p>Transmission: {car.transmission}</p>
             </div>
+            <Link to={'/purchase/' + listing.listingId}>Buy Now</Link>
 
             {userStatus?.userStatus.sub === listing.listingUser.username 
             || userStatus?.userStatus.authorities.includes("ADMIN") 
