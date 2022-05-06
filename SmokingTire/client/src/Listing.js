@@ -3,15 +3,15 @@ import { useContext, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
-function Listing(props){
-    const {listingId, description, userId, carId, postDate, viewCount, mileage, price, isAvailable} = props.listingObj;
+function Listing(props) {
+    const { listingId, description, userId, carId, postDate, viewCount, mileage, price, isAvailable } = props.listingObj;
 
     const [user, setUser] = useContext(AuthContext);
     const nav = useNavigate();
     const { someId } = useParams();
 
     function increaseViewCount() {
- 
+
         const jwt = localStorage.getItem("token");
         if (jwt) {
             fetch("http://localhost:8080/api/increaseViewCount/" + someId,
@@ -74,8 +74,8 @@ function Listing(props){
             {user?.user.sub === userId || user?.user.authorities.includes("USER") ? (
                 <>
 
-                <Link to={'/edit/listing/' + listingId}>Edit</Link>
-                <Link to={'/delete/listing/' + listingId}>Delete</Link>
+                    <Link to={'/edit/listing/' + listingId}>Edit</Link>
+                    <Link to={'/delete/listing/' + listingId}>Delete</Link>
 
                 </>
             ) : (
