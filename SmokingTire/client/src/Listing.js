@@ -12,8 +12,12 @@ function Listing(props){
         car:temp.car, postDate:temp.postDate, viewCount:temp.viewCount, mileage:temp.mileage, 
         price:temp.price, isAvailable:temp.available
     };
+
+    const listingUser = {userId:listing.listingUser.userId, username:listing.listingUser.username,
+        password:listing.listingUser.password, roles:listing.listingUser.roles};
+    listing.listingUser = listingUser;
     console.log(listing);
-    
+
     const car = listing.car
     const make = car.make.makeName;
     const model = car.make.model.modelName;
@@ -38,7 +42,7 @@ function Listing(props){
             )
                 .then(response => {
                     if (response.status == 204) {
-                        return response.json();
+                        console.log(response);
                     } else {
                         console.log(response);
                         alert("update to view count failed!");
