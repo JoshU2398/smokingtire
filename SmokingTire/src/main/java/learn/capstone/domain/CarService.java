@@ -19,4 +19,8 @@ public class CarService {
         return repo.findAll();
     }
 
+    public Car findByModelId(Integer modelId){
+        return repo.findByModelId(modelId);
+    }
+
 }

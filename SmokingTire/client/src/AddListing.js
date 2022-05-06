@@ -20,9 +20,45 @@ function AddListing(){
     const [model, setModel] = useState({});
     const [modelName, setModelName] = useState("");
     const [modelYear, setModelYear] = useState(0);
+    const [postDate, setPostDate] = useState("");
+    const [isAvailable, setAvailable] = useState(true);
+    const [toAdd, setToAdd] = useState(null);
 
     const navigate = useNavigate();
     const jwt = localStorage.getItem("token");
+
+    useEffect(
+        () => {
+            const jwt = localStorage.getItem("token");
+            if(jwt){
+                fetch("http://localhost:8080/api/security/findUser/" + user.user.sub,
+                {
+                    headers: {
+                        Authorization: "Bearer " + jwt
+                    }
+                })
+                .then(response => {
+                    if(response.status == 200){
+                        return response.json();
+                    }else{
+                        console.log(response);
+                        alert("retrieving toAdd failed");
+                    }
+                })
+                .then(retrievedUser => {
+                    console.log(retrievedUser);
+                    setToAdd(retrievedUser);
+                })
+                .catch(rejection => {
+                    console.log(rejection);
+                    alert("Something very bad happened...");
+                });
+            }else{
+                navigate("/login");
+            }
+        },
+        []
+    );
 
     useEffect(() => {
         if(jwt){
@@ -46,15 +82,8 @@ function AddListing(){
         setDescription(e.target.value);
     }
 
-    function addViewCountHandler(e){
-        setViewCount(e.target.value);
-    }
 
-    function addCarHandler(e){
-        setCar(e.target.value);
-    }
-
-    function addHorsePowerHandler(e){
+    function addHorsepowerHandler(e){
         setHorsepower(e.target.value);
     }
 
@@ -70,16 +99,8 @@ function AddListing(){
         setTransmission(e.target.value);
     }
 
-    function addMakeHandler(e){
-        setMake(e.target.value);
-    }
-
     function addMakeNameHandler(e){
         setMakeName(e.target.value);
-    }
-
-    function addModelHandler(e){
-        setModel(e.target.value);
     }
 
     function addModelNameHandler(e){
@@ -94,6 +115,7 @@ function AddListing(){
 
     function handleSubmit(e) {
         e.preventDefault();
+        const updatedUser = {userId:toAdd.userId, username:toAdd.username, password:toAdd.password, roles:toAdd.roles};
 
         let newModel = {
             modelName: modelName,
@@ -121,9 +143,12 @@ function AddListing(){
             mileage: mileage,
             description: description,
             viewCount: viewCount,
-            user: user,
+            postDate: postDate,
+            isAvailable: isAvailable,
+            listingUser: updatedUser,
             car: newCar};
 
+            console.log(updatedUser);
             console.log(newListing);
             fetch("http://localhost:8080/api/listings/add", {
                 method: "POST",
@@ -134,8 +159,14 @@ function AddListing(){
                 body: JSON.stringify(newListing)
             })
             .then(response => {
-                alert(response.status);
-                navigate("/")
+                if(response.status === 400){
+                    console.log(response);
+                    alert("Something went wrong");
+                    navigate("/addListing");
+                } else {
+                    alert(response.status);
+                    navigate("/")
+                }
             })
             .catch(
                 rejection => console.log("failure ", rejection)

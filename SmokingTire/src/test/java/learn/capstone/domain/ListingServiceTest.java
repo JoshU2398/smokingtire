@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -120,7 +119,7 @@ class ListingServiceTest {
         listing.setPostDate(LocalDate.now());
         listing.setDescription("This is my dummy available listing.");
         listing.setViewCount(3);
-        listing.setUser(makeUser());
+        listing.setListingUser(makeUser());
         listing.setCar(makeCar());
         listing.setAvailable(true);
 
@@ -136,7 +135,7 @@ class ListingServiceTest {
         listing.setPostDate(LocalDate.now());
         listing.setDescription("This is my dummy purchased listing.");
         listing.setViewCount(3);
-        listing.setUser(makeUser());
+        listing.setListingUser(makeUser());
         listing.setCar(makeCar());
         listing.setAvailable(false);
 
