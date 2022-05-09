@@ -20,3 +20,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.listing-item {
+  border-radius: 50px;
+  font-size: medium;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.container-fluid {
+  padding: 0 !important;
+}
+
+.bg-primary {
+  background-color: red !important;
+}
+
+.btn-primary {
+  background-color: red;
+}

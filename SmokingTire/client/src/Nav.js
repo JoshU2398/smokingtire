@@ -4,18 +4,19 @@ import AuthContext from './AuthContext';
 
 
 
-function Nav(){
+function Nav() {
     const [user, setUser] = useContext(AuthContext);
     const nav = useNavigate();
 
-    function handleLogout(){
+    function handleLogout() {
         localStorage.removeItem("token");
         setUser(null);
         nav("/");
     }
 
     return (
-        <nav>
+        <nav className='px-5 navbar navbar-expand-lg navbar-dark bg-primary'>
+            <div className="container-fluid">
                 <ul>
                     <li>
                         <Link to="/">Home</Link>
@@ -41,6 +42,7 @@ function Nav(){
                     )}
 
                 </ul>
+            </div>
         </nav>
     )
 
