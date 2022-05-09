@@ -24,7 +24,6 @@ function ViewListing() {
                 })
                 .then(response => {
                     if(response.status == 200) {
-                        console.log(response.json());
                         return response.json();
                     } else {
                         console.log(response);
@@ -46,44 +45,44 @@ function ViewListing() {
         []
     );
 
-    console.log(listing)
-
-    const car = listing.car;
-    const make = car.make.makeName;
-    const model = car.make.model.modelName;
-    const modelYear = car.make.model.modelYear;
+    console.log(listing);
+    console.log(userStatus?.user.sub)
 
     return (
-        <div className="listing-item">
-            <h3>{modelYear} {make} {model}</h3>
-            <h4>Owner: {listing.listingUser.username}</h4>
-            <p>Posted on: {listing.postDate}</p>
-            <p>Views: {listing.viewCount}</p>
-            <p>Price: ${listing.price}</p>
-            <p>Description: {listing.description}</p>
+        <>
+            { listing != undefined || listing != null ? (
+                <div className="listing-item">
+                    <h3>{listing.car.make.model.modelYear} {listing.car.make.makeName} {listing.car.make.model.modelName}</h3>
+                    <h4>Owner: {listing.listingUser.username}</h4>
+                    <p>Posted on: {listing.postDate}</p>
+                    <p>Views: {listing.viewCount}</p>
+                    <p>Price: ${listing.price}</p>
+                    <p>Description: {listing.description}</p>
 
-            <div className="car-details">
-                <p>Body: {car.chassis}</p>
-                <p>Mileage: {listing.mileage}</p>
-                <p>Horsepower: {car.horsepower}</p>
-                <p>Drivetrain: {car.drivetrain}</p>
-                <p>Transmission: {car.transmission}</p>
-            </div>
-            <Link to={'/purchase/' + listing.listingId}>Buy Now</Link>
+                    <div className="car-details">
+                        <p>Body: {listing.car.chassis}</p>
+                        <p>Mileage: {listing.mileage}</p>
+                        <p>Horsepower: {listing.car.horsepower}</p>
+                        <p>Drivetrain: {listing.car.drivetrain}</p>
+                        <p>Transmission: {listing.car.transmission}</p>
+                    </div>
+                    {listing.available === true ? <Link to={'/purchase/' + listing.listingId}>Buy Now</Link> : null }
 
-            {userStatus?.userStatus.sub === listing.listingUser.username 
-            || userStatus?.userStatus.authorities.includes("ADMIN") 
-            ? listing.available === true ? (
-                <>
-                <Link to={'/edit/listing/' + listing.listingId}>Edit</Link>
-                <Link to={'/delete/listing/' + listing.listingId}>Delete</Link>
-                </>
-            ) : (
-                null
-            ) : (
-                null
-            )}
-        </div>
+                    {userStatus?.user.sub === listing.listingUser.username 
+                    || userStatus?.user.authorities.includes("ADMIN") 
+                    ? listing.available === true ? (
+                        <>
+                        <Link to={'/edit/listing/' + listing.listingId}>Edit</Link>
+                        <Link to={'/delete/listing/' + listing.listingId}>Delete</Link>
+                        </>
+                    ) : (
+                        null
+                    ) : (
+                        null
+                    )}
+                </div>
+            ) : null }
+        </>
     )
 }
 
