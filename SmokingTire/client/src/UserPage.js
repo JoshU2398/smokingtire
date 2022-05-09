@@ -60,13 +60,13 @@ function UserPage() {
         </div>
 
         <div className='purchased-listings'>
-        <h3>Purchased Listings</h3>
-        {listingFactory(usersPurchased)}
+            <h2>Purchased Listings</h2>
+            {listingFactory(usersPurchased)}
         </div>
 
         <div className='users-active-listings'>
-        <h3>Your Active Listings</h3>
-        {listingFactory(usersListings)}
+            <h2>Your Active Listings</h2>
+            {listingFactory(usersListings)}
         </div>
         </>
     )

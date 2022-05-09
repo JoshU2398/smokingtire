@@ -13,6 +13,7 @@ import DeleteListing from './DeleteListing';
 import AddUser from './AddUser';
 import EditUser from './EditUser';
 import DeleteUser from './DeleteUser';
+import ViewListing from './ViewListing';
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} /> 
           <Route path="/addListing" element={<AddListing/>}/>
+          <Route path="/view/listing/:id" element={<ViewListing/>}/>
           <Route path="/userpage" element={<UserPage/>}/>
           <Route path='/addUser' element={<AddUser/>}/>
           <Route path="/edit/user/:username" element={<EditUser/>} />
