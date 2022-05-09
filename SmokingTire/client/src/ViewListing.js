@@ -23,7 +23,7 @@ function ViewListing() {
                     }
                 })
                 .then(response => {
-                    if(response.status == 200) {
+                    if(response.status === 200) {
                         return response.json();
                     } else {
                         console.log(response);
@@ -50,7 +50,7 @@ function ViewListing() {
 
     return (
         <>
-            { listing != undefined || listing != null ? (
+            { listing !== undefined || listing !== null ? (
                 <div className="listing-item">
                     <h3>{listing.car.make.model.modelYear} {listing.car.make.makeName} {listing.car.make.model.modelName}</h3>
                     <h4>Owner: {listing.listingUser.username}</h4>
