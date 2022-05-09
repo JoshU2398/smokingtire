@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -68,7 +67,7 @@ class ListingDbRepoTest {
     void shouldFindById() {
         Listing actual = repo.findByListingId(2);
         assertEquals("this is a public listing", actual.getDescription());
-        assertEquals("bob", actual.getUser().getUsername());
+        assertEquals("bob", actual.getListingUser().getUsername());
         assertEquals("Viper", actual.getCar().getMake().getModel().getModelName());
     }
 
@@ -136,7 +135,7 @@ class ListingDbRepoTest {
         Car car = new Car(1, 500, "rear-wheel drive", "roadster", "manual", make);
         listing.setCar(car);
 
-        listing.setUser(new AppUser(1, "bob"
+        listing.setListingUser(new AppUser(1, "bob"
                 , "$2a$12$HqaU3VlN09ufZ60R8VrLHuIX8H6b1iFDA9AG./vzThpIzhxEIF8nC"
                 , Collections.singleton("USER")));
         return listing;
