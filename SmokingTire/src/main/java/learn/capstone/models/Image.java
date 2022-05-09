@@ -10,6 +10,11 @@ public class Image {
     public Image() {
     }
 
+    public Image(String imageUrl, Integer modelId) {
+        this.imageUrl = imageUrl;
+        this.modelId = modelId;
+    }
+
     public Image(Integer imageId, String imageUrl, Integer modelId) {
         this.imageId = imageId;
         this.imageUrl = imageUrl;

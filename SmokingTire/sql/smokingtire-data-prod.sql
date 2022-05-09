@@ -113,7 +113,7 @@ values
 ('Supra', '1998'),
 ('Viper', '2004');
 
-insert into images(imageUrl, modelId) values ('test_url',1), ('test_url2',2);
+insert into images(imageUrl, modelId) values ('1998Viper.jpg',1), ('supra.jpg',2);
 
 insert into makes(
 makeName,

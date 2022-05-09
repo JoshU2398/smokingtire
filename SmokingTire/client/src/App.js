@@ -14,6 +14,7 @@ import AddUser from './AddUser';
 import EditUser from './EditUser';
 import DeleteUser from './DeleteUser';
 import ViewListing from './ViewListing';
+import UploadImage from './UploadImage';
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
           <Route path="/delete/user/:username" element={<DeleteUser/>} />
           <Route path="/edit/listing/:id" element={<EditListing/>}/>
           <Route path="/delete/listing/:id" element={<DeleteListing/>}/>
+          <Route path='/image/:id' element={<UploadImage/>}/>
           <Route path="*" element={<NotFound/>} />
       </Routes>
     </div>
