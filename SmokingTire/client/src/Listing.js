@@ -75,18 +75,8 @@ function Listing(props) {
                 <p>Drivetrain: {car.drivetrain}</p>
                 <p>Transmission: {car.transmission}</p>
             </div>
-            <Link to={'/view/listing/' + listing} onClick={increaseViewCount}>View</Link>
+            <Link to={'/view/listing/' + listing.listingId} onClick={increaseViewCount}>View</Link>
 
-            {user?.user.sub === listing.listingUser.username || user?.user.authorities.includes("ADMIN") ? listing.isAvailable === true ? (
-                <>
-                <Link to={'/edit/listing/' + listing.listingId}>Edit</Link>
-                <Link to={'/delete/listing/' + listing.listingId}>Delete</Link>
-                </>
-            ) : (
-                null
-            ) : (
-                null
-            )}
         </div>
     )
 }
