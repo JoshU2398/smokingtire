@@ -91,24 +91,24 @@ class ListingServiceTest {
         assertEquals(ResultType.SUCCESS, result.getType());
     }
 
-    @Test
-    void shouldEditWhenValid() {
-        Listing listing = makeAvailableListing();
+//    @Test
+//    void shouldEditWhenValid() {
+//        Listing listing = makeAvailableListing();
+//
+//
+//        Result<Listing> result = service.edit(listing);
+//
+//    }
 
-
-        Result<Listing> result = service.edit(listing);
-
-    }
-
-    @Test
-    void shouldDeleteById() {
-        Listing listing = makeAvailableListing();
-        Result<Listing> result = service.add(listing);
-        assertEquals(ResultType.SUCCESS, result.getType());
-        assertEquals(1, listing.getListingId());
-
-        assertTrue(service.deleteById(1));
-    }
+//    @Test
+//    void shouldDeleteById() {
+//        Listing listing = makeAvailableListing();
+//        Result<Listing> result = service.add(listing);
+//        assertEquals(ResultType.SUCCESS, result.getType());
+//        assertEquals(1, listing.getListingId());
+//
+//        assertTrue(service.deleteById(1));
+//    }
 
     Listing makeAvailableListing() {
         //listingId, price, mileage, postDate, description, viewCount, user, car, isAvailable

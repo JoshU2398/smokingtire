@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CarRepo {
     List<Car> findAll();
+    Car findByModelId(Integer modelId);
 }
