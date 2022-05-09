@@ -27,7 +27,7 @@ function ViewListing() {
                         return response.json();
                     } else {
                         console.log(response);
-                        alert("retrieving toEdit failed");
+                        alert("Error: Listing could not be found.");
                     }
                 })
                 .then(retrievedListing => {

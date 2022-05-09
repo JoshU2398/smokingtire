@@ -73,7 +73,7 @@ function DeleteUser() {
     }
 
     function cancel() {
-        navigate("/");
+        navigate("/userpage");
     }
 
     return (
