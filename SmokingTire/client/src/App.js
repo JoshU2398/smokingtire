@@ -10,8 +10,10 @@ import NotFound from './NotFound';
 import AddListing from './AddListing';
 import EditListing from './EditListing';
 import DeleteListing from './DeleteListing';
+import AddUser from './AddUser';
 import EditUser from './EditUser';
 import DeleteUser from './DeleteUser';
+import ViewListing from './ViewListing';
 
 function App() {
 
@@ -34,8 +36,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} /> 
           <Route path="/addListing" element={<AddListing/>}/>
-          <Route path="/login" element={<Login />} />
+          <Route path="/view/listing/:id" element={<ViewListing/>}/>
           <Route path="/userpage" element={<UserPage/>}/>
+          <Route path='/addUser' element={<AddUser/>}/>
           <Route path="/edit/user/:username" element={<EditUser/>} />
           <Route path="/delete/user/:username" element={<DeleteUser/>} />
           <Route path="/edit/listing/:id" element={<EditListing/>}/>

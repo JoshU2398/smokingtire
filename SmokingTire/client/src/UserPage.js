@@ -55,18 +55,18 @@ function UserPage() {
         <>
         <div>
             <h2>Account Details</h2>
-            <Link to={'/edit/user/' + user.user.sub}>Edit Account</Link>
+            <Link to={'/edit/user/' + user.user.sub}>Edit Account</Link><br />
             <Link to={'/delete/user/' + user.user.sub}>Delete Account</Link>
         </div>
 
         <div className='purchased-listings'>
-        <h3>Purchased Listings</h3>
-        {listingFactory(usersPurchased)}
+            <h2>Purchased Listings</h2>
+            {listingFactory(usersPurchased)}
         </div>
 
         <div className='users-active-listings'>
-        <h3>Your Active Listings</h3>
-        {listingFactory(usersListings)}
+            <h2>Your Active Listings</h2>
+            {listingFactory(usersListings)}
         </div>
         </>
     )

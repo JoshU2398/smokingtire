@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
@@ -7,12 +7,10 @@ function AddListing(){
 
     const [price, setPrice] = useState(0);
     const [mileage, setMileage] = useState(0);
-    const [postDate, setPostDate] = useState("");
     const [description, setDescription] = useState("");
     const [viewCount, setViewCount] = useState(0);
     const [user, setUser] = useContext(AuthContext);
     const [car, setCar] = useState({});
-    const [isAvailable, setAvailable] = useState(true);
     const [horsepower, setHorsepower] = useState(0);
     const [drivetrain, setDrivetrain] = useState("");
     const [chassis, setChassis] = useState("");
@@ -22,15 +20,53 @@ function AddListing(){
     const [model, setModel] = useState({});
     const [modelName, setModelName] = useState("");
     const [modelYear, setModelYear] = useState(0);
+    const [postDate, setPostDate] = useState("");
+    const [isAvailable, setAvailable] = useState(true);
+    const [toAdd, setToAdd] = useState(null);
 
     const navigate = useNavigate();
     const jwt = localStorage.getItem("token");
 
-    if(jwt){
-        navigate("addListing");
-    } else {
-        navigate("/");
-    }
+    useEffect(
+        () => {
+            const jwt = localStorage.getItem("token");
+            if(jwt){
+                fetch("http://localhost:8080/api/security/findUser/" + user.user.sub,
+                {
+                    headers: {
+                        Authorization: "Bearer " + jwt
+                    }
+                })
+                .then(response => {
+                    if(response.status == 200){
+                        return response.json();
+                    }else{
+                        console.log(response);
+                        alert("retrieving toAdd failed");
+                    }
+                })
+                .then(retrievedUser => {
+                    console.log(retrievedUser);
+                    setToAdd(retrievedUser);
+                })
+                .catch(rejection => {
+                    console.log(rejection);
+                    alert("Something very bad happened...");
+                });
+            }else{
+                navigate("/login");
+            }
+        },
+        []
+    );
+
+    useEffect(() => {
+        if(jwt){
+            navigate("/addListing");
+        } else {
+            navigate("/");
+        }
+    }, []);
 
 
     function addPriceHandler(e){
@@ -41,23 +77,13 @@ function AddListing(){
         setMileage(e.target.value);
     }
 
-    function addPostDateHandler(e){
-        setPostDate(e.target.value);
-    }
 
     function addDescriptionHandler(e){
         setDescription(e.target.value);
     }
 
-    function addViewCountHandler(e){
-        setViewCount(e.target.value);
-    }
 
-    function addCarHandler(e){
-        setCar(e.target.value);
-    }
-
-    function addHorsePowerHandler(e){
+    function addHorsepowerHandler(e){
         setHorsepower(e.target.value);
     }
 
@@ -73,16 +99,8 @@ function AddListing(){
         setTransmission(e.target.value);
     }
 
-    function addMakeHandler(e){
-        setMake(e.target.value);
-    }
-
     function addMakeNameHandler(e){
         setMakeName(e.target.value);
-    }
-
-    function addModelHandler(e){
-        setModel(e.target.value);
     }
 
     function addModelNameHandler(e){
@@ -97,16 +115,19 @@ function AddListing(){
 
     function handleSubmit(e) {
         e.preventDefault();
+        const updatedUser = {userId:toAdd.userId, username:toAdd.username, password:toAdd.password, roles:toAdd.roles};
 
         let newModel = {
             modelName: modelName,
             modelYear: modelYear
         }
+        console.log(newModel);
 
         let newMake = {
             makeName: makeName,
             model: newModel
         }
+        console.log(newMake);
 
         let newCar = {
             horsepower: horsepower,
@@ -115,18 +136,21 @@ function AddListing(){
             transmission: transmission,
             make: newMake
         }
+            console.log(newCar);
         
         let newListing = {
             price: price,
             mileage: mileage,
-            postDate: postDate,
             description: description,
             viewCount: viewCount,
-            user: user,
-            car: newCar,
-            isAvailable: isAvailable};
+            postDate: postDate,
+            isAvailable: isAvailable,
+            listingUser: updatedUser,
+            car: newCar};
 
-            fetch("http://localhost:8080/api/add", {
+            console.log(updatedUser);
+            console.log(newListing);
+            fetch("http://localhost:8080/api/listings/add", {
                 method: "POST",
                 headers: {
                     Authorization: "Bearer " + jwt,
@@ -135,8 +159,14 @@ function AddListing(){
                 body: JSON.stringify(newListing)
             })
             .then(response => {
-                alert(response.status);
-                navigate("/")
+                if(response.status === 400){
+                    console.log(response);
+                    alert("Something went wrong");
+                    navigate("/addListing");
+                } else {
+                    alert(response.status);
+                    navigate("/")
+                }
             })
             .catch(
                 rejection => console.log("failure ", rejection)
@@ -165,25 +195,11 @@ function AddListing(){
                         onChange={addMileageHandler}></input>
                 </div>
                 <div className="stringInput">
-                    <label htmlFor="postDate"><b>Enter Post Date</b></label>
-                    <input
-                        name="postDate"
-                        placeholder="mm-dd-yyyy"
-                        onChange={addPostDateHandler}></input>
-                </div>
-                <div className="stringInput">
                     <label htmlFor="description"><b>Enter Description</b></label>
-                    <text
+                    <textarea
                         name="Description"
                         placeholder="dummy text"
-                        onChange={addDescriptionHandler}></text>
-                </div>
-                <div className="numInput">
-                    <label htmlFor="viewCount"><b>Enter View Count</b></label>
-                    <input
-                        name="viewCount"
-                        placeholder="0"
-                        onChange={addViewCountHandler}></input>
+                        onChange={addDescriptionHandler}></textarea>
                 </div>
                 <div className="stringInput">
                     <label htmlFor="makeName"><b>Enter Make</b></label>
@@ -206,6 +222,7 @@ function AddListing(){
                         placeholder="0"
                         onChange={addModelYearHandler}></input>
                 </div>
+                <button>Submit</button>
             </form>
         </>
 

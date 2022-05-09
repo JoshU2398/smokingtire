@@ -1,9 +1,8 @@
-import { useContext, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import AuthContext from './AuthContext';
 
 function DeleteUser() { 
-    const [toDelete, setToDelete] = useContext(AuthContext);
+    const [toDelete, setToDelete] = useState(null);
     const {username} = useParams(toDelete);
     const navigate = useNavigate();
 
@@ -22,7 +21,7 @@ function DeleteUser() {
                         return response.json();
                     }else{
                         console.log(response);
-                        alert("retrieving toDelete failed");
+                        alert("retrieving toEdit failed");
                     }
                 })
                 .then(retrievedUser => {
@@ -33,12 +32,14 @@ function DeleteUser() {
                     console.log(rejection);
                     alert("Something very bad happened...");
                 });
-            }else{
+            } else {
                 navigate("/login");
             }
         },
         []
     );
+
+    console.log(toDelete?.userId)
 
     function handleDelete(event) {
         event.preventDefault();
@@ -59,6 +60,7 @@ function DeleteUser() {
                 } else if (response.status === 404) {
                     alert("User not found.");
                 } else {
+                    console.log(response)
                     alert("Failed with status: \n\n" + response.status);
                 }
 
@@ -71,7 +73,7 @@ function DeleteUser() {
     }
 
     function cancel() {
-        navigate("/userpage");
+        navigate("/");
     }
 
     return (

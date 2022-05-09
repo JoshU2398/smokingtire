@@ -1,6 +1,5 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import AuthContext from "./AuthContext";
 
 function EditUser(){
 
@@ -8,8 +7,6 @@ function EditUser(){
     const [toEdit, setToEdit] = useState(null);
 
     const {username} = useParams();
-
-    const [userStatus, setUserStatus] = useContext(AuthContext);
 
     const nav = useNavigate();
 
@@ -91,15 +88,19 @@ function EditUser(){
         });
     }
 
+    function cancel() {
+        nav("/userpage");
+    }
 
     return toEdit ? <form onSubmit={handleEditSubmit}>
             <label htmlFor="username">New Username: </label><br/>
-            <textarea className="username-edit" id="username" value={toEdit?.username} onChange={handleUsernameChange}></textarea><br/>
+            <input className="username-edit" id="username" value={toEdit?.username} onChange={handleUsernameChange}></input><br/>
 
             <label htmlFor="password">New Password: </label><br/>
             <input type="password" id="password" onChange={handlePasswordChange}></input><br/>
 
             <button>Submit</button>
+            <button onClick={cancel}>Cancel</button>
 
     </form> :
     <></>

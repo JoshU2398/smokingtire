@@ -36,9 +36,14 @@ function Nav() {
                             </li>
                         </>
                     ) : (
-                        <li>
-                            <Link to="/login">Login</Link>
-                        </li>
+                        <>
+                            <li>
+                                <Link to="/login">Login</Link><br />
+                            </li>
+                            <li>
+                                <Link to="/addUser">Register</Link>
+                            </li>
+                        </>
                     )}
 
                 </ul>
