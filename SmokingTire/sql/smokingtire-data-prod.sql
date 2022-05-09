@@ -19,6 +19,13 @@ modelId        int primary key auto_increment,
 modelName      varchar(20) not null,
 modelYear      year not null
     );
+    
+create table images(
+imageId 		int primary key auto_increment,
+imageUrl 		varchar(100),
+modelId 		int not null,
+constraint fk_images_modelId foreign key (modelId) references models(modelId)
+);
 
 
 
@@ -106,6 +113,7 @@ values
 ('Supra', '1998'),
 ('Viper', '2004');
 
+insert into images(imageUrl, modelId) values ('test_url',1), ('test_url2',2);
 
 insert into makes(
 makeName,
