@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
 function Listing(props) {
+
+    const { listingId, description, userId, carId, postDate, viewCount, mileage, price, isAvailable } = props.listingObj;
+
     console.log(props.listingObj);
     const temp = props.listingObj;
 
@@ -23,11 +26,12 @@ function Listing(props) {
     const model = car.make.model.modelName;
     const modelYear = car.make.model.modelYear;
 
+
     const [user, setUser] = useContext(AuthContext);
     const nav = useNavigate();
 
     function increaseViewCount() {
- 
+
         const jwt = localStorage.getItem("token");
         if (jwt) {
             fetch("http://localhost:8080/api/listings/increaseViewCount/" + listing.listingId,
