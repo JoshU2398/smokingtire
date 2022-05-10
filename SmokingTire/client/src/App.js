@@ -14,6 +14,7 @@ import AddUser from './AddUser';
 import EditUser from './EditUser';
 import DeleteUser from './DeleteUser';
 import ViewListing from './ViewListing';
+import PurchaseListing from './PurchaseListing';
 import UploadImage from './UploadImage';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path="/login" element={<Login />} /> 
           <Route path="/addListing" element={<AddListing/>}/>
           <Route path="/view/listing/:id/:imageUrl" element={<ViewListing/>}/>
+          <Route path="/purchase/:id" element={<PurchaseListing/>}/>
           <Route path="/userpage" element={<UserPage/>}/>
           <Route path='/addUser' element={<AddUser/>}/>
           <Route path="/edit/user/:username" element={<EditUser/>} />
