@@ -61,8 +61,10 @@ views            int not null,
 mileage       int not null,
 price         int not null,
 isAvailable	  boolean not null,
+imageId		  int not null,
 constraint fk_listings_users foreign key (userId) references users(userId),
-constraint fk_listings_cars foreign key (carId) references cars(carId)
+constraint fk_listings_cars foreign key (carId) references cars(carId),
+constraint fk_listings_images foreign key (imageId) references images(imageId)
 
 );
 
@@ -113,7 +115,7 @@ values
 ('Supra', '1998'),
 ('Viper', '2004');
 
-insert into images(imageUrl, modelId) values ('test_url',1), ('test_url2',2);
+insert into images(imageUrl, modelId) values ('1998Viper.jpg',1), ('supra.jpg',2);
 
 insert into makes(
 makeName,
@@ -144,11 +146,12 @@ createDate,
 views,
 mileage,
 price,
-isAvailable
+isAvailable,
+imageId
 ) 
 values 
-('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000, 0), 
-('this is a public listing', 1, 1, '2020-04-05', 8792, 2000, 120000, 1);
+('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000, 0, 2), 
+('this is a public listing', 1, 1, '2020-04-05', 8792, 2000, 120000, 1, 1);
     
 
  
@@ -227,11 +230,12 @@ createDate,
 views,
 mileage,
 price,
-isAvailable
+isAvailable,
+imageId
 ) 
 values 
-('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000, 0), 
-('this is a public listing', 1, 1, '2020-04-05', 8792, 2000, 120000, 1);
+('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000, 0, 2), 
+('this is a public listing', 1, 1, '2020-04-05', 8792, 2000, 120000, 1, 1);
 
 
 
