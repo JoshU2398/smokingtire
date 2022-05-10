@@ -83,9 +83,9 @@ function PurchaseListing() {
                     + "\nPrice: " + toConvert.price + " " 
                     + "\nPurchaser: \n" 
                     + name + " " 
-                    + "\nEmail: " + toEmail  
+                    + "\nEmail: " + toEmail + " "
                     + "\nAddress: \n"
-                    + streetAddress + "\n " 
+                    + streetAddress + " \n" 
                     + city + ", " + state + " " + zip;
 
         fetch("http://localhost:8080/email/" + toEmail + "/" + body, {
