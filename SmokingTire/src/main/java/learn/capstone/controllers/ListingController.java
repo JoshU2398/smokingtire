@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"})
@@ -91,7 +92,7 @@ public class ListingController {
 
     @PutMapping("/increaseViewCount/{listingId}")
     public ResponseEntity<Object> increaseViewCount(@PathVariable Integer listingId, @RequestBody Listing listing) {
-        if (listingId != listing.getListingId()) {
+        if (!Objects.equals(listingId, listing.getListingId())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 

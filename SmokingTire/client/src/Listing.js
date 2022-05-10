@@ -1,11 +1,11 @@
 
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
 function Listing(props) {
 
-    const { listingId, description, userId, carId, postDate, viewCount, mileage, price, isAvailable } = props.listingObj;
+    const { listingId, description, userId, carId, postDate, viewCount, mileage, price, isAvailable, imageUrl } = props.listingObj;
 
     console.log(props.listingObj);
     const temp = props.listingObj;
@@ -13,7 +13,7 @@ function Listing(props) {
     const listing = {
         listingId:temp.listingId, description:temp.description, listingUser:temp.listingUser, 
         car:temp.car, postDate:temp.postDate, viewCount:temp.viewCount, mileage:temp.mileage, 
-        price:temp.price, isAvailable:temp.available
+        price:temp.price, isAvailable:temp.available, imageUrl:temp.imageUrl
     };
 
     const listingUser = {userId:listing.listingUser.userId, username:listing.listingUser.username,
@@ -25,14 +25,40 @@ function Listing(props) {
     const make = car.make.makeName;
     const model = car.make.model.modelName;
     const modelYear = car.make.model.modelYear;
+    const jwt = localStorage.getItem("token");
 
-
+    const [image, setImage] = useState(null);
     const [user, setUser] = useContext(AuthContext);
     const nav = useNavigate();
 
+    useEffect(() => {
+        fetch("http://localhost:8080/api/image/" + imageUrl, {
+            headers: {
+                Authorization: "Bearer " + jwt
+            }
+        })
+        .then(response => {
+            if (response.status === 200){
+                return response.blob();
+            } else {
+                alert("We couldn't find the image!")
+            }
+        })
+        .then(imageBlob => {
+            console.log(imageBlob);
+            const imageObjectURL = URL.createObjectURL(imageBlob);
+            setImage(imageObjectURL);
+        })
+        .catch(rejection => {
+            console.log(JSON.stringify(rejection));
+            alert("Your server isn't on.")
+        });
+    }, 
+    []);
+
+
     function increaseViewCount() {
 
-        const jwt = localStorage.getItem("token");
         if (jwt) {
             fetch("http://localhost:8080/api/listings/increaseViewCount/" + listing.listingId,
                 {
@@ -66,20 +92,13 @@ function Listing(props) {
     return (
         <div className="listing-item">
             <h3>{modelYear} {make} {model}</h3>
-            <h4>Owner: {listing.listingUser.username}</h4>
+            {image !== undefined || image !== null ? <img src={image} alt="Not found."></img> : null }
             <p>Posted on: {listing.postDate}</p>
             <p>Views: {listing.viewCount}</p>
             <p>Price: ${listing.price}</p>
-            <p>Description: {listing.description}</p>
+            <p>Mileage: {listing.mileage}</p>
 
-            <div className="car-details">
-                <p>Body: {car.chassis}</p>
-                <p>Mileage: {listing.mileage}</p>
-                <p>Horsepower: {car.horsepower}</p>
-                <p>Drivetrain: {car.drivetrain}</p>
-                <p>Transmission: {car.transmission}</p>
-            </div>
-            <Link to={'/view/listing/' + listing.listingId} onClick={increaseViewCount}>View</Link>
+            <Link to={'/view/listing/' + listing.listingId + "/"  + listing.imageUrl} onClick={increaseViewCount}>View</Link>
 
         </div>
     )

@@ -27,7 +27,7 @@ public class ListingDbRepo implements ListingRepo {
 
     @Override
     public List<Listing> findAllAvailableListings() {
-        final String sql = "select listingId, listingText, createDate, views, mileage, price, isAvailable "
+        final String sql = "select listingId, listingText, createDate, views, mileage, price, isAvailable, imageUrl "
                 + "from listings where isAvailable = true;";
 
         List<Listing> result = template.query(sql, new ListingMapper()).stream().collect(Collectors.toList());
@@ -41,7 +41,7 @@ public class ListingDbRepo implements ListingRepo {
 
     @Override
     public List<Listing> findPurchasedListingsByUser(String username) {
-        final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price, l.isAvailable "
+        final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price, l.isAvailable, l.imageUrl "
                 + "from listings l "
                 + "inner join users u on l.userId = u.userId "
                 + "where l.isAvailable = false and u.username = ?;";
@@ -57,7 +57,7 @@ public class ListingDbRepo implements ListingRepo {
 
     @Override
     public List<Listing> findAllAvailableByUser(String username) {
-        final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price, l.isAvailable "
+        final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price, l.isAvailable, l.imageUrl "
                 + "from listings l "
                 + "inner join users u on l.userId = u.userId "
                 + "where l.isAvailable = true and u.username = ?;";
@@ -74,7 +74,7 @@ public class ListingDbRepo implements ListingRepo {
     @Override
     @Transactional
     public List<Listing> findByMakeId(int makeId) {
-        final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price, l.isAvailable "
+        final String sql = "select l.listingId, l.listingText, l.createDate, l.views, l.mileage, l.price, l.isAvailable, l.imageUrl "
                 + "from listings l "
                 + "inner join cars c on c.carId = l.carId "
                 + "inner join makes m on m.makeId = c.makeId "
@@ -92,7 +92,7 @@ public class ListingDbRepo implements ListingRepo {
     @Override
     @Transactional
     public List<Listing> findByModelId(int modelId) {
-        final String sql = "select l.listingId, l.listingText, l.userId, l.carId, l.createDate, l.views, l.mileage, l.price, l.isAvailable "
+        final String sql = "select l.listingId, l.listingText, l.userId, l.carId, l.createDate, l.views, l.mileage, l.price, l.isAvailable, l.imageUrl "
                 + "from listings l "
                 + "inner join cars c on c.carId = l.carId "
                 + "inner join makes m on m.makeId = c.makeId "
@@ -111,7 +111,7 @@ public class ListingDbRepo implements ListingRepo {
 
     @Override
     public List<Listing> findByPriceRange(Integer min, Integer max) {
-        final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price, isAvailable "
+        final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price, isAvailable, l.imageUrl "
                 + "from listings "
                 + "where price between ? and ?;";
 
@@ -127,7 +127,7 @@ public class ListingDbRepo implements ListingRepo {
 
     @Override
     public Listing findByListingId(int listingId) {
-        final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price, isAvailable "
+        final String sql = "select listingId, listingText, userId, carId, createDate, views, mileage, price, isAvailable, imageUrl "
                 + "from listings "
                 + "where listingId = ?;";
 
@@ -143,8 +143,8 @@ public class ListingDbRepo implements ListingRepo {
 
     @Override
     public Listing add(Listing toAdd) {
-        final String sql = "insert into listings (listingText, userId, carId, createDate, views, mileage, price, isAvailable)"
-                + "values (?,?,?,?,?,?,?,?)";
+        final String sql = "insert into listings (listingText, userId, carId, createDate, views, mileage, price, isAvailable, imageUrl)"
+                + "values (?,?,?,?,?,?,?,?,?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = template.update(connection -> {
@@ -157,6 +157,7 @@ public class ListingDbRepo implements ListingRepo {
             ps.setInt(6, toAdd.getMileage());
             ps.setInt(7, toAdd.getPrice());
             ps.setBoolean(8, true);
+            ps.setString(9, toAdd.getImageUrl());
             return ps;
         }, keyHolder);
 

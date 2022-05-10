@@ -23,29 +23,24 @@ public class Listing {
     @NotNull(message = "Car is required.")
     Car car;
     Boolean isAvailable;
+    @NotNull(message = "At least one image is required.")
+    String imageUrl;
 
 
     public Listing() {
     }
 
-    public Listing(Integer listingId, Integer price, Integer mileage, LocalDate postDate, String description, Integer viewCount, AppUser user, Car car, boolean isAvailable) {
+    public Listing(Integer listingId, Integer price, Integer mileage, LocalDate postDate, String description, Integer viewCount, AppUser listingUser, Car car, Boolean isAvailable, String imageUrl) {
         this.listingId = listingId;
         this.price = price;
         this.mileage = mileage;
         this.postDate = postDate;
         this.description = description;
         this.viewCount = viewCount;
-        this.listingUser = user;
+        this.listingUser = listingUser;
         this.car = car;
         this.isAvailable = isAvailable;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
+        this.imageUrl = imageUrl;
     }
 
     public Integer getListingId() {
@@ -104,7 +99,15 @@ public class Listing {
         this.listingUser = listingUser;
     }
 
-    public Boolean isAvailable() {
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public Boolean getAvailable() {
         return isAvailable;
     }
 
@@ -112,16 +115,24 @@ public class Listing {
         isAvailable = available;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Listing listing = (Listing) o;
-        return isAvailable == listing.isAvailable && Objects.equals(listingId, listing.listingId) && Objects.equals(price, listing.price) && Objects.equals(mileage, listing.mileage) && Objects.equals(postDate, listing.postDate) && Objects.equals(description, listing.description) && Objects.equals(viewCount, listing.viewCount) && Objects.equals(listingUser, listing.listingUser) && Objects.equals(car, listing.car);
+        return Objects.equals(listingId, listing.listingId) && Objects.equals(price, listing.price) && Objects.equals(mileage, listing.mileage) && Objects.equals(postDate, listing.postDate) && Objects.equals(description, listing.description) && Objects.equals(viewCount, listing.viewCount) && Objects.equals(listingUser, listing.listingUser) && Objects.equals(car, listing.car) && Objects.equals(isAvailable, listing.isAvailable) && Objects.equals(imageUrl, listing.imageUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(listingId, price, mileage, postDate, description, viewCount, listingUser, car, isAvailable);
+        return Objects.hash(listingId, price, mileage, postDate, description, viewCount, listingUser, car, isAvailable, imageUrl);
     }
 }

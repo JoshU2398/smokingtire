@@ -5,16 +5,17 @@ import AuthContext from "./AuthContext";
 function ViewListing() {
 
     const [listing, setListing] = useState(null);
-    const {id} = useParams();
+    const {id, imageUrl} = useParams();
 
     const[userStatus, setUserStatus] = useContext(AuthContext);
 
     const nav = useNavigate();
+    const jwt = localStorage.getItem("token");
+    const [image, setImage] = useState(null);
 
     useEffect(
         () => {
     
-            const jwt = localStorage.getItem("token");
             if(jwt){
     
                 fetch("http://localhost:8080/api/listings/findListing/" + id, {
@@ -45,14 +46,40 @@ function ViewListing() {
         []
     );
 
+    useEffect(() => {
+        fetch("http://localhost:8080/api/image/" + imageUrl, {
+            headers: {
+                Authorization: "Bearer " + jwt
+            }
+        })
+        .then(response => {
+            if (response.status === 200){
+                return response.blob();
+            } else {
+                alert("We couldn't find the image!")
+            }
+        })
+        .then(imageBlob => {
+            console.log(imageBlob);
+            const imageObjectURL = URL.createObjectURL(imageBlob);
+            setImage(imageObjectURL);
+        })
+        .catch(rejection => {
+            console.log(JSON.stringify(rejection));
+            alert("Your server isn't on.")
+        });
+    }, 
+    []);
+
     console.log(listing);
     console.log(userStatus?.user.sub)
 
     return (
         <>
-            { listing !== undefined || listing !== null ? (
+            { listing != undefined || listing != null ? (
                 <div className="listing-item">
                     <h3>{listing.car.make.model.modelYear} {listing.car.make.makeName} {listing.car.make.model.modelName}</h3>
+                    {image !== undefined || image !== null ? <img src={image} alt="Not found."></img> : null }
                     <h4>Owner: {listing.listingUser.username}</h4>
                     <p>Posted on: {listing.postDate}</p>
                     <p>Views: {listing.viewCount}</p>

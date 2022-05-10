@@ -21,8 +21,7 @@ modelYear      year not null
     );
     
 create table images(
-imageId 		int primary key auto_increment,
-imageUrl 		varchar(100),
+imageUrl 		varchar(100) primary key,
 modelId 		int not null,
 constraint fk_images_modelId foreign key (modelId) references models(modelId)
 );
@@ -61,8 +60,10 @@ views            int not null,
 mileage       int not null,
 price         int not null,
 isAvailable	  boolean not null,
+imageUrl 	  varchar(100) not null,
 constraint fk_listings_users foreign key (userId) references users(userId),
-constraint fk_listings_cars foreign key (carId) references cars(carId)
+constraint fk_listings_cars foreign key (carId) references cars(carId),
+constraint fk_listings_images foreign key (imageUrl) references images(imageUrl)
 
 );
 
@@ -113,7 +114,7 @@ values
 ('Supra', '1998'),
 ('Viper', '2004');
 
-insert into images(imageUrl, modelId) values ('1998Viper.jpg',1), ('supra.jpg',2);
+insert into images(imageUrl, modelId) values ('1998Viper.jpg',2), ('supra.jpg',1);
 
 insert into makes(
 makeName,
@@ -144,9 +145,10 @@ createDate,
 views,
 mileage,
 price,
-isAvailable
+isAvailable,
+imageUrl
 ) 
 values 
-('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000, 0), 
-('this is a public listing', 1, 1, '2020-04-05', 8792, 2000, 120000, 1);
+('this is a private listing', 1, 2, '2020-04-06', 6523, 20000, 70000, 0, 'supra.jpg'), 
+('this is a public listing', 1, 1, '2020-04-05', 8792, 2000, 120000, 1, '1998Viper.jpg');
     

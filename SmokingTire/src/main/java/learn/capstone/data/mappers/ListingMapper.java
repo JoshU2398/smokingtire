@@ -20,6 +20,7 @@ public class ListingMapper implements RowMapper<Listing> {
             listing.setPostDate(rs.getDate("createDate").toLocalDate());
         }
         listing.setAvailable(rs.getBoolean("isAvailable"));
+        listing.setImageUrl(rs.getString("imageUrl"));
 
         return listing;
     }

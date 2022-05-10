@@ -27,9 +27,9 @@ public class ImageUploadController {
         this.storageService = storageService;
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, @PathVariable Integer id){
-        storageService.store(file, id);
+    @PostMapping("/{modelId}")
+    public ResponseEntity handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, @PathVariable Integer modelId){
+        storageService.store(file, modelId);
         redirectAttributes.addFlashAttribute("message", "you successfully uploaded " + file.getOriginalFilename() + "!");
         return ResponseEntity.ok().build();
     }
@@ -39,6 +39,7 @@ public class ImageUploadController {
         InputStream fileStream = new FileInputStream("./listingImages/" + imageName);
         return IOUtils.toByteArray(fileStream);
     }
+
 
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exception){
