@@ -27,7 +27,7 @@ public class ModelDbRepo implements ModelRepo {
     public List<Model> findAllByMake(Integer makeId) {
         String sql = "select mo.modelId, mo.modelName, mo.modelYear "
                 + "from makes m "
-                + "inner join models mo on m.makeId = mo.makeId "
+                + "inner join models mo on m.modelId = mo.modelId "
                 + "where m.makeId = ?;";
 
         return template.query(sql, new ModelMapper(), makeId).stream().collect(Collectors.toList());
