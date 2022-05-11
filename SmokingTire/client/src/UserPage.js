@@ -1,13 +1,48 @@
 import {useState, useEffect, useContext} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Listing from "./Listing";
 import AuthContext from './AuthContext';
 
 function UserPage() {
 
     const [user, setUser] = useContext(AuthContext);
+    const jwt = localStorage.getItem("token");
+    const [userId, setUserId] = useState(null);
+
     const [usersListings, setUsersListings] = useState([]);
     const [usersPurchased, setUsersPurchased] = useState([]);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+
+        if(jwt) {
+            fetch("http://localhost:8080/api/security/findUser/" + user.user.sub,
+            {
+                headers: {
+                    Authorization: "Bearer " + jwt
+                }
+            })
+            .then(response => {
+                if(response.status == 200){
+                    return response.json();
+                }else{
+                    console.log(response);
+                    alert("retrieving toEdit failed");
+                }
+            })
+            .then(retrievedUser => {
+                console.log(retrievedUser);
+                setUserId(retrievedUser.userId);
+            })
+            .catch(rejection => {
+                console.log(rejection);
+                alert("Something very bad happened...");
+            });
+        } else {
+            navigate("/login");
+        }
+    },[]);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/listings/userSelling/" + user.user.sub)
@@ -56,7 +91,7 @@ function UserPage() {
         <div>
             <h2>Account Details</h2>
             <Link to={'/edit/user/' + user.user.sub}>Edit Account</Link><br />
-            <Link to={'/delete/user/' + user.user.sub}>Delete Account</Link>
+            <Link to={'/delete/user/' + userId}>Delete Account</Link>
         </div>
 
         <div className='purchased-listings'>
