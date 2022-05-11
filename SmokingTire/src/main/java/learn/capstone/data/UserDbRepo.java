@@ -95,6 +95,7 @@ public class UserDbRepo implements UserRepo {
 
     @Override
     public boolean remove(Integer userId) {
+        template.update("delete from listings where userId = ?;", userId);
         template.update("delete from userroles where userId = ?;", userId);
         return template.update("delete from users where userId = ?;", userId) > 0;
     }
