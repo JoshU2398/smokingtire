@@ -27,11 +27,12 @@ function Listings() {
     console.log(listings)
 
     function listingFactory() {
-        return listings.map(listing => <Listing
-            key={listing.listingId}
-            listingObj={listing}
-            removeFromState={removeListingFromState}
-        />);
+        return listings.map(listing => <div className="col-4"> 
+            <Listing
+                key={listing.listingId}
+                listingObj={listing}
+                removeFromState={removeListingFromState}
+            /></div>);
     }
 
 
