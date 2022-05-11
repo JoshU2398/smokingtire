@@ -7,6 +7,16 @@
 */
 
 
+.home-page {
+  color: #fff;
+  background-image: url('../public/smokingtire.jpg');
+  background-color: #000;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -24,6 +34,7 @@ code {
 
 .listing-item {
   border-radius: 50px;
+  padding: 30px;
   font-size: medium;
   font-family: "Times New Roman", Times, serif;
 }
@@ -33,9 +44,28 @@ code {
 }
 
 .bg-primary {
-  background-color: red !important;
+  background-color: #F25F5C !important;
 }
 
 .btn-primary {
-  background-color: red;
+  background-color: #F25F5C;
 }
+
+/* start nav */
+.navbar-brand {
+  font-family: 'Times New Roman', Times, serif !important;
+  font-weight: 800 !important;
+  font-size: 30px;
+
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white !important;
+}
+
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .show>.nav-link {
+  color: rgb(211, 215, 250) !important;
+}
+
+/* end nav */
