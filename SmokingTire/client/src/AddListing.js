@@ -72,7 +72,7 @@ function AddListing(){
         }
     }, []);
 
-    const onSubmit
+    
 
 
     // function addPriceHandler(e){
