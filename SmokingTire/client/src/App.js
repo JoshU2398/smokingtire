@@ -25,17 +25,17 @@ function App() {
 
   useEffect(() => {
     const jwt_token = localStorage.getItem("token");
-    if(jwt_token){
-        setUser({user: jwtDecode(jwt_token)});
+    if (jwt_token) {
+      setUser({ user: jwtDecode(jwt_token) });
     }
   }, []);
 
 
   return (
     <AuthContext.Provider value={[user, setUser]}>
-    <div className="App">
-      <Nav />
-      <Routes>
+      <div className="App">
+        <Nav />
+        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/viewListings" element={<Listings/>}/>
@@ -52,6 +52,7 @@ function App() {
           <Route path="*" element={<NotFound/>} />
       </Routes>
     </div>
+
     </AuthContext.Provider>
   );
 }
