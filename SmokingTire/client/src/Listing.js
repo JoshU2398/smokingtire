@@ -11,13 +11,15 @@ function Listing(props) {
     const temp = props.listingObj;
 
     const listing = {
-        listingId:temp.listingId, description:temp.description, listingUser:temp.listingUser, 
-        car:temp.car, postDate:temp.postDate, viewCount:temp.viewCount, mileage:temp.mileage, 
-        price:temp.price, isAvailable:temp.available, imageUrl:temp.imageUrl
+        listingId: temp.listingId, description: temp.description, listingUser: temp.listingUser,
+        car: temp.car, postDate: temp.postDate, viewCount: temp.viewCount, mileage: temp.mileage,
+        price: temp.price, isAvailable: temp.available, imageUrl: temp.imageUrl
     };
 
-    const listingUser = {userId:listing.listingUser.userId, username:listing.listingUser.username,
-        password:listing.listingUser.password, roles:listing.listingUser.roles};
+    const listingUser = {
+        userId: listing.listingUser.userId, username: listing.listingUser.username,
+        password: listing.listingUser.password, roles: listing.listingUser.roles
+    };
     listing.listingUser = listingUser;
     console.log(listing);
 
@@ -37,24 +39,24 @@ function Listing(props) {
                 Authorization: "Bearer " + jwt
             }
         })
-        .then(response => {
-            if (response.status === 200){
-                return response.blob();
-            } else {
-                alert("We couldn't find the image!")
-            }
-        })
-        .then(imageBlob => {
-            console.log(imageBlob);
-            const imageObjectURL = URL.createObjectURL(imageBlob);
-            setImage(imageObjectURL);
-        })
-        .catch(rejection => {
-            console.log(JSON.stringify(rejection));
-            alert("Your server isn't on.")
-        });
-    }, 
-    []);
+            .then(response => {
+                if (response.status === 200) {
+                    return response.blob();
+                } else {
+                    alert("We couldn't find the image!")
+                }
+            })
+            .then(imageBlob => {
+                console.log(imageBlob);
+                const imageObjectURL = URL.createObjectURL(imageBlob);
+                setImage(imageObjectURL);
+            })
+            .catch(rejection => {
+                console.log(JSON.stringify(rejection));
+                alert("Your server isn't on.")
+            });
+    },
+        []);
 
 
     function increaseViewCount() {
@@ -92,13 +94,13 @@ function Listing(props) {
     return (
         <div className="listing-item">
             <h3>{modelYear} {make} {model}</h3>
-            {image !== undefined || image !== null ? <img src={image} alt="Not found."></img> : null }
+            {image !== undefined || image !== null ? <img src={image} alt="Not found."></img> : null}
             <p>Posted on: {listing.postDate}</p>
             <p>Views: {listing.viewCount}</p>
             <p>Price: ${listing.price}</p>
             <p>Mileage: {listing.mileage}</p>
 
-            <Link to={'/view/listing/' + listing.listingId + "/"  + listing.imageUrl} onClick={increaseViewCount}>View</Link>
+            <Link to={'/view/listing/' + listing.listingId + "/" + listing.imageUrl} onClick={increaseViewCount}>View</Link>
 
         </div>
     )
