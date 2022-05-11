@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Listing from './Listing';
+import Form from './Form';
 
 function Listings() {
     const [listings, setListings] = useState([]);
@@ -40,6 +41,8 @@ function Listings() {
         <div className="main">
             <div className="view-listings">
                 <h2>Cars For Sale</h2>
+                <p>Filter search: </p>
+                <Form/>
                 {listingFactory()}
             </div>
         </div>
