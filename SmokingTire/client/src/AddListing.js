@@ -1,9 +1,13 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import AuthContext from "./AuthContext";
 
 
 function AddListing(){
+
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const [listing, setListing] = useState({});
 
     const [price, setPrice] = useState(0);
     const [mileage, setMileage] = useState(0);
@@ -68,117 +72,119 @@ function AddListing(){
         }
     }, []);
 
-
-    function addPriceHandler(e){
-        setPrice(e.target.value);
-    }
-
-    function addMileageHandler(e){
-        setMileage(e.target.value);
-    }
+    const onSubmit
 
 
-    function addDescriptionHandler(e){
-        setDescription(e.target.value);
-    }
+    // function addPriceHandler(e){
+    //     setPrice(e.target.value);
+    // }
+
+    // function addMileageHandler(e){
+    //     setMileage(e.target.value);
+    // }
 
 
-    function addHorsepowerHandler(e){
-        setHorsepower(e.target.value);
-    }
-
-    function addDrivetrainHandler(e){
-        setDrivetrain(e.target.value);
-    }
-
-    function addChassisHandler(e){
-        setChassis(e.target.value);
-    }
-
-    function addTransmissionHandler(e){
-        setTransmission(e.target.value);
-    }
-
-    function addMakeNameHandler(e){
-        setMakeName(e.target.value);
-    }
-
-    function addModelNameHandler(e){
-        setModelName(e.target.value);
-    }
-
-    function addModelYearHandler(e){
-        setModelYear(e.target.value);
-    }
+    // function addDescriptionHandler(e){
+    //     setDescription(e.target.value);
+    // }
 
 
+    // function addHorsepowerHandler(e){
+    //     setHorsepower(e.target.value);
+    // }
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        const updatedUser = {userId:toAdd.userId, username:toAdd.username, password:toAdd.password, roles:toAdd.roles};
+    // function addDrivetrainHandler(e){
+    //     setDrivetrain(e.target.value);
+    // }
 
-        let newModel = {
-            modelName: modelName,
-            modelYear: modelYear
-        }
-        console.log(newModel);
+    // function addChassisHandler(e){
+    //     setChassis(e.target.value);
+    // }
 
-        let newMake = {
-            makeName: makeName,
-            model: newModel
-        }
-        console.log(newMake);
+    // function addTransmissionHandler(e){
+    //     setTransmission(e.target.value);
+    // }
 
-        let newCar = {
-            horsepower: horsepower,
-            drivetrain: drivetrain,
-            chassis: chassis,
-            transmission: transmission,
-            make: newMake
-        }
-            console.log(newCar);
+    // function addMakeNameHandler(e){
+    //     setMakeName(e.target.value);
+    // }
+
+    // function addModelNameHandler(e){
+    //     setModelName(e.target.value);
+    // }
+
+    // function addModelYearHandler(e){
+    //     setModelYear(e.target.value);
+    // }
+
+
+
+    // function handleSubmit(e) {
+    //     e.preventDefault();
+    //     const updatedUser = {userId:toAdd.userId, username:toAdd.username, password:toAdd.password, roles:toAdd.roles};
+
+    //     let newModel = {
+    //         modelName: modelName,
+    //         modelYear: modelYear
+    //     }
+    //     console.log(newModel);
+
+    //     let newMake = {
+    //         makeName: makeName,
+    //         model: newModel
+    //     }
+    //     console.log(newMake);
+
+    //     let newCar = {
+    //         horsepower: horsepower,
+    //         drivetrain: drivetrain,
+    //         chassis: chassis,
+    //         transmission: transmission,
+    //         make: newMake
+    //     }
+    //         console.log(newCar);
         
-        let newListing = {
-            price: price,
-            mileage: mileage,
-            description: description,
-            viewCount: viewCount,
-            postDate: postDate,
-            isAvailable: isAvailable,
-            listingUser: updatedUser,
-            car: newCar};
+    //     let newListing = {
+    //         price: price,
+    //         mileage: mileage,
+    //         description: description,
+    //         viewCount: viewCount,
+    //         postDate: postDate,
+    //         isAvailable: isAvailable,
+    //         listingUser: updatedUser,
+    //         car: newCar};
 
-            console.log(updatedUser);
-            console.log(newListing);
-            fetch("http://localhost:8080/api/listings/add", {
-                method: "POST",
-                headers: {
-                    Authorization: "Bearer " + jwt,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(newListing)
-            })
-            .then(response => {
-                if(response.status === 400){
-                    console.log(response);
-                    alert("Something went wrong");
-                    navigate("/addListing");
-                } else {
-                    alert(response.status);
-                    navigate("/")
-                }
-            })
-            .catch(
-                rejection => console.log("failure ", rejection)
-            );
-    }
+    //         console.log(updatedUser);
+    //         console.log(newListing);
+    //         fetch("http://localhost:8080/api/listings/add", {
+    //             method: "POST",
+    //             headers: {
+    //                 Authorization: "Bearer " + jwt,
+    //                 "Content-Type": "application/json"
+    //             },
+    //             body: JSON.stringify(newListing)
+    //         })
+    //         .then(response => {
+    //             if(response.status === 400){
+    //                 console.log(response);
+    //                 alert("Something went wrong");
+    //                 navigate("/addListing");
+    //             } else {
+    //                 alert(response.status);
+    //                 navigate("/")
+    //             }
+    //         })
+    //         .catch(
+    //             rejection => console.log("failure ", rejection)
+    //         );
+    // }
 
 
 
 
     return (
         <>
-            <form className="addListing" onSubmit={handleSubmit}>
+            <form className="addListing" onSubmit={handleSubmit(onSubmit)}>
                 <h3 className="addListingTitle">Create a Listing</h3>
                 <div className="numInput">
                     <label htmlFor="price"><b>Enter Price</b></label>
