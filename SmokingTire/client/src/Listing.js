@@ -32,11 +32,7 @@ function Listing(props) {
     const nav = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/image/" + imageUrl, {
-            headers: {
-                Authorization: "Bearer " + jwt
-            }
-        })
+        fetch("http://localhost:8080/api/image/" + imageUrl)
         .then(response => {
             if (response.status === 200){
                 return response.blob();

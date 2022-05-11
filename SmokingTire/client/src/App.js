@@ -16,6 +16,7 @@ import DeleteUser from './DeleteUser';
 import ViewListing from './ViewListing';
 import PurchaseListing from './PurchaseListing';
 import UploadImage from './UploadImage';
+import Listings from './Listings';
 
 function App() {
 
@@ -36,7 +37,8 @@ function App() {
       <Nav />
       <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} /> 
+          <Route path="/login" element={<Login />} />
+          <Route path="/viewListings" element={<Listings/>}/>
           <Route path="/addListing" element={<AddListing/>}/>
           <Route path="/view/listing/:id/:imageUrl" element={<ViewListing/>}/>
           <Route path="/purchase/:id" element={<PurchaseListing/>}/>

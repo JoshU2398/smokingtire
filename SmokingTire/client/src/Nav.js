@@ -23,7 +23,11 @@ function Nav() {
                     </li>
 
                     <li>
-                        <Link to="/addListing">Add Listing</Link>
+                        <Link to="/viewListings">Buy a Car</Link>
+                    </li>
+
+                    <li>
+                        <Link to="/addListing">Sell Your Car</Link>
                     </li>
 
                     {user?.user ? (
