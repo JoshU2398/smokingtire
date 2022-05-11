@@ -6,3 +6,6 @@
 
 # Docker artifacts
 Dockerfile*
+
+#Target Directory
+**/target/*.*
