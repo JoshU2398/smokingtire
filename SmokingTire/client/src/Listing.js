@@ -34,29 +34,26 @@ function Listing(props) {
     const nav = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/image/" + imageUrl, {
-            headers: {
-                Authorization: "Bearer " + jwt
+        fetch("http://localhost:8080/api/image/" + imageUrl)
+        .then(response => {
+            if (response.status === 200){
+                return response.blob();
+            } else {
+                alert("We couldn't find the image!")
             }
         })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.blob();
-                } else {
-                    alert("We couldn't find the image!")
-                }
-            })
-            .then(imageBlob => {
-                console.log(imageBlob);
-                const imageObjectURL = URL.createObjectURL(imageBlob);
-                setImage(imageObjectURL);
-            })
-            .catch(rejection => {
-                console.log(JSON.stringify(rejection));
-                alert("Your server isn't on.")
-            });
-    },
-        []);
+        .then(imageBlob => {
+            console.log(imageBlob);
+            const imageObjectURL = URL.createObjectURL(imageBlob);
+            setImage(imageObjectURL);
+        })
+        .catch(rejection => {
+            console.log(JSON.stringify(rejection));
+            alert("Your server isn't on.")
+        });
+    }, 
+    []);
+
 
 
     function increaseViewCount() {

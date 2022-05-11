@@ -16,6 +16,7 @@ import DeleteUser from './DeleteUser';
 import ViewListing from './ViewListing';
 import PurchaseListing from './PurchaseListing';
 import UploadImage from './UploadImage';
+import Listings from './Listings';
 
 function App() {
 
@@ -24,19 +25,20 @@ function App() {
 
   useEffect(() => {
     const jwt_token = localStorage.getItem("token");
-    if(jwt_token){
-        setUser({user: jwtDecode(jwt_token)});
+    if (jwt_token) {
+      setUser({ user: jwtDecode(jwt_token) });
     }
   }, []);
 
 
   return (
     <AuthContext.Provider value={[user, setUser]}>
-    <div className="App">
-      <Nav />
-      <Routes>
+      <div className="App">
+        <Nav />
+        <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} /> 
+          <Route path="/login" element={<Login />} />
+          <Route path="/viewListings" element={<Listings/>}/>
           <Route path="/addListing" element={<AddListing/>}/>
           <Route path="/view/listing/:id/:imageUrl" element={<ViewListing/>}/>
           <Route path="/purchase/:id" element={<PurchaseListing/>}/>
@@ -50,6 +52,7 @@ function App() {
           <Route path="*" element={<NotFound/>} />
       </Routes>
     </div>
+
     </AuthContext.Provider>
   );
 }

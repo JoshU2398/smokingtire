@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-
+import Listing from './Listing';
 
 function Listings() {
     const [listings, setListings] = useState([]);
@@ -24,24 +24,25 @@ function Listings() {
 
     }
 
+    console.log(listings)
+
     function listingFactory() {
-        return listings.map(listing =>
-            <div className="col-4">
-                <Listing
-                    key={listing.listingId}
-                    listingObj={listing}
-                    removeFromState={removeListingFromState}
-                />
-            </div>
-        );
+        return listings.map(listing => <div className="col-4"> 
+            <Listing
+                key={listing.listingId}
+                listingObj={listing}
+                removeFromState={removeListingFromState}
+            /></div>);
     }
 
 
     return (
-        <>
-
-            {listingFactory()}
-        </>
+        <div className="main">
+            <div className="view-listings">
+                <h2>Cars For Sale</h2>
+                {listingFactory()}
+            </div>
+        </div>
     )
 }
 

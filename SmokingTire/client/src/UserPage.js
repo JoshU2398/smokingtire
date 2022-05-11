@@ -80,9 +80,9 @@ function UserPage() {
 
     function listingFactory(props) {
         return props.map(listing => <Listing
-        key={listing.listingId}
-        listingObj={listing}
-        removeFromState={removeListingFromState}
+            key={listing.listingId}
+            listingObj={listing}
+            removeFromState={removeListingFromState}
         />);
     }
 
