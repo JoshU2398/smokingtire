@@ -1,1 +1,1 @@
-window.REACT_APP_API_URL
+window.API_URL = "http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com";
