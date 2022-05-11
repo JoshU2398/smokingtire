@@ -43,7 +43,7 @@ function App() {
           <Route path="/userpage" element={<UserPage/>}/>
           <Route path='/addUser' element={<AddUser/>}/>
           <Route path="/edit/user/:username" element={<EditUser/>} />
-          <Route path="/delete/user/:username" element={<DeleteUser/>} />
+          <Route path="/delete/user/:userId" element={<DeleteUser/>} />
           <Route path="/edit/listing/:id" element={<EditListing/>}/>
           <Route path="/delete/listing/:id" element={<DeleteListing/>}/>
           <Route path='/image/:id' element={<UploadImage/>}/>

@@ -2,10 +2,10 @@ version: "3.9"
 
 services:
   smoking-tires-api:
-    image: <your-dockerhub-username>/smokingtires-api:1.0
+    image: joshund/smokingtires-api:1.0
     environment:
-      - DB_URL=jdbc:mysql://<your-rds-endpoint>:3306/smokingtires_prod
+      - DB_URL=jdbc:mysql://smokingtiresdb.cgaxixhvyl9c.us-east-1.rds.amazonaws.com:3306/smokingtires_prod
       - DB_USERNAME=admin
-      - DB_PASSWORD=<your-rds-password>
+      - DB_PASSWORD=admin-password
     ports:
       - 8080:8080

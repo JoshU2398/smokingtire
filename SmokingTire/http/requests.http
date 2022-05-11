@@ -1,5 +1,5 @@
 
-GET http://localhost:8080/api/listings/findAvailable HTTP/1.1
+GET http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/listings/findAvailable HTTP/1.1
 
 ###
 GET http://localhost:8080/api/listings/userPurchased/bob HTTP/1.1

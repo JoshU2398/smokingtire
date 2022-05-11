@@ -1,87 +1,48 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import AuthContext from './AuthContext';
 
 function DeleteUser() { 
-    const [toDelete, setToDelete] = useState(null);
-    const {username} = useParams(toDelete);
+    const {userId} = useParams();
+    const [user, setUser] = useContext(AuthContext);
+
     const navigate = useNavigate();
-
-    useEffect(
-        () => {
-            const jwt = localStorage.getItem("token");
-            if(jwt){
-                fetch("http://localhost:8080/api/security/findUser/" + username,
-                {
-                    headers: {
-                        Authorization: "Bearer " + jwt
-                    }
-                })
-                .then(response => {
-                    if(response.status == 200){
-                        return response.json();
-                    }else{
-                        console.log(response);
-                        alert("retrieving toEdit failed");
-                    }
-                })
-                .then(retrievedUser => {
-                    console.log(retrievedUser);
-                    setToDelete(retrievedUser);
-                })
-                .catch(rejection => {
-                    console.log(rejection);
-                    alert("Something very bad happened...");
-                });
-            } else {
-                navigate("/login");
-            }
-        },
-        []
-    );
-
-    console.log(toDelete?.userId)
 
     function handleDelete(event) {
         event.preventDefault();
 
-        const jwt = localStorage.getItem("token");
+        localStorage.removeItem("token");
+        setUser(null);
 
-        if (jwt) {
-            fetch("http://localhost:8080/api/security/delete/" + toDelete?.userId, {
-                method: "DELETE",
-                headers: {
-                    Authorization: "Bearer " + jwt
-                }
-            })
-            .then(response => {
+        fetch("http://localhost:8080/api/security/delete/" + userId, {
+            method: "DELETE"
+        })
+        .then(response => {
 
-                if (response.status === 204) {
-                    navigate("/");
-                } else if (response.status === 404) {
-                    alert("User not found.");
-                } else {
-                    console.log(response)
-                    alert("Failed with status: \n\n" + response.status);
-                }
+            if (response.status === 204) {
+                navigate("/");
+            } else if (response.status === 404) {
+                alert("User not found.");
+            } else {
+                console.log(response)
+                alert("Failed with status: \n\n" + response.status);
+            }
 
-            })
-            .catch(rejection => alert("oops! \n\n" + rejection));
-        } else {
-            navigate("/login")
-        }
+        })
+        .catch(rejection => alert("oops! \n\n" + rejection));
 
     }
 
     function cancel() {
-        navigate("/");
+        navigate("/userpage");
     }
 
     return (
         <div className="delete-user">
-            <h2>Delete {toDelete?.username}</h2>
+            <h2>Delete Account</h2>
             
             <div className="delete-user-card">
-                <p>Are you sure you want to delete this account? This action can not be undone.</p>
+                <p>Are you sure you want to delete this account? This action can not be undone and will delete all history of your activity.</p>
 
                 <button id="delete-user" onClick={handleDelete}>Delete</button>&nbsp;
                 <button onClick={cancel}>Cancel</button>
