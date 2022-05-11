@@ -16,6 +16,7 @@ import DeleteUser from './DeleteUser';
 import ViewListing from './ViewListing';
 import PurchaseListing from './PurchaseListing';
 import UploadImage from './UploadImage';
+import Listings from './Listings';
 
 function App() {
 
@@ -37,19 +38,21 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/addListing" element={<AddListing />} />
-          <Route path="/view/listing/:id/:imageUrl" element={<ViewListing />} />
-          <Route path="/purchase/:id" element={<PurchaseListing />} />
-          <Route path="/userpage" element={<UserPage />} />
-          <Route path='/addUser' element={<AddUser />} />
-          <Route path="/edit/user/:username" element={<EditUser />} />
-          <Route path="/delete/user/:userId" element={<DeleteUser />} />
-          <Route path="/edit/listing/:id" element={<EditListing />} />
-          <Route path="/delete/listing/:id" element={<DeleteListing />} />
-          <Route path='/image/:id' element={<UploadImage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
+          <Route path="/viewListings" element={<Listings/>}/>
+          <Route path="/addListing" element={<AddListing/>}/>
+          <Route path="/view/listing/:id/:imageUrl" element={<ViewListing/>}/>
+          <Route path="/purchase/:id" element={<PurchaseListing/>}/>
+          <Route path="/userpage" element={<UserPage/>}/>
+          <Route path='/addUser' element={<AddUser/>}/>
+          <Route path="/edit/user/:username" element={<EditUser/>} />
+          <Route path="/delete/user/:userId" element={<DeleteUser/>} />
+          <Route path="/edit/listing/:id" element={<EditListing/>}/>
+          <Route path="/delete/listing/:id" element={<DeleteListing/>}/>
+          <Route path='/image/:id' element={<UploadImage/>}/>
+          <Route path="*" element={<NotFound/>} />
+      </Routes>
+    </div>
+
     </AuthContext.Provider>
   );
 }
