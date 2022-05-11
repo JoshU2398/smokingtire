@@ -24,32 +24,32 @@ function App() {
 
   useEffect(() => {
     const jwt_token = localStorage.getItem("token");
-    if(jwt_token){
-        setUser({user: jwtDecode(jwt_token)});
+    if (jwt_token) {
+      setUser({ user: jwtDecode(jwt_token) });
     }
   }, []);
 
 
   return (
     <AuthContext.Provider value={[user, setUser]}>
-    <div className="App">
-      <Nav />
-      <Routes>
+      <div className="App">
+        <Nav />
+        <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} /> 
-          <Route path="/addListing" element={<AddListing/>}/>
-          <Route path="/view/listing/:id/:imageUrl" element={<ViewListing/>}/>
-          <Route path="/purchase/:id" element={<PurchaseListing/>}/>
-          <Route path="/userpage" element={<UserPage/>}/>
-          <Route path='/addUser' element={<AddUser/>}/>
-          <Route path="/edit/user/:username" element={<EditUser/>} />
-          <Route path="/delete/user/:userId" element={<DeleteUser/>} />
-          <Route path="/edit/listing/:id" element={<EditListing/>}/>
-          <Route path="/delete/listing/:id" element={<DeleteListing/>}/>
-          <Route path='/image/:id' element={<UploadImage/>}/>
-          <Route path="*" element={<NotFound/>} />
-      </Routes>
-    </div>
+          <Route path="/login" element={<Login />} />
+          <Route path="/addListing" element={<AddListing />} />
+          <Route path="/view/listing/:id/:imageUrl" element={<ViewListing />} />
+          <Route path="/purchase/:id" element={<PurchaseListing />} />
+          <Route path="/userpage" element={<UserPage />} />
+          <Route path='/addUser' element={<AddUser />} />
+          <Route path="/edit/user/:username" element={<EditUser />} />
+          <Route path="/delete/user/:userId" element={<DeleteUser />} />
+          <Route path="/edit/listing/:id" element={<EditListing />} />
+          <Route path="/delete/listing/:id" element={<DeleteListing />} />
+          <Route path='/image/:id' element={<UploadImage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
     </AuthContext.Provider>
   );
 }
