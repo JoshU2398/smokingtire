@@ -77,6 +77,12 @@ function AddListing() {
                 alert("Failure: " + rejection.status + ": " + rejection.statusText)
             });
     }, []);
+
+    useEffect(() => {
+        if (makeId) {
+            findModels();
+        }
+    }, [makeId])
     
     
     function addPriceHandler(e){
@@ -93,6 +99,17 @@ function AddListing() {
 
     function findCar(){
         fetch("http://localhost:8080/api/cars/" + modelId)
+        .then(response => {
+            if(response.status === 200) {
+                return response.json();
+            } else {
+                alert("Something went wrong while fetching the car.");
+            }
+        })
+        .then(carData => setCar(carData))
+        .catch(rejection => {
+            alert("Failure to connect with server probably.");
+        });
     }
     
     function findModels() {
@@ -118,7 +135,6 @@ function AddListing() {
     }
 
     function modelFactory() {
-        {findModels()}
         if (models != null || models != undefined) {
             return models.map(model => <Model
                     key={model.modelId}
@@ -127,14 +143,11 @@ function AddListing() {
          }
     }
 
-    function onSubmit(e) {
-        e.preventDefault();
-        const updatedUser = {userId:toAdd.userId, username:toAdd.username, password:toAdd.password, roles:toAdd.roles};
+    function onSubmit() {
 
-        let newCar = {
-            
-        }
-            console.log(newCar);
+        findCar();
+        console.log(car);
+        const updatedUser = {userId:toAdd.userId, username:toAdd.username, password:toAdd.password, roles:toAdd.roles};
 
         let newListing = {
             price: price,
@@ -144,7 +157,8 @@ function AddListing() {
             postDate: postDate,
             isAvailable: isAvailable,
             listingUser: updatedUser,
-            car: newCar};
+            car: car};
+        console.log(newListing);
 
             fetch("http://localhost:8080/api/listings/add", {
                 method: "POST",
@@ -180,11 +194,11 @@ function AddListing() {
                         <input className="form-control" id="price" {...register("price", {required: true})} /><br/><br/>
 
                         <label className="form-label" htmlFor="make">Car Make:</label><br/>
-                        <select className="form-select" id="make" {...register("make")} onChange={(e) => setMakeId(e.target.value)}>
+                        <select className="form-select" id="make" {...register("make")} onClick={(e) => setMakeId(e.target.value)}>
                             {makeFactory()}   
                         </select><br/><br/>
 
-                        <select className="form-select" id="model" {...register("model")} onChange={(e) => setModelId(e.target.value)}>
+                        <select className="form-select" id="model" {...register("model")} onClick={(e) => setModelId(e.target.value)}>
                             {modelFactory()}   
                         </select><br/><br/>
 
@@ -192,6 +206,7 @@ function AddListing() {
                         {errors.name && <span className="form-error form-text"><i>(This field is required)</i></span>}<br/>
                         <input className="form-control" id="mileage" {...register("mileage", {required: true})} /><br/><br/>
 
+                        <input id="uploadInput" type="file"/>
                         <button>Submit</button>
                     </form>
                 </div>
