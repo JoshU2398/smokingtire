@@ -9,11 +9,16 @@ function Listings() {
     const [modelId, setModelId] = useState(null);
   
     function childToParent(childMakeId, childModelId) {
+        console.log(childMakeId);
+        console.log(childModelId);
+
         setMakeId(childMakeId);
         setModelId(childModelId);
     }
 
     useEffect(() => {
+        console.log(makeId);
+        console.log(modelId);
         if (makeId == null && modelId == null) {
             fetch("http://localhost:8080/api/listings/findAvailable")
                 .then(response => {
@@ -25,9 +30,9 @@ function Listings() {
                 })
                 .then(listingData => setListings(listingData))
                 .catch(rejection => {
-                    alert("Failure: " + rejection.status + ": " + rejection.statusText)
+                    alert("Failure: all")
                 });
-        } else if (makeId != null && modelId == null) {
+        } else if (makeId && modelId == null) {
             fetch("http://localhost:8080/api/listings/findByMake/" + makeId)
                 .then(response => {
                     if (response.status === 200) {
@@ -38,10 +43,10 @@ function Listings() {
                 })
                 .then(listingData => setListings(listingData))
                 .catch(rejection => {
-                    alert("Failure: " + rejection.status + ": " + rejection.statusText)
+                    alert("Failure: makes")
                 });
-        } else if (makeId != null && modelId != null) {
-            fetch("http://localhost:8080/api/listings/findByModel" + modelId)
+        } else if (makeId && modelId) {
+            fetch("http://localhost:8080/api/listings/findByModel/" + modelId)
                 .then(response => {
                     if (response.status === 200) {
                         return response.json();
@@ -51,10 +56,10 @@ function Listings() {
                 })
                 .then(listingData => setListings(listingData))
                 .catch(rejection => {
-                    alert("Failure: " + rejection.status + ": " + rejection.statusText)
+                    alert("Failure: models")
                 });
         }
-    }, []);
+    }, [makeId, modelId]);
 
     function removeListingFromState(listingId) {
         setListings(listings.filter(listing => listing.listingId !== listingId));
