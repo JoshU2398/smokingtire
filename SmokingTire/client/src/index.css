@@ -20,6 +20,14 @@
 }
 
 
+.welcome {
+  font-family: 'Arvo', serif;
+  color: #000;
+  position: relative;
+  text-align: center;
+
+}
+
 .home-page {
   color: #fff;
   background-image: url('../public/smokingtire.jpg');
@@ -45,6 +53,11 @@ code {
 }
 
 
+.carousel {
+  padding: 80px;
+  position: relative;
+}
+
 .listing-item {
   border-radius: 50px;
   padding: 30px;
@@ -54,6 +67,7 @@ code {
 
 .container-fluid {
   padding: 0 !important;
+  width: 100%;
 }
 
 .bg-primary {
@@ -81,4 +95,11 @@ code {
   color: rgb(211, 215, 250) !important;
 }
 
+.nav-item {}
+
 /* end nav */
+
+
+.user-details .purchased-listings .users-active-listings {
+  padding: 50px;
+}

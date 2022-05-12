@@ -3,7 +3,10 @@ import Welcome from "./Welcome";
 function Home() {
     return (
         <div className="home-page">
-            <div className="container">
+
+            <div className="col-2"></div>
+            <div className="container col">
+                <div className="welcome"><Welcome /></div>
                 <div id="carCarousel" className="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div className="carousel-inner">
                         <div className="carousel-item active">
@@ -25,9 +28,11 @@ function Home() {
                         <span className="visually-hidden">Next</span>
                     </button>
                 </div>
-                <Welcome />
+
             </div>
+            <div className="col-2"></div>
         </div>
+
     )
 }
 
