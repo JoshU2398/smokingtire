@@ -28,21 +28,25 @@ function Nav() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link to="/">Home</Link>
+                            <NavLink className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} to="/">Home</NavLink>
                         </li>
 
                         <li className="nav-item">
+
+                            <NavLink className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} to="/addListing">Add Listing</NavLink>
+
                         <Link to="/viewListings">Buy a Car</Link>
                         </li>
 
                         <li className="nav-item">
                             <Link to="/addListing">Sell Your Car</Link>
+
                         </li>
 
                         {user?.user ? (
                             <>
                                 <li className="nav-item">
-                                    <Link to="/userpage">User Profile Page</Link>
+                                    <NavLink className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} to="/userpage">User Profile Page</NavLink>
                                 </li>
                                 <li className="nav-item">
                                     <button onClick={handleLogout}>Logout {user.user.sub}</button>

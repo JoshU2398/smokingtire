@@ -1,4 +1,4 @@
-import {useState, useEffect, useContext} from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Listing from "./Listing";
 import AuthContext from './AuthContext';
@@ -16,65 +16,65 @@ function UserPage() {
 
     useEffect(() => {
 
-        if(jwt) {
+        if (jwt) {
             fetch("http://localhost:8080/api/security/findUser/" + user.user.sub,
-            {
-                headers: {
-                    Authorization: "Bearer " + jwt
-                }
-            })
-            .then(response => {
-                if(response.status == 200){
-                    return response.json();
-                }else{
-                    console.log(response);
-                    alert("retrieving toEdit failed");
-                }
-            })
-            .then(retrievedUser => {
-                console.log(retrievedUser);
-                setUserId(retrievedUser.userId);
-            })
-            .catch(rejection => {
-                console.log(rejection);
-                alert("Something very bad happened...");
-            });
+                {
+                    headers: {
+                        Authorization: "Bearer " + jwt
+                    }
+                })
+                .then(response => {
+                    if (response.status == 200) {
+                        return response.json();
+                    } else {
+                        console.log(response);
+                        alert("retrieving toEdit failed");
+                    }
+                })
+                .then(retrievedUser => {
+                    console.log(retrievedUser);
+                    setUserId(retrievedUser.userId);
+                })
+                .catch(rejection => {
+                    console.log(rejection);
+                    alert("Something very bad happened...");
+                });
         } else {
             navigate("/login");
         }
-    },[]);
+    }, []);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/listings/userSelling/" + user.user.sub)
-        .then(response => {
-            if(response.status === 200){
+            .then(response => {
+                if (response.status === 200) {
                     return response.json();
-            }else{
-                alert("Something went wrong while fetching...");
-            }
-        })
-        .then(listingData => setUsersListings(listingData))
-        .catch(rejection => {
-            alert("Failure: " + rejection.status + ": " + rejection.statusText)
-        });
+                } else {
+                    alert("Something went wrong while fetching...");
+                }
+            })
+            .then(listingData => setUsersListings(listingData))
+            .catch(rejection => {
+                alert("Failure: " + rejection.status + ": " + rejection.statusText)
+            });
     }, []);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/listings/userPurchased/" + user.user.sub)
-        .then(response => {
-            if(response.status === 200){
+            .then(response => {
+                if (response.status === 200) {
                     return response.json();
-            }else{
-                alert("Something went wrong while fetching...");
-            }
-        })
-        .then(listingData => setUsersPurchased(listingData))
-        .catch(rejection => {
-            alert("Failure: " + rejection.status + ": " + rejection.statusText)
-        });
+                } else {
+                    alert("Something went wrong while fetching...");
+                }
+            })
+            .then(listingData => setUsersPurchased(listingData))
+            .catch(rejection => {
+                alert("Failure: " + rejection.status + ": " + rejection.statusText)
+            });
     }, []);
 
-    function removeListingFromState(listingId){
+    function removeListingFromState(listingId) {
         setUsersListings(usersListings.filter(listing => listing.listingId !== listingId));
     }
 
@@ -88,21 +88,21 @@ function UserPage() {
 
     return (
         <>
-        <div>
-            <h2>Account Details</h2>
-            <Link to={'/edit/user/' + user.user.sub}>Edit Account</Link><br />
-            <Link to={'/delete/user/' + userId}>Delete Account</Link>
-        </div>
+            <div className="user-details">
+                <h2>Account Details</h2>
+                <Link to={'/edit/user/' + user.user.sub}>Edit Account</Link><br />
+                <Link to={'/delete/user/' + userId}>Delete Account</Link>
+            </div>
 
-        <div className='purchased-listings'>
-            <h2>Purchased Listings</h2>
-            {listingFactory(usersPurchased)}
-        </div>
+            <div className='purchased-listings'>
+                <h2>Purchased Listings</h2>
+                {listingFactory(usersPurchased)}
+            </div>
 
-        <div className='users-active-listings'>
-            <h2>Your Active Listings</h2>
-            {listingFactory(usersListings)}
-        </div>
+            <div className='users-active-listings'>
+                <h2>Your Active Listings</h2>
+                {listingFactory(usersListings)}
+            </div>
         </>
     )
 }

@@ -89,7 +89,7 @@ function Listing(props) {
     }
 
     return (
-        <div className="listing-item">
+        <div className="container">
             <h3>{modelYear} {make} {model}</h3>
             {image !== undefined || image !== null ? <img src={image} alt="Not found."></img> : null}
             <p>Posted on: {listing.postDate}</p>
