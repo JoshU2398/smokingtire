@@ -25,6 +25,8 @@
   color: #000;
   position: relative;
   text-align: center;
+  font-style: italic;
+  font-size: 150%;
 
 }
 
@@ -36,6 +38,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  height: 100vh;
 }
 
 body {
