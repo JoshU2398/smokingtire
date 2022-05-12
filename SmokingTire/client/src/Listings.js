@@ -41,7 +41,6 @@ function Listings() {
         <div className="main">
             <div className="view-listings">
                 <h2>Cars For Sale</h2><br />
-                <p>Filter search: </p>
 
                 {listingFactory()}
             </div>
