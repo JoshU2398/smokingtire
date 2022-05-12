@@ -1,26 +1,84 @@
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import Make from "./Make";
+import Model from "./Model";
+
 function Form() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+
+    const [makes, setMakes] = useState([]);
+    const [makeId, setMakeId] = useState(null);
+
+    const [models, setModels] = useState([]);
+    const [modelId, setModelId] = useState("Model");
+
+    useEffect(() => {
+        fetch("http://localhost:8080/api/makes")
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    alert("Something went wrong while fetching...");
+                }
+            })
+            .then(makesData => setMakes(makesData))
+            .catch(rejection => {
+                alert("Failure: " + rejection.status + ": " + rejection.statusText)
+            });
+    }, []);
+    console.log(makes)
+
+    function makeFactory() {
+        return makes.map(make => <Make
+                key={make.makeId}
+                makeObj={make}
+            />);
+    }
+
+    function findModels() {
+        console.log(makeId);
+
+        fetch("http://localhost:8080/api/models/findByMake/" + makeId)
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    alert("Something went wrong while fetching...");
+                }
+            })
+            .then(modelsData => setModels(modelsData))
+            .catch(rejection => {
+                alert("Failure: " + rejection.status + ": " + rejection.statusText)
+            });
+    }
+
+    function modelFactory() {
+        if (models != null || models != undefined) {
+            return models.map(model => <Model
+                    key={model.modelId}
+                    modelObj={model}
+                />);
+         }
+    }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            {/* register your input into the hook by invoking the "register" function */}
-            <input defaultValue="test" {...register("example")} />
+        <div className="dropdowns">
+            <select className="make-dropdown" id="makes" placeholder="Make"
+              onChange={(e) => setMakeId(e.target.value)}>
+                {makeFactory()}
+            </select>
 
-            {/* include validation with required or other standard HTML validation rules */}
-            <input {...register("exampleRequired", { required: true })} />
-            {/* errors will return when field validation fails  */}
-            {errors.exampleRequired && <span>This field is required</span>}
-
-            <input type="submit" />
-
-
-
-
-
-
-
-        </form>
+            {makeId != null || makeId != undefined ? 
+                <>
+                {findModels()}
+                <select className="model-dropdown" id="models" placeholder="Model"
+                    onChange={(e) => setModelId(e.target.value)}>
+                    {modelFactory()}
+                </select>
+                </>
+            :
+                <select value={modelId}></select>
+            }
+        </div>
     );
 }
 

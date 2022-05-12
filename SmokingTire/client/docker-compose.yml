@@ -2,8 +2,8 @@ version: "3.9"
 
 services:
   smoking-tires-api:
-    image: <your-dockerhub-name>/smokingtires-ui:2.0
+    image: joshund/smokingtires-ui:2.0
     environment:
-      - API_URL=<your-api-url>/smokingtires_prod
+      - API_URL=http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/smokingtires_prod
     ports:
       - 80:80

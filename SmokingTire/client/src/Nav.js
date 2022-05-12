@@ -20,6 +20,7 @@ function Nav() {
     return (
         <nav className='px-5 navbar navbar-expand-lg navbar-dark bg-primary'>
             <div className="container-fluid">
+
                 <NavLink className="navbar-brand" to="/">SmokingTire</NavLink>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -31,7 +32,15 @@ function Nav() {
                         </li>
 
                         <li className="nav-item">
+
                             <NavLink className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} to="/addListing">Add Listing</NavLink>
+
+                        <Link to="/viewListings">Buy a Car</Link>
+                        </li>
+
+                        <li className="nav-item">
+                            <Link to="/addListing">Sell Your Car</Link>
+
                         </li>
 
                         {user?.user ? (
@@ -56,6 +65,7 @@ function Nav() {
 
                     </ul>
                 </div>
+
             </div>
         </nav>
     )

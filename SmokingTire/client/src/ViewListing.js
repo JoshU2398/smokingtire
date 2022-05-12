@@ -13,45 +13,30 @@ function ViewListing() {
     const jwt = localStorage.getItem("token");
     const [image, setImage] = useState(null);
 
-    useEffect(
-        () => {
-    
-            if(jwt){
-    
-                fetch("http://localhost:8080/api/listings/findListing/" + id, {
-                    headers: {
-                        Authorization: "Bearer " + jwt
-                    }
-                })
-                .then(response => {
-                    if(response.status === 200) {
-                        return response.json();
-                    } else {
-                        console.log(response);
-                        alert("retrieving toEdit failed");
-                    }
-                })
-                .then(retrievedListing => {
-                    console.log(retrievedListing);
-                    setListing(retrievedListing);
-                })
-                .catch(rejection => {
-                    console.log(rejection);
-                    alert("Rejected!");
-                })
-                } else {
-                    nav("/login");
-                }
-            },
-        []
-    );
-
     useEffect(() => {
-        fetch("http://localhost:8080/api/image/" + imageUrl, {
-            headers: {
-                Authorization: "Bearer " + jwt
+    
+        fetch("http://localhost:8080/api/listings/findListing/" + id)
+        .then(response => {
+            if(response.status === 200) {
+                return response.json();
+            } else {
+                console.log(response);
+                alert("retrieving toEdit failed");
             }
         })
+        .then(retrievedListing => {
+            console.log(retrievedListing);
+            setListing(retrievedListing);
+        })
+        .catch(rejection => {
+            console.log(rejection);
+            alert("Rejected!");
+        })
+        
+    },[]);
+
+    useEffect(() => {
+        fetch("http://localhost:8080/api/image/" + imageUrl)
         .then(response => {
             if (response.status === 200){
                 return response.blob();
