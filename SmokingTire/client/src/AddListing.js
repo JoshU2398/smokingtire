@@ -84,35 +84,35 @@ function AddListing() {
             findModels();
         }
     }, [makeId])
-    
-    
-    function addPriceHandler(e){
+
+
+    function addPriceHandler(e) {
         setPrice(e.target.value);
     }
-    
-    function addDescriptionHandler(e){
+
+    function addDescriptionHandler(e) {
         setDescription(e.target.value);
     }
-    
-    function addMileageHandler(e){
+
+    function addMileageHandler(e) {
         setMileage(e.target.value);
     }
 
-    function findCar(){
+    function findCar() {
         fetch("http://localhost:8080/api/cars/" + modelId)
-        .then(response => {
-            if(response.status === 200) {
-                return(response.json());
-            } else {
-                alert("Something went wrong while fetching the car.");
-            }
-        })
-        .then(carData => setCar(carData))
-        .catch(rejection => {
-            alert("Failure to connect with server probably.");
-        });
+            .then(response => {
+                if (response.status === 200) {
+                    return (response.json());
+                } else {
+                    alert("Something went wrong while fetching the car.");
+                }
+            })
+            .then(carData => setCar(carData))
+            .catch(rejection => {
+                alert("Failure to connect with server probably.");
+            });
     }
-    
+
     function findModels() {
         fetch("http://localhost:8080/api/models/findByMake/" + makeId)
             .then(response => {
@@ -130,18 +130,18 @@ function AddListing() {
 
     function makeFactory() {
         return makes.map(make => <Make
-                key={make.makeId}
-                makeObj={make}
-            />);
+            key={make.makeId}
+            makeObj={make}
+        />);
     }
 
     function modelFactory() {
         if (models != null || models != undefined) {
             return models.map(model => <Model
-                    key={model.modelId}
-                    modelObj={model}
-                />);
-         }
+                key={model.modelId}
+                modelObj={model}
+            />);
+        }
     }
 
     function uploadImage(e) {
@@ -162,7 +162,7 @@ function AddListing() {
 
         findCar();
         console.log(car);
-        const updatedUser = {userId:toAdd.userId, username:toAdd.username, password:toAdd.password, roles:toAdd.roles};
+        const updatedUser = { userId: toAdd.userId, username: toAdd.username, password: toAdd.password, roles: toAdd.roles };
 
         let newListing = {
             price: price,
@@ -173,19 +173,20 @@ function AddListing() {
             isAvailable: isAvailable,
             listingUser: updatedUser,
             car: car,
-            imageUrl: imageUrl};
+            imageUrl: imageUrl
+        };
         console.log(newListing);
 
-            fetch("http://localhost:8080/api/listings/add", {
-                method: "POST",
-                headers: {
-                    Authorization: "Bearer " + jwt,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(newListing)
-            })
+        fetch("http://localhost:8080/api/listings/add", {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + jwt,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newListing)
+        })
             .then(response => {
-                if(response.status === 400){
+                if (response.status === 400) {
                     console.log(response);
                     alert("Something went wrong");
                     nav("/addListing");
@@ -200,35 +201,36 @@ function AddListing() {
 
     return (
         <div className="row">
-            <div className="col"/>
+            <div className="col" />
             <div className="col-6">
                 <div className="semi-opaque form-card">
-                    <form onSubmit={handleSubmit(onSubmit)}>  
-                        <label className="form-label" htmlFor="price">Enter Listing Price:</label><br/>
-                        <input className="form-control" name="price" placeholder="0" onChange={addPriceHandler} /><br/>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <label className="form-label" htmlFor="price">Enter Listing Price:</label><br />
+                        <input className="form-control" name="price" placeholder="0" onChange={addPriceHandler} /><br />
 
-                        <label className="form-label" htmlFor="make">Car Make:</label><br/>
+                        <label className="form-label" htmlFor="make">Car Make:</label><br />
                         <select className="form-select" id="make" {...register("make")} onClick={(e) => setMakeId(e.target.value)}>
-                            {makeFactory()}   
-                        </select><br/><br/>
+                            {makeFactory()}
+                        </select><br /><br />
 
+                        <label className="form-label" htmlFor="make">Car Model:</label><br />
                         <select className="form-select" id="model" {...register("model")} onClick={(e) => setModelId(e.target.value)}>
-                            {modelFactory()}   
-                        </select><br/><br/>
+                            {modelFactory()}
+                        </select><br /><br />
 
                         <label className="form-label" htmlFor="description">Description</label><br />
-                        <textarea  name="description" placeholder="description" onChange={addDescriptionHandler}></textarea><br /><br />
+                        <textarea name="description" placeholder="description" onChange={addDescriptionHandler}></textarea><br /><br />
 
                         <label className="form-label" htmlFor="mileage">Enter Current Mileage:</label>
-                        <input className="form-control" name="mileage" onChange={addMileageHandler} /><br/><br/>
+                        <input className="form-control" name="mileage" onChange={addMileageHandler} /><br /><br />
 
-                        <input id="uploadInput" type="file" onChange={uploadImage}/><br />
+                        <input id="uploadInput" type="file" onChange={uploadImage} /><br />
 
                         <button type="submit">Submit</button>
                     </form>
                 </div>
             </div>
-            <div className="col"/>
+            <div className="col" />
         </div>
 
     )
