@@ -16,8 +16,9 @@ function AddListing() {
     const [viewCount, setViewCount] = useState(0);
     const [user, setUser] = useContext(AuthContext);
     const [car, setCar] = useState({});
+    const [imageUrl, setImageUrl] = useState("");
 
-    const [postDate, setPostDate] = useState("");
+    const [postDate, setPostDate] = useState("2022-05-12");
     const [isAvailable, setAvailable] = useState(true);
     const [toAdd, setToAdd] = useState(null);
 
@@ -101,7 +102,7 @@ function AddListing() {
         fetch("http://localhost:8080/api/cars/" + modelId)
         .then(response => {
             if(response.status === 200) {
-                return response.json();
+                return(response.json());
             } else {
                 alert("Something went wrong while fetching the car.");
             }
@@ -143,6 +144,20 @@ function AddListing() {
          }
     }
 
+    function uploadImage(e) {
+        e.preventDefault();
+
+        let data = new FormData();
+
+        data.append("file", document.getElementById("uploadInput").files[0]);
+        setImageUrl(document.getElementById("uploadInput").files[0].name);
+
+        fetch("http://localhost:8080/api/image/" + modelId, {
+            method: "POST",
+            body: data
+        })
+    }
+
     function onSubmit() {
 
         findCar();
@@ -157,7 +172,8 @@ function AddListing() {
             postDate: postDate,
             isAvailable: isAvailable,
             listingUser: updatedUser,
-            car: car};
+            car: car,
+            imageUrl: imageUrl};
         console.log(newListing);
 
             fetch("http://localhost:8080/api/listings/add", {
@@ -175,7 +191,6 @@ function AddListing() {
                     nav("/addListing");
                 } else {
                     alert(response.status);
-                    nav("/")
                 }
             })
             .catch(
@@ -189,9 +204,8 @@ function AddListing() {
             <div className="col-6">
                 <div className="semi-opaque form-card">
                     <form onSubmit={handleSubmit(onSubmit)}>  
-                        <label className="form-label" htmlFor="price">Enter Listing Price:</label>
-                        {errors.name && <span className="form-error form-text"><i>(This field is required)</i></span>}<br/>
-                        <input className="form-control" id="price" {...register("price", {required: true})} /><br/><br/>
+                        <label className="form-label" htmlFor="price">Enter Listing Price:</label><br/>
+                        <input className="form-control" name="price" placeholder="0" onChange={addPriceHandler} /><br/>
 
                         <label className="form-label" htmlFor="make">Car Make:</label><br/>
                         <select className="form-select" id="make" {...register("make")} onClick={(e) => setMakeId(e.target.value)}>
@@ -202,12 +216,15 @@ function AddListing() {
                             {modelFactory()}   
                         </select><br/><br/>
 
-                        <label className="form-label" htmlFor="mileage">Enter Current Mileage:</label>
-                        {errors.name && <span className="form-error form-text"><i>(This field is required)</i></span>}<br/>
-                        <input className="form-control" id="mileage" {...register("mileage", {required: true})} /><br/><br/>
+                        <label className="form-label" htmlFor="description">Description</label><br />
+                        <textarea  name="description" placeholder="description" onChange={addDescriptionHandler}></textarea><br /><br />
 
-                        <input id="uploadInput" type="file"/>
-                        <button>Submit</button>
+                        <label className="form-label" htmlFor="mileage">Enter Current Mileage:</label>
+                        <input className="form-control" name="mileage" onChange={addMileageHandler} /><br/><br/>
+
+                        <input id="uploadInput" type="file" onChange={uploadImage}/><br />
+
+                        <button type="submit">Submit</button>
                     </form>
                 </div>
             </div>
