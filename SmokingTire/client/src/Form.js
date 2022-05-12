@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import Make from "./Make";
 import Model from "./Model";
 
-function Form() {
+function Form({childToParent}) {
 
     const [makes, setMakes] = useState([]);
     const [makeId, setMakeId] = useState(null);
@@ -78,6 +77,7 @@ function Form() {
             :
                 <select value={modelId}></select>
             }
+            <button primary onClick={() => childToParent(makeId, modelId)}>Confirm</button>
         </div>
     );
 }

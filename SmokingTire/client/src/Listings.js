@@ -5,19 +5,55 @@ import Form from './Form';
 function Listings() {
     const [listings, setListings] = useState([]);
 
+    const [makeId, setMakeId] = useState(null);
+    const [modelId, setModelId] = useState(null);
+  
+    function childToParent(childMakeId, childModelId) {
+        setMakeId(childMakeId);
+        setModelId(childModelId);
+    }
+
     useEffect(() => {
-        fetch("http://localhost:8080/api/listings/findAvailable")
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json();
-                } else {
-                    alert("Something went wrong while fetching...");
-                }
-            })
-            .then(listingData => setListings(listingData))
-            .catch(rejection => {
-                alert("Failure: " + rejection.status + ": " + rejection.statusText)
-            });
+        if (makeId == null && modelId == null) {
+            fetch("http://localhost:8080/api/listings/findAvailable")
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.json();
+                    } else {
+                        alert("Something went wrong while fetching...");
+                    }
+                })
+                .then(listingData => setListings(listingData))
+                .catch(rejection => {
+                    alert("Failure: " + rejection.status + ": " + rejection.statusText)
+                });
+        } else if (makeId != null && modelId == null) {
+            fetch("http://localhost:8080/api/listings/findByMake/" + makeId)
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.json();
+                    } else {
+                        alert("Something went wrong while fetching...");
+                    }
+                })
+                .then(listingData => setListings(listingData))
+                .catch(rejection => {
+                    alert("Failure: " + rejection.status + ": " + rejection.statusText)
+                });
+        } else if (makeId != null && modelId != null) {
+            fetch("http://localhost:8080/api/listings/findByModel" + modelId)
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.json();
+                    } else {
+                        alert("Something went wrong while fetching...");
+                    }
+                })
+                .then(listingData => setListings(listingData))
+                .catch(rejection => {
+                    alert("Failure: " + rejection.status + ": " + rejection.statusText)
+                });
+        }
     }, []);
 
     function removeListingFromState(listingId) {
@@ -42,7 +78,7 @@ function Listings() {
             <div className="view-listings">
                 <h2>Cars For Sale</h2>
                 <p>Filter search: </p>
-                <Form/>
+                <Form childToParent={childToParent}/>
                 {listingFactory()}
             </div>
         </div>
