@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import Make from "./Make";
 import Model from "./Model";
 
-function Form() {
+function Form(props) {
 
     const [makes, setMakes] = useState([]);
     const [makeId, setMakeId] = useState(null);
 
     const [models, setModels] = useState([]);
-    const [modelId, setModelId] = useState("Model");
+    const [modelId, setModelId] = useState(null);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/makes")
@@ -22,10 +21,15 @@ function Form() {
             })
             .then(makesData => setMakes(makesData))
             .catch(rejection => {
-                alert("Failure: " + rejection.status + ": " + rejection.statusText)
+                alert("Failure: There is an issue with the server. make")
             });
     }, []);
-    console.log(makes)
+
+    useEffect(() => {
+        if (makeId) {
+            findModels();
+        }
+    }, [makeId])
 
     function makeFactory() {
         return makes.map(make => <Make
@@ -35,8 +39,8 @@ function Form() {
     }
 
     function findModels() {
-        console.log(makeId);
 
+        console.log(makeId);
         fetch("http://localhost:8080/api/models/findByMake/" + makeId)
             .then(response => {
                 if (response.status === 200) {
@@ -47,7 +51,7 @@ function Form() {
             })
             .then(modelsData => setModels(modelsData))
             .catch(rejection => {
-                alert("Failure: " + rejection.status + ": " + rejection.statusText)
+                alert("Failure: There is an issue with the server. model")
             });
     }
 
@@ -62,22 +66,24 @@ function Form() {
 
     return (
         <div className="dropdowns">
-            <select className="make-dropdown" id="makes" placeholder="Make"
-              onChange={(e) => setMakeId(e.target.value)}>
-                {makeFactory()}
-            </select>
-
-            {makeId != null || makeId != undefined ? 
-                <>
-                {findModels()}
-                <select className="model-dropdown" id="models" placeholder="Model"
-                    onChange={(e) => setModelId(e.target.value)}>
-                    {modelFactory()}
+            <form onSubmit={() => props.childToParent(makeId, modelId)}>
+                <select className="make-dropdown" id="makes" defaultValue={{ label: "Select Make", value: null }}
+                onClick={(e) => setMakeId(e.target.value)}>
+                    {makeFactory()}
                 </select>
-                </>
-            :
-                <select value={modelId}></select>
-            }
+
+                {makeId != null || makeId != undefined ? 
+                    <>
+                    <select className="model-dropdown" id="models"
+                    onClick={(e) => setModelId(e.target.value)}>
+                        {modelFactory()}
+                    </select>
+                    </>
+                :
+                    <select value={modelId}></select>
+                }
+                <button>Confirm</button>
+            </form>
         </div>
     );
 }
