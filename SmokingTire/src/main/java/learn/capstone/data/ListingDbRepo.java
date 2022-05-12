@@ -78,7 +78,7 @@ public class ListingDbRepo implements ListingRepo {
                 + "from listings l "
                 + "inner join cars c on c.carId = l.carId "
                 + "inner join makes m on m.makeId = c.makeId "
-                + "where m.makeId = ?;";
+                + "where l.isAvailable = true and m.makeId = ?;";
 
         List<Listing> result = template.query(sql, new ListingMapper(), makeId).stream().collect(Collectors.toList());
 
@@ -97,7 +97,7 @@ public class ListingDbRepo implements ListingRepo {
                 + "inner join cars c on c.carId = l.carId "
                 + "inner join makes m on m.makeId = c.makeId "
                 + "inner join models mo on mo.modelId = m.modelId "
-                + "where mo.modelId = ?;";
+                + "where l.isAvailable = true and mo.modelId = ?;";
 
         List<Listing> result = template.query(sql, new ListingMapper(), modelId).stream()
                 .collect(Collectors.toList());

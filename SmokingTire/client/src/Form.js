@@ -8,7 +8,7 @@ function Form(props) {
     const [makeId, setMakeId] = useState(null);
 
     const [models, setModels] = useState([]);
-    const [modelId, setModelId] = useState("Model");
+    const [modelId, setModelId] = useState(null);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/makes")
