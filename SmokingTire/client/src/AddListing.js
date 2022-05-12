@@ -189,8 +189,9 @@ function AddListing() {
                     console.log(response);
                     alert("Something went wrong");
                     nav("/addListing");
-                } else {
-                    alert(response.status);
+                } if(response.status === 201) {
+                    alert("You have successfully created your listing.");
+                    nav("/userpage")
                 }
             })
             .catch(
