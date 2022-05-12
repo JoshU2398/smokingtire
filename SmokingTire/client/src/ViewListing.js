@@ -78,7 +78,13 @@ function ViewListing() {
                         <p>Drivetrain: {listing.car.drivetrain}</p>
                         <p>Transmission: {listing.car.transmission}</p>
                     </div>
-                    {listing.available === true ? <Link to={'/purchase/' + listing.listingId}>Buy Now</Link> : null}
+                    {listing.available === true ? userStatus?.user.sub === listing.listingUser.username ?
+                        <Link to={'/purchase/' + listing.listingId}>Buy Now</Link> 
+                    : 
+                        null
+                    :
+                        null
+                    }
 
                     {userStatus?.user.sub === listing.listingUser.username
                         || userStatus?.user.authorities.includes("ADMIN")

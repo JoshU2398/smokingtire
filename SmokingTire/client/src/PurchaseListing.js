@@ -13,101 +13,101 @@ function PurchaseListing() {
     const [zip, setZip] = useState("");
 
     const [toConvert, setToConvert] = useState(null);
-    const {id} = useParams();
+    const { id } = useParams();
 
     const navigate = useNavigate();
 
     useEffect(
         () => {
-    
-            if(jwt){
-    
+
+            if (jwt) {
+
                 fetch("http://localhost:8080/api/listings/findListing/" + id, {
                     headers: {
                         Authorization: "Bearer " + jwt
                     }
                 })
-                .then(response => {
-                    if(response.status === 200) {
-                        return response.json();
-                    } else {
-                        console.log(response);
-                        alert("retrieving toEdit failed");
-                    }
-                })
-                .then(retrievedListing => {
-                    console.log(retrievedListing);
-                    setToConvert(retrievedListing);
-                })
-                .catch(rejection => {
-                    console.log(rejection);
-                    alert("Rejected!");
-                })
-                } else {
-                    navigate("/login");
-                }
-            },
+                    .then(response => {
+                        if (response.status === 200) {
+                            return response.json();
+                        } else {
+                            console.log(response);
+                            alert("retrieving toEdit failed");
+                        }
+                    })
+                    .then(retrievedListing => {
+                        console.log(retrievedListing);
+                        setToConvert(retrievedListing);
+                    })
+                    .catch(rejection => {
+                        console.log(rejection);
+                        alert("Rejected!");
+                    })
+            } else {
+                navigate("/login");
+            }
+        },
         []
     );
 
-    function toEmailHandler(e){
+    function toEmailHandler(e) {
         setToEmail(e.target.value);
     }
 
-    function nameHandler(e){
+    function nameHandler(e) {
         setName(e.target.value);
     }
 
-    function streetAddressHandler(e){
+    function streetAddressHandler(e) {
         setStreetAddress(e.target.value);
     }
 
-    function cityHandler(e){
+    function cityHandler(e) {
         setCity(e.target.value);
     }
 
-    function stateHandler(e){
+    function stateHandler(e) {
         setState(e.target.value);
     }
 
-    function zipHandler(e){
+    function zipHandler(e) {
         setZip(e.target.value);
     }
 
     function sendEmail(e) {
         e.preventDefault();
 
-        const body = "This is a confirmation for your order. \n" 
-                    + "Seller: " + toConvert.listingUser.username + " " 
-                    + "\nCar: " + toConvert.car.make.model.modelYear + " " + toConvert.car.make.makeName + " "  + toConvert.car.make.model.modelName + " "
-                    + "\nPrice: " + toConvert.price + " " 
-                    + "\nPurchaser: \n" 
-                    + name + " " 
-                    + "\nEmail: " + toEmail + " "
-                    + "\nAddress: \n"
-                    + streetAddress + " \n" 
-                    + city + ", " + state + " " + zip;
+        const body = "This is a confirmation for your order. \n"
+            + "Seller: " + toConvert.listingUser.username + " "
+            + "\nCar: " + toConvert.car.make.model.modelYear + " " + toConvert.car.make.makeName + " " + toConvert.car.make.model.modelName + " "
+            + "\nPrice: " + toConvert.price + " "
+            + "\nPurchaser: \n"
+            + name + " "
+            + "\nEmail: " + toEmail + " "
+            + "\nAddress: \n"
+            + streetAddress + " \n"
+            + city + ", " + state + " " + zip;
 
         fetch("http://localhost:8080/email/" + toEmail + "/" + body, {
             method: "POST"
         })
-        .then(response => {
-            console.log(response)
-            alert("Email sent sucessfully!")
-            navigate("/userpage")
-        })
-        .catch(
-            rejection => console.log("failure ", rejection)
-        );
+            .then(response => {
+                console.log(response)
+                alert("Email sent sucessfully!")
+                navigate("/userpage")
+            })
+            .catch(
+                rejection => console.log("failure ", rejection)
+            );
     }
 
     function convertToSold() {
-        
-        const listingUser = { 
-            userId:toConvert.listingUser.userId, username:toConvert.listingUser.username,
-            password:toConvert.listingUser.password, roles:toConvert.listingUser.roles 
+
+        const listingUser = {
+            userId: toConvert.listingUser.userId, username: toConvert.listingUser.username,
+            password: toConvert.listingUser.password, roles: toConvert.listingUser.roles
         };
-        
+
         if (jwt) {
             fetch("http://localhost:8080/api/listings/convertToSold/" + id,
                 {
@@ -167,7 +167,7 @@ function PurchaseListing() {
                 <button type="submit" onClick={convertToSold}>Purchase</button>
             </form>
         </>
-        )
+    )
 
 }
 
