@@ -86,7 +86,8 @@ code {
   font-family: 'Times New Roman', Times, serif !important;
   font-weight: 800 !important;
   font-size: 30px;
-
+  color: #A8B4A5 !important;
+  font-style: italic;
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -104,5 +105,36 @@ code {
 
 
 .user-details .purchased-listings .users-active-listings {
-  padding: 50px;
+  color: black !important;
+  padding: 100px;
+  margin-left: 70px;
+}
+
+.user-page {
+  /*
+  background-color: #c10a07;
+  */
+
+
+  color: black;
+  background-image: url('../public/smokingtire.jpg');
+  background-color: #000;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100%;
+
+}
+
+
+.main {
+  background-color: #c10a07;
+  background-image: url('../public/smokingtire.jpg');
+
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100%;
 }

@@ -35,24 +35,24 @@ function Listing(props) {
 
     useEffect(() => {
         fetch("http://localhost:8080/api/image/" + imageUrl)
-        .then(response => {
-            if (response.status === 200){
-                return response.blob();
-            } else {
-                alert("We couldn't find the image!")
-            }
-        })
-        .then(imageBlob => {
-            console.log(imageBlob);
-            const imageObjectURL = URL.createObjectURL(imageBlob);
-            setImage(imageObjectURL);
-        })
-        .catch(rejection => {
-            console.log(JSON.stringify(rejection));
-            alert("Your server isn't on.")
-        });
-    }, 
-    []);
+            .then(response => {
+                if (response.status === 200) {
+                    return response.blob();
+                } else {
+                    alert("We couldn't find the image!")
+                }
+            })
+            .then(imageBlob => {
+                console.log(imageBlob);
+                const imageObjectURL = URL.createObjectURL(imageBlob);
+                setImage(imageObjectURL);
+            })
+            .catch(rejection => {
+                console.log(JSON.stringify(rejection));
+                alert("Your server isn't on.")
+            });
+    },
+        []);
 
 
 
@@ -92,12 +92,12 @@ function Listing(props) {
         <div className="container">
             <h3>{modelYear} {make} {model}</h3>
             {image !== undefined || image !== null ? <img src={image} alt="Not found."></img> : null}
-            <p>Posted on: {listing.postDate}</p>
-            <p>Views: {listing.viewCount}</p>
-            <p>Price: ${listing.price}</p>
-            <p>Mileage: {listing.mileage}</p>
+            <p><b>Posted on: {listing.postDate}</b></p>
+            <p><b>Views: {listing.viewCount}</b></p>
+            <p><b>Price: ${listing.price}</b></p>
+            <p><b>Mileage: {listing.mileage}</b></p>
 
-            <Link to={'/view/listing/' + listing.listingId + "/" + listing.imageUrl} onClick={increaseViewCount}>View</Link>
+            <Link to={'/view/listing/' + listing.listingId + "/" + listing.imageUrl} onClick={increaseViewCount}>View</Link><br /><br />
 
         </div>
     )
