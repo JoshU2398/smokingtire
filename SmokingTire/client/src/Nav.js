@@ -33,14 +33,14 @@ function Nav() {
 
                         <li className="nav-item">
 
-                            <NavLink className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} to="/addListing">Add Listing</NavLink>
+                            <NavLink className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} to="/viewListings">Buy a Car</NavLink>
 
-                        <Link to="/viewListings">Buy a Car</Link>
+
                         </li>
 
                         <li className="nav-item">
-                            <Link to="/addListing">Sell Your Car</Link>
 
+                            <NavLink className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} to="/addListing">Sell Your Car</NavLink>
                         </li>
 
                         {user?.user ? (
@@ -55,10 +55,12 @@ function Nav() {
                         ) : (
                             <>
                                 <li className="nav-item">
-                                    <Link to="/login">Login</Link><br />
+
+                                    <NavLink className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} to="/login">Login</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/addUser">Register</Link>
+
+                                    <NavLink className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} to="/addUser">Register</NavLink>
                                 </li>
                             </>
                         )}

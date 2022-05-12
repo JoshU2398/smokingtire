@@ -28,21 +28,21 @@ function Listings() {
     console.log(listings)
 
     function listingFactory() {
-        return listings.map(listing => <div className="col-4"> 
+        return listings.map(listing => <div className="col-4">
             <Listing
                 key={listing.listingId}
                 listingObj={listing}
                 removeFromState={removeListingFromState}
-            /></div>);
+            /><br /><br /></div>);
     }
 
 
     return (
         <div className="main">
             <div className="view-listings">
-                <h2>Cars For Sale</h2>
+                <h2>Cars For Sale</h2><br />
                 <p>Filter search: </p>
-                <Form/>
+                <Form /><br /><br />
                 {listingFactory()}
             </div>
         </div>
