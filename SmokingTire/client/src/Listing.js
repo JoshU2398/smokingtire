@@ -24,9 +24,9 @@ function Listing(props) {
     console.log(listing);
 
     const car = listing.car
-    const make = car.make.makeName;
-    const model = car.make.model.modelName;
-    const modelYear = car.make.model.modelYear;
+    const make = car.model.makeName;
+    const model = car.model.modelName;
+    const modelYear = car.model.modelYear;
     const jwt = localStorage.getItem("token");
 
     const [image, setImage] = useState(null);

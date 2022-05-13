@@ -63,7 +63,7 @@ function ViewListing() {
         <div className="view-listing">
             {listing != undefined || listing != null ? (
                 <div className="listing-item">
-                    <h3>{listing.car.make.model.modelYear} {listing.car.make.makeName} {listing.car.make.model.modelName}</h3>
+                    <h3>{listing.car.model.modelYear} {listing.car.model.makeName} {listing.car.model.modelName}</h3>
                     {image !== undefined || image !== null ? <img src={image} alt="Not found."></img> : null}
                     <h4>Owner: {listing.listingUser.username}</h4>
                     <p>Posted on: {listing.postDate}</p>
