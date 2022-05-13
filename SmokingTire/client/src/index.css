@@ -250,3 +250,15 @@ code {
   background-attachment: fixed;
   height: 100vh;
 }
+
+
+.edit-listing {
+  background-color: #c10a07;
+  background-image: url('../public/smokingtire.jpg');
+
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+}
