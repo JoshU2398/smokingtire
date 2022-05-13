@@ -14,18 +14,18 @@ public class Car {
     @NotNull(message = "Transmission cannot be empty.")
     String transmission;
     @NotNull(message = "Make cannot be empty.")
-    Make make;
+    Model model;
 
     public Car() {
     }
 
-    public Car(Integer carId, Integer horsepower, String drivetrain, String chassis, String transmission, Make make) {
+    public Car(Integer carId, Integer horsepower, String drivetrain, String chassis, String transmission, Model model) {
         this.carId = carId;
         this.horsepower = horsepower;
         this.drivetrain = drivetrain;
         this.chassis = chassis;
         this.transmission = transmission;
-        this.make = make;
+        this.model = model;
     }
 
     public Integer getCarId() {
@@ -68,12 +68,12 @@ public class Car {
         this.transmission = transmission;
     }
 
-    public Make getMake() {
-        return make;
+    public Model getModel() {
+        return model;
     }
 
-    public void setMake(Make make) {
-        this.make = make;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
     @Override
@@ -81,11 +81,11 @@ public class Car {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return Objects.equals(carId, car.carId) && Objects.equals(horsepower, car.horsepower) && Objects.equals(drivetrain, car.drivetrain) && Objects.equals(chassis, car.chassis) && Objects.equals(transmission, car.transmission) && Objects.equals(make, car.make);
+        return Objects.equals(carId, car.carId) && Objects.equals(horsepower, car.horsepower) && Objects.equals(drivetrain, car.drivetrain) && Objects.equals(chassis, car.chassis) && Objects.equals(transmission, car.transmission) && Objects.equals(model, car.model);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(carId, horsepower, drivetrain, chassis, transmission, make);
+        return Objects.hash(carId, horsepower, drivetrain, chassis, transmission, model);
     }
 }
