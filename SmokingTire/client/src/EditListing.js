@@ -16,12 +16,13 @@ function EditListing() {
 
             const jwt = localStorage.getItem("token");
 
-            if (jwt) {
-                fetch("http://localhost:8080/api/listings/findListing/" + id,
-                    {
-                        headers: {
-                            Authorization: "Bearer " + jwt
-                        }
+
+            if(jwt) {
+                fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/listings/findListing/" + id,
+                {
+                    headers: {
+                        Authorization: "Bearer " + jwt
+
                     }
                 ).then(response => {
                     if (response.status == 200) {
@@ -84,12 +85,16 @@ function EditListing() {
             password: toEdit.listingUser.password, roles: toEdit.listingUser.roles
         };
         const listing = {
-            listingId: toEdit.listingId, description: toEdit.description, listingUser: listingUser,
-            car: toEdit.car, postDate: toEdit.postDate, viewCount: toEdit.viewCount, mileage: toEdit.mileage,
-            price: toEdit.price, isAvailable: toEdit.available
+
+            listingId:toEdit.listingId, description:toEdit.description, listingUser:listingUser, 
+            car:toEdit.car, postDate:toEdit.postDate, viewCount:toEdit.viewCount, mileage:toEdit.mileage, 
+            price:toEdit.price, isAvailable:toEdit.available, imageUrl:toEdit.imageUrl
+
         };
 
-        fetch("http://localhost:8080/api/listings/edit/" + id, {
+        console.log(listing);
+
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/listings/edit/" + id, {
             method: "PUT",
             headers: {
                 Authorization: "Bearer " + jwt,
@@ -116,9 +121,11 @@ function EditListing() {
         nav("/userpage");
     }
 
-    return toEdit ? <div className="edit-listing"><form onSubmit={handleEditSubmit}>
-        <label htmlFor="listingText">Description: </label><br />
-        <textarea className="listing-edit" id="listingText" value={toEdit?.description} onChange={handleTextChange}></textarea><br /><br />
+
+    return toEdit ? <form className="edit-listing" onSubmit={handleEditSubmit}>
+                <label htmlFor="listingText">Description: </label><br/>
+                <textarea className="listing-edit" id="listingText" value={toEdit?.description} onChange={handleTextChange}></textarea><br/>
+
 
         <label htmlFor="listingPrice">Price: </label><br />
         <textarea className="listing-edit" id="listingPrice" value={toEdit?.price} onChange={handlePriceChange}></textarea><br /><br />

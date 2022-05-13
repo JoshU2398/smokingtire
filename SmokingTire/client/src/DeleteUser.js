@@ -14,7 +14,7 @@ function DeleteUser() {
         localStorage.removeItem("token");
         setUser(null);
 
-        fetch("http://localhost:8080/api/security/delete/" + userId, {
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/security/delete/" + userId, {
             method: "DELETE"
         })
         .then(response => {

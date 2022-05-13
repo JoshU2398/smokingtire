@@ -5,7 +5,7 @@ GET http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/l
 GET http://localhost:8080/api/listings/userPurchased/bob HTTP/1.1
 
 ###
-GET http://localhost:8080/api/listings/findByMake/1 HTTP/1.1
+GET http://localhost:8080/api/models/findByMake/4 HTTP/1.1
 
 ###
 GET http://localhost:8080/api/listings/findByModel/2 HTTP/1.1

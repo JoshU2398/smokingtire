@@ -12,7 +12,7 @@ function SelectModel() {
     useEffect(() => {
 
         if(jwt){
-            fetch("http://localhost:8080/api/makes", 
+            fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/makes", 
             {
                 headers: {
                     Authorization: "Bearer " + jwt

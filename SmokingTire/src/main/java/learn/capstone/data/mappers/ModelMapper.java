@@ -13,6 +13,7 @@ public class ModelMapper implements RowMapper<Model> {
         toReturn.setModelId(rs.getInt("modelId"));
         toReturn.setModelName(rs.getString("modelName"));
         toReturn.setModelYear(rs.getInt("modelYear"));
+        toReturn.setMakeId(rs.getInt("makeId"));
         return toReturn;
 
     }

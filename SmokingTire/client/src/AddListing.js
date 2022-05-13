@@ -35,7 +35,7 @@ function AddListing() {
     useEffect(
         () => {
             if (jwt) {
-                fetch("http://localhost:8080/api/security/findUser/" + user.user.sub,
+                fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/security/findUser/" + user.user.sub,
                     {
                         headers: {
                             Authorization: "Bearer " + jwt
@@ -65,7 +65,7 @@ function AddListing() {
     );
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/makes")
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/makes")
             .then(response => {
                 if (response.status === 200) {
                     return response.json();
@@ -99,7 +99,8 @@ function AddListing() {
     }
 
     function findCar() {
-        fetch("http://localhost:8080/api/cars/" + modelId)
+        console.log(modelId);
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/cars/" + modelId)
             .then(response => {
                 if (response.status === 200) {
                     return (response.json());
@@ -107,14 +108,16 @@ function AddListing() {
                     alert("Something went wrong while fetching the car.");
                 }
             })
-            .then(carData => setCar(carData))
+            .then(carData => {
+                console.log(carData);
+                setCar(carData);})
             .catch(rejection => {
                 alert("Failure to connect with server probably.");
             });
     }
 
     function findModels() {
-        fetch("http://localhost:8080/api/models/findByMake/" + makeId)
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/models/findByMake/" + makeId)
             .then(response => {
                 if (response.status === 200) {
                     return response.json();
@@ -152,7 +155,7 @@ function AddListing() {
         data.append("file", document.getElementById("uploadInput").files[0]);
         setImageUrl(document.getElementById("uploadInput").files[0].name);
 
-        fetch("http://localhost:8080/api/image/" + modelId, {
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/image/" + modelId, {
             method: "POST",
             body: data
         })
@@ -177,7 +180,7 @@ function AddListing() {
         };
         console.log(newListing);
 
-        fetch("http://localhost:8080/api/listings/add", {
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/listings/add", {
             method: "POST",
             headers: {
                 Authorization: "Bearer " + jwt,

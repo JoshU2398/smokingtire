@@ -24,9 +24,9 @@ function Listing(props) {
     console.log(listing);
 
     const car = listing.car
-    const make = car.make.makeName;
-    const model = car.make.model.modelName;
-    const modelYear = car.make.model.modelYear;
+    const make = car.model.makeName;
+    const model = car.model.modelName;
+    const modelYear = car.model.modelYear;
     const jwt = localStorage.getItem("token");
 
     const [image, setImage] = useState(null);
@@ -34,7 +34,7 @@ function Listing(props) {
     const nav = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/image/" + imageUrl)
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/image/" + imageUrl)
             .then(response => {
                 if (response.status === 200) {
                     return response.blob();
@@ -59,7 +59,7 @@ function Listing(props) {
     function increaseViewCount() {
 
         if (jwt) {
-            fetch("http://localhost:8080/api/listings/increaseViewCount/" + listing.listingId,
+            fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/listings/increaseViewCount/" + listing.listingId,
                 {
                     method: "PUT",
                     headers: {

@@ -20,7 +20,7 @@ function AddUser() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        fetch("http://localhost:8080/api/security/register" + "/" + username + "/" + password, {
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/security/register" + "/" + username + "/" + password, {
             method: "POST"
         })
             .then(response => {
