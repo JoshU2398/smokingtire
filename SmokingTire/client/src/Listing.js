@@ -1,6 +1,6 @@
 
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
 function Listing(props) {
@@ -97,8 +97,8 @@ function Listing(props) {
             <p><b>Price: ${listing.price}</b></p>
             <p><b>Mileage: {listing.mileage}</b></p>
 
-            <Link to={'/view/listing/' + listing.listingId + "/" + listing.imageUrl} onClick={increaseViewCount}>View</Link><br /><br />
 
+            <NavLink className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} to={'/view/listing/' + listing.listingId + "/" + listing.imageUrl} onClick={increaseViewCount}>View</NavLink>
         </div>
     )
 }
