@@ -15,7 +15,7 @@ function EditUser() {
         () => {
             const jwt = localStorage.getItem("token");
             if (jwt) {
-                fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/security/findUser/" + username,
+                fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/security/findUser/" + username,
                     {
                         headers: {
                             Authorization: "Bearer " + jwt
@@ -66,7 +66,7 @@ function EditUser() {
         const jwt = localStorage.getItem("token");
         const updatedUser = { userId: toEdit.userId, username: toEdit.username, password: toEdit.password, roles: toEdit.roles };
 
-        fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/security/update/" + toEdit?.userId, {
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/security/update/" + toEdit?.userId, {
             method: "PUT",
             headers: {
                 Authorization: "Bearer " + jwt,

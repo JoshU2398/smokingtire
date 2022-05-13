@@ -26,7 +26,7 @@ function PurchaseListing() {
 
             if (jwt) {
 
-                fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/listings/findListing/" + id, {
+                fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/listings/findListing/" + id, {
                     headers: {
                         Authorization: "Bearer " + jwt
                     }
@@ -58,7 +58,7 @@ function PurchaseListing() {
         () => {
             const jwt = localStorage.getItem("token");
             if(jwt){
-                fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/security/findUser/" + user.user.sub,
+                fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/security/findUser/" + user.user.sub,
                 {
                     headers: {
                         Authorization: "Bearer " + jwt
@@ -126,7 +126,7 @@ function PurchaseListing() {
             + streetAddress + " \n"
             + city + ", " + state + " " + zip;
 
-        fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/email/" + toEmail + "/" + body, {
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/email/" + toEmail + "/" + body, {
             method: "POST"
         })
             .then(response => {
@@ -147,7 +147,7 @@ function PurchaseListing() {
         };
 
         if (jwt) {
-            fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/listings/convertToSold/" + id,
+            fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/listings/convertToSold/" + id,
                 {
                     method: "PUT",
                     headers: {

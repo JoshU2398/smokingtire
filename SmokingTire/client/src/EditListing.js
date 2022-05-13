@@ -17,7 +17,7 @@ function EditListing(){
             const jwt = localStorage.getItem("token");
 
             if(jwt) {
-                fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/listings/findListing/" + id,
+                fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/listings/findListing/" + id,
                 {
                     headers: {
                         Authorization: "Bearer " + jwt
@@ -91,7 +91,7 @@ function EditListing(){
 
         console.log(listing);
 
-        fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/listings/edit/" + id, {
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/listings/edit/" + id, {
             method: "PUT",
             headers: {
                 Authorization: "Bearer " + jwt,

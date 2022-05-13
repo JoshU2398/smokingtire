@@ -5,7 +5,7 @@ function Listings() {
     const [listings, setListings] = useState([]);
 
     useEffect(() => {
-        fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/listings/findAvailable")
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/listings/findAvailable")
             .then(response => {
                 if (response.status === 200) {
                     return response.json();

@@ -34,7 +34,7 @@ function Listing(props) {
     const nav = useNavigate();
 
     useEffect(() => {
-        fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/image/" + imageUrl)
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/image/" + imageUrl)
             .then(response => {
                 if (response.status === 200) {
                     return response.blob();
@@ -59,7 +59,7 @@ function Listing(props) {
     function increaseViewCount() {
 
         if (jwt) {
-            fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/listings/increaseViewCount/" + listing.listingId,
+            fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/listings/increaseViewCount/" + listing.listingId,
                 {
                     method: "PUT",
                     headers: {

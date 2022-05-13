@@ -15,7 +15,7 @@ function ViewListing() {
 
     useEffect(() => {
 
-        fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/listings/findListing/" + id)
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/listings/findListing/" + id)
             .then(response => {
                 if (response.status === 200) {
                     return response.json();
@@ -36,7 +36,7 @@ function ViewListing() {
     }, []);
 
     useEffect(() => {
-        fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/image/" + imageUrl)
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/image/" + imageUrl)
             .then(response => {
                 if (response.status === 200) {
                     return response.blob();

@@ -12,7 +12,7 @@ function DeleteListing() {
             const jwt = localStorage.getItem("token");
 
             if (jwt) {
-                fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/listings/findListing/" + id, {
+                fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/listings/findListing/" + id, {
                     headers: {
                         Authorization: "Bearer " + jwt
                     }
@@ -47,7 +47,7 @@ function DeleteListing() {
         const jwt = localStorage.getItem("token");
 
         if (jwt) {
-            fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/listings/delete/" + id, {
+            fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/listings/delete/" + id, {
                 method: "DELETE",
                 headers: {
                     Authorization: "Bearer " + jwt

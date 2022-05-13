@@ -11,7 +11,7 @@ function Login() {
 
     function submitHandler(event) {
         event.preventDefault()
-        fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/security/login", {
+        fetch("http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/api/security/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

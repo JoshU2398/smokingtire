@@ -1,1 +1,1 @@
-window.API_URL = "http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com";
+window.API_URL = "http://smokingtiresui-env-1.eba-2r42cd2t.us-east-1.elasticbeanstalk.com/";
