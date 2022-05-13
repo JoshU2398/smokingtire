@@ -11,7 +11,7 @@ function UploadImage() {
 
         data.append("file", document.getElementById("uploadInput").files[0]);
 
-        fetch("http://localhost:8080/api/image/" + id, {
+        fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/image/" + id, {
             method: "POST",
             body: data
         })

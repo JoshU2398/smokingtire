@@ -17,7 +17,7 @@ function UserPage() {
     useEffect(() => {
 
         if (jwt) {
-            fetch("http://localhost:8080/api/security/findUser/" + user.user.sub,
+            fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/security/findUser/" + user.user.sub,
                 {
                     headers: {
                         Authorization: "Bearer " + jwt
@@ -45,7 +45,7 @@ function UserPage() {
     }, []);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/listings/userSelling/" + user.user.sub)
+        fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/listings/userSelling/" + user.user.sub)
             .then(response => {
                 if (response.status === 200) {
                     return response.json();
@@ -60,7 +60,7 @@ function UserPage() {
     }, []);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/listings/userPurchased/" + user.user.sub)
+        fetch("http://smokingtiresapi-env.eba-e7j6miiq.us-east-1.elasticbeanstalk.com/api/listings/userPurchased/" + user.user.sub)
             .then(response => {
                 if (response.status === 200) {
                     return response.json();
