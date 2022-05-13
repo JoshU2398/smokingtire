@@ -79,7 +79,7 @@ function ViewListing() {
                         <p>Transmission: {listing.car.transmission}</p>
                     </div>
                     {listing.available === true ? userStatus?.user.sub !== listing.listingUser.username ?
-                        <Link to={'/purchase/' + listing.listingId}>Buy Now</Link> 
+                        <Link className="nav-link" to={'/purchase/' + listing.listingId}>Buy Now</Link> 
                     : 
                         null
                     :
@@ -90,8 +90,8 @@ function ViewListing() {
                         || userStatus?.user.authorities.includes("ADMIN")
                         ? listing.available === true ? (
                             <>
-                                <Link to={'/edit/listing/' + listing.listingId}>Edit</Link>
-                                <Link to={'/delete/listing/' + listing.listingId}>Delete</Link>
+                                <Link className="nav-link" to={'/edit/listing/' + listing.listingId}>Edit</Link>
+                                <Link className="nav-link" to={'/delete/listing/' + listing.listingId}>Delete</Link>
                             </>
                         ) : (
                             null

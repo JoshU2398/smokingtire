@@ -118,7 +118,7 @@ function EditListing(){
         nav("/userpage");
     }
 
-    return toEdit ? <form onSubmit={handleEditSubmit}>
+    return toEdit ? <form className="editListing" onSubmit={handleEditSubmit}>
                 <label htmlFor="listingText">Description: </label><br/>
                 <textarea className="listing-edit" id="listingText" value={toEdit?.description} onChange={handleTextChange}></textarea><br/>
 

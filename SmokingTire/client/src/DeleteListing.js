@@ -76,7 +76,7 @@ function DeleteListing() {
     }
 
     return (
-        <div className="delete-listing">
+        <div className="deleteListing">
             <h2>Delete Listing</h2>
             
             <div className="delete-listing-card">

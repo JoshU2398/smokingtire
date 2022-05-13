@@ -30,8 +30,8 @@
   position: relative;
   text-align: center;
   font-style: italic;
-  font-size: 150%;
-
+  font-size: 300%;
+  padding-top: 50px;
 }
 
 .home-page {
@@ -95,12 +95,12 @@ code {
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: white !important;
+  color: #0b2027ff !important;
 }
 
 .navbar-dark .navbar-nav .nav-link.active,
 .navbar-dark .navbar-nav .show>.nav-link {
-  color: rgb(211, 215, 250) !important;
+  color: rgb(8, 23, 161) !important;
 }
 
 .nav-item {}
@@ -119,6 +119,28 @@ code {
   color: black !important;
   padding: 100px;
   margin-left: 70px;
+}
+
+.deleteListing{
+  color: black;
+  background-image: url('../public/smokingtire.jpg');
+  background-color: #000;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+}
+
+.editListing{
+  color: black;
+  background-image: url('../public/smokingtire.jpg');
+  background-color: #000;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
 }
 
 .user-page {
@@ -159,7 +181,7 @@ code {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  height: 100%;
+  height: 100vh;
 }
 
 .view-listing {
