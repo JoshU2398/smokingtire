@@ -138,7 +138,7 @@ function PurchaseListing() {
     }
 
     return (
-        <>
+        <div className="purchase-listing">
             <form className="puchaseListing" onSubmit={sendEmail}>
                 <div className="stringInput">
                     <label htmlFor="email"><b>Email: </b></label>
@@ -166,7 +166,7 @@ function PurchaseListing() {
                 </div>
                 <button type="submit" onClick={convertToSold}>Purchase</button>
             </form>
-        </>
+        </div>
     )
 
 }
