@@ -86,8 +86,10 @@ function EditListing(){
         const listing = {
             listingId:toEdit.listingId, description:toEdit.description, listingUser:listingUser, 
             car:toEdit.car, postDate:toEdit.postDate, viewCount:toEdit.viewCount, mileage:toEdit.mileage, 
-            price:toEdit.price, isAvailable:toEdit.available
+            price:toEdit.price, isAvailable:toEdit.available, imageUrl:toEdit.imageUrl
         };
+
+        console.log(listing);
 
         fetch("http://localhost:8080/api/listings/edit/" + id, {
             method: "PUT",

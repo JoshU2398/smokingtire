@@ -1,9 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import AuthContext from "./AuthContext";
 
 function PurchaseListing() {
 
     const jwt = localStorage.getItem("token");
+
+    const [user, setUser] = useContext(AuthContext);
+    const [purchaser, setPurchaser] = useState(null);
 
     const [toEmail, setToEmail] = useState("");
     const [name, setName] = useState("");
@@ -50,6 +54,40 @@ function PurchaseListing() {
         []
     );
 
+    useEffect(
+        () => {
+            const jwt = localStorage.getItem("token");
+            if(jwt){
+                fetch("http://localhost:8080/api/security/findUser/" + user.user.sub,
+                {
+                    headers: {
+                        Authorization: "Bearer " + jwt
+                    }
+                })
+                .then(response => {
+                    if(response.status == 200){
+                        return response.json();
+                    }else{
+                        console.log(response);
+                        alert("retrieving Purchaser failed");
+                    }
+                })
+                .then(retrievedUser => {
+                    console.log(retrievedUser);
+                    setPurchaser(retrievedUser);
+                })
+                .catch(rejection => {
+                    console.log(rejection);
+                    alert("Something very bad happened...");
+                });
+            }else{
+                navigate("/login");
+            }
+        },
+        []
+    );
+
+
     function toEmailHandler(e) {
         setToEmail(e.target.value);
     }
@@ -79,7 +117,7 @@ function PurchaseListing() {
 
         const body = "This is a confirmation for your order. \n"
             + "Seller: " + toConvert.listingUser.username + " "
-            + "\nCar: " + toConvert.car.make.model.modelYear + " " + toConvert.car.make.makeName + " " + toConvert.car.make.model.modelName + " "
+            + "\nCar: " + toConvert.car.model.modelYear + " " + toConvert.car.model.makeName + " " + toConvert.car.model.modelName + " "
             + "\nPrice: " + toConvert.price + " "
             + "\nPurchaser: \n"
             + name + " "
@@ -104,8 +142,8 @@ function PurchaseListing() {
     function convertToSold() {
 
         const listingUser = {
-            userId: toConvert.listingUser.userId, username: toConvert.listingUser.username,
-            password: toConvert.listingUser.password, roles: toConvert.listingUser.roles
+            userId: purchaser.userId, username: purchaser.username,
+            password: purchaser.password, roles: purchaser.roles
         };
 
         if (jwt) {

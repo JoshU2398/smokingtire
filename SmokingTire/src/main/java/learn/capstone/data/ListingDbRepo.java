@@ -272,10 +272,10 @@ public class ListingDbRepo implements ListingRepo {
     }
 
     private void addMakeName(Model model){
-        final String sql = "select m.makeName"
+        final String sql = "select m.makeId, m.makeName "
                 + "from listings l "
                 + "inner join cars c on c.carId = l.carId "
-                + "inner join models mo on mo.modelId = c.modelId"
+                + "inner join models mo on mo.modelId = c.modelId "
                 + "inner join makes m on m.makeId = mo.makeId "
                 + "where mo.modelId = ?;";
 

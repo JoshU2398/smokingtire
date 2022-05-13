@@ -34,8 +34,8 @@ public class CarDbRepo implements CarRepo{
         final String sql = "select c.carId, c.horsepower, c.drivetrain, c.chassis, c.transmission, c.modelId "
                 + "from listings l "
                 + "inner join cars c on c.carId = l.carId "
-                + "inner join makes m on m.makeId = c.makeId "
-                + "inner join models mo on mo.makeId = m.makeId "
+                + "inner join models mo on mo.modelId = c.modelId "
+                + "inner join makes m on m.makeId = mo.makeId "
                 + "where mo.modelId = ?;";
 
         Car result = template.query(sql, new CarMapper(), modelId).stream()
@@ -49,10 +49,10 @@ public class CarDbRepo implements CarRepo{
     }
 
     private void addMakeName(Model model){
-        final String sql = "select m.makeName"
+        final String sql = "select m.makeId, m.makeName "
                 + "from listings l "
                 + "inner join cars c on c.carId = l.carId "
-                + "inner join models mo on mo.modelId = c.modelId"
+                + "inner join models mo on mo.modelId = c.modelId "
                 + "inner join makes m on m.makeId = mo.makeId "
                 + "where mo.modelId = ?;";
 

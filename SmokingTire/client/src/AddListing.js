@@ -99,6 +99,7 @@ function AddListing() {
     }
 
     function findCar() {
+        console.log(modelId);
         fetch("http://localhost:8080/api/cars/" + modelId)
             .then(response => {
                 if (response.status === 200) {
@@ -107,7 +108,9 @@ function AddListing() {
                     alert("Something went wrong while fetching the car.");
                 }
             })
-            .then(carData => setCar(carData))
+            .then(carData => {
+                console.log(carData);
+                setCar(carData);})
             .catch(rejection => {
                 alert("Failure to connect with server probably.");
             });
